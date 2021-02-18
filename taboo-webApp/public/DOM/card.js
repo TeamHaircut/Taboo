@@ -16,16 +16,17 @@ function getCardBorder(type) {
 	} else {
 		textColor = "text-dark"; 
 		bgColor = "border-dark";
-		cardBorderDiv.style.borderWidth = `${type}px`;	
+		cardBorderDiv.style.borderWidth = `${type}px`;
+
 	}
 	cardBorderDiv.classList.add(
 		"card", 
 		textColor, 
 		bgColor, 
 		"mr-3");
-	cardBorderDiv.style.height = "13rem";
-	cardBorderDiv.style.minWidth = "8rem";
-    cardBorderDiv.style.maxWidth = "8rem";
+	cardBorderDiv.style.height = "18rem";
+	cardBorderDiv.style.minWidth = "15rem";
+    cardBorderDiv.style.maxWidth = "15rem";
 	return cardBorderDiv;
 }
 

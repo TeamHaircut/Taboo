@@ -28,6 +28,7 @@ function outputBlackCard(GameState) {
 		} else {
 			div1 = buildCard('dark', GameState.cardCzar, GameState.blackCard, false, '');
 		}
+		
 		document.querySelector('.blackcard-div').appendChild(div1);
 	}
 }

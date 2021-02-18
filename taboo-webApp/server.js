@@ -147,7 +147,7 @@ io.on('connection', socket => {
 
 			// Clear czar and judge hand
 			clearHand();
-			io.to(user.room).emit('terminate', {
+			io.to(user.room).emit('terminate', { 
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 		}
