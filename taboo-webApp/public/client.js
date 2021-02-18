@@ -193,7 +193,7 @@ socket.on('launch', ({GameState}) => {
 // Apply game intialization to DOM
 function initializeGame(GameState) {
 
-	gameControl.innerHTML = `<i class="fas fa-stop"></i> Terminate Game`;
+	gameControl.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	outputRoomUserTable(GameState);
 	outputBlackCard(GameState);
 	outputWhiteCards(GameState, true);
