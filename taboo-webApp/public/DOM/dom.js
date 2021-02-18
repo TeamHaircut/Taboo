@@ -180,7 +180,7 @@ function outputRoomUserTable(GameState) {
 }
 
 // Output message to DOM
-function outputMessage(message) {
+/*function outputMessage(message) {
 	const div = document.createElement('div');
 	if(message.username == getClientUsername()) {
 		div.classList.add('mine');
@@ -202,6 +202,7 @@ function outputMessage(message) {
 	div.appendChild(div1);
 	document.querySelector('.chat-messages').appendChild(div);
 }
+*/
 
 function outputJudgeHand(GameState) {
 	judgeHandDiv.innerHTML =``;

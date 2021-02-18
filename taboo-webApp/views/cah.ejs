@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<h1><i class="fas fa-blind"></i>  CAH</h1>
+	<h1><i class="far fa-comments"></i>  Taboo</h1>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -15,7 +15,7 @@
 				<p class="nav-link"><i class="fas fa-home"></i> The <span id="client-room"><%= user.last_room %></span> room</p>
 			</li>
 			<li class="nav-item active">
-				<a id="gamecontrol" href="#" class="nav-link"><i class="fas fa-play"></i> Launch Game</a>
+				<a id="gamecontrol" href="#" class="nav-link"><i class="fas fa-play"></i> Start Game</a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Game Options</a>
@@ -64,26 +64,7 @@
 		  </tbody>
 		</table> 
 	</div>
-	<div class="mb-3"></div>
-	<header class="card card-body">
-		<h3><i class="fas fa-comments"></i> Boner-Chat</h3>
-	</header>
-	<main>
-		<div class="chat-messages" style="overflow-y:auto; width: auto; height:215px; padding: 20px; border: solid 1px #EEE;">
-	</main>
-	<div>
-		<form class="form-group" id="chat-form">
-			<input
-				class="form-control"
-				id="msg"
-				type="text"
-				placeholder="Enter Message"
-				required
-				autocomplete="off"
-			/>
-			<button class="btn btn-primary btn-block mb-2"><i class="fas fa-paper-plane"></i> Send</button>
-		</form>
-	</div>
+
 </div>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/DOM/dom.js"></script>

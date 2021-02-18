@@ -97,7 +97,7 @@ io.on('connection', socket => {
 	// Listen for game control event
 	socket.on('gameControlState', ({state}) => {
 		const user = getCurrentUser(socket.id);
-		if(state === `<i class="fas fa-play"></i> Launch Game`) {
+		if(state === `<i class="fas fa-play"></i> Start Game`) {
 
 			//merge selected decks
 			mergeSelectedDecks();

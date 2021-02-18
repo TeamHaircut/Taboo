@@ -17,15 +17,16 @@ socket.on('reconnecting', () => {
 socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() });
 
 // Message from server
-socket.on('message', message => {
+/*socket.on('message', message => {
 	outputMessage(message);
 	
 	// Scroll down
 	chatMessages.scrollTop = chatMessages.scrollHeight;
 });
+*/
 
 // Message submit
-chatForm.addEventListener('submit', e => {
+/*chatForm.addEventListener('submit', e => {
 	e.preventDefault();
 	
 	// Get message text
@@ -38,6 +39,7 @@ chatForm.addEventListener('submit', e => {
 	e.target.elements.msg.value = '';
 	e.target.elements.msg.focus();
 });
+*/
 
 gameControl.addEventListener("click", function(){ 
 	//Emit game control state to server
@@ -206,7 +208,7 @@ socket.on('terminate', ({GameState}) => {
 // Apply game termination to DOM
 function terminateGame(GameState) {
 
-	gameControl.innerHTML = `<i class="fas fa-play"></i> Launch Game`;
+	gameControl.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	outputBlackCard(GameState);
 	outputWhiteCards(GameState, false);
 	infoDiv.innerHTML = ``;
