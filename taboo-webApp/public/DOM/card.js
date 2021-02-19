@@ -216,3 +216,44 @@ function buildCard(bgColor, czar, card, user, buttonType) {
 	cardBorder.appendChild(cardHeader);
 	return cardBorder;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
+function buildCardTaboo(bgColor, czar, card, user, buttonType) {
+	const cardBorder = getCardBorderTaboo(bgColor);
+	const cardHeader = getCardHeader();
+	const cardButton = getCardButton(czar, card, user, buttonType);
+	const cardBody = getCardBody(card);
+	cardHeader.appendChild(cardButton);
+	cardBorder.appendChild(cardBody);
+	cardBorder.appendChild(cardHeader);
+	return cardBorder;
+}
+
+function getCardBorderTaboo(type) {
+	type = "green";
+	const cardBorderDiv = document.createElement('div');
+	
+	var textColor;
+	var bgColor;
+	if (type === 'light'){
+		textColor = "text-black"; 
+		bgColor = "border-dark";
+	} else if (type === 'green') {
+		textColor = "text-white"; 
+		bgColor = "bg-dark";
+	} else {
+		textColor = "text-dark"; 
+		bgColor = "border-dark";
+		cardBorderDiv.style.borderWidth = `${type}px`;
+
+	}
+	cardBorderDiv.classList.add(
+		"card", 
+		textColor, 
+		bgColor, 
+		"mr-3");
+	cardBorderDiv.style.height = "18rem";
+	cardBorderDiv.style.minWidth = "15rem";
+    cardBorderDiv.style.maxWidth = "15rem";
+	return cardBorderDiv;
+}

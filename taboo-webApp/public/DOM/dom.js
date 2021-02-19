@@ -21,12 +21,12 @@ function outputBlackCard(GameState) {
 		var div1;
 		if(GameState.czarHand.length == 0 && (GameState.judgeHand.length <= 1 || GameState.judgeHand.length == 0 )  ) {
 			if(!cardSelected) {
-				div1 = buildCard('dark', GameState.cardCzar, GameState.blackCard, false, 'next');
+				div1 = buildCardTaboo('dark', GameState.cardCzar, GameState.blackCard, false, 'next');
 			} else {
-				div1 = buildCard('dark', GameState.cardCzar, GameState.blackCard, false, '');
+				div1 = buildCardTaboo('dark', GameState.cardCzar, GameState.blackCard, false, '');
 			}
 		} else {
-			div1 = buildCard('dark', GameState.cardCzar, GameState.blackCard, false, '');
+			div1 = buildCardTaboo('dark', GameState.cardCzar, GameState.blackCard, false, '');
 		}
 		
 		document.querySelector('.blackcard-div').appendChild(div1);
