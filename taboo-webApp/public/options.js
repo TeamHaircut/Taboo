@@ -5,9 +5,9 @@ const map2 = new Map();
 //New Deck Options go here
 ////////////////////////////////////////////////////////////
 var basePacks = [
-    {id:'BaseGameUS', text:'Green'},{id:'BaseGame1v0', text:'Purple'}
+    {id:'Green', text:'Green Cards'},{id:'Purple', text:'Purple Cards'}
 ];
-
+////////////////////////////////////////////////////////////
 createToggleButtons(basePacks, baseBtnGroup);
 
 function createToggleButtons(packs, btnGroup) {
