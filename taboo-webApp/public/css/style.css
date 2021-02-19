@@ -39,6 +39,33 @@ body {
   grid-area: 5 / 2 / span 1 / span 1;
 }
 
+.sbHeaderitem1 { grid-area: header; }
+.sbNameAitem2 { grid-area: teamA; }
+.sbNameBitem3 { grid-area: teamB; }
+.sbTallyAitem4 { grid-area: tallyA; }
+.sbTallyBitem5 { grid-area: tallyB; }
+.sbScoreAitem6 { grid-area: scoreA; }
+.sbScoreBitem7 { grid-area: scoreB; }
+
+.grid-scoreboard {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'teamA teamB'
+    'tallyA tallyB'
+    'scoreA scoreB';
+  grid-gap: 1px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.grid-scoreboard > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 5px 0;
+  font-size: 12px;
+}
+
 .messages {
   margin-top: 5px;
   margin-bottom: 5px;
