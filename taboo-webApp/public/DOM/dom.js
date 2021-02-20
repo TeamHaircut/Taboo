@@ -4,6 +4,7 @@ const roomUserTable = document.querySelector('.userlist-table');
 
 //const chatMessages = document.querySelector('.chat-messages');
 
+const cardColor = document.getElementById("tabooCardColor");
 const guessWord = document.querySelector('.guessWord');
 const taboo0 = document.querySelector('.taboo0');
 const taboo1 = document.querySelector('.taboo1');
@@ -97,12 +98,17 @@ function outputTabooCard(GameState) {
 			//if(!cardSelected) {
 				// if card is not selected do not show a card
 			//} else {
-				guessWord.innerHTML = `${tabooCard[0]}`;
-				taboo0.innerHTML = `${tabooCard[1]}`;
-				taboo1.innerHTML = `${tabooCard[2]}`;
-				taboo2.innerHTML = `${tabooCard[3]}`;
-				taboo3.innerHTML = `${tabooCard[4]}`;
-				taboo4.innerHTML = `${tabooCard[5]}`;
+				if(tabooCard[1] == "GREEN") {
+					cardColor.src = "img_cardbackground_green.PNG";
+				} else {
+					cardColor.src = "img_cardbackground_purple.PNG";
+				}
+				guessWord.innerHTML = `${tabooCard[2]}`;
+				taboo0.innerHTML = `${tabooCard[3]}`;
+				taboo1.innerHTML = `${tabooCard[4]}`;
+				taboo2.innerHTML = `${tabooCard[5]}`;
+				taboo3.innerHTML = `${tabooCard[6]}`;
+				taboo4.innerHTML = `${tabooCard[7]}`;
 			//}
 	}
 }
