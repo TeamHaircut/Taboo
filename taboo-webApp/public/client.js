@@ -221,6 +221,10 @@ function terminateGame(GameState) {
 	gameControl.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	outputTabooCard(GameState);
+	timer.style.display = "none";
+	giverControl0.style.display = "none";
+	giverControl1.style.display = "none";
+	buzzerControl.style.display = "none";
 	//outputWhiteCards(GameState, false);
 	infoDiv.innerHTML = ``;
 	//czarDeckDiv.innerHTML =``;
