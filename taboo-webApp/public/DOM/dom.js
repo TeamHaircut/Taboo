@@ -115,3 +115,8 @@ function outputTabooCard(GameState) {
 function passCard() {
 	drawBlackCard();
   }
+
+function checkCard() {
+	drawBlackCard();
+	//addPoint();
+}
