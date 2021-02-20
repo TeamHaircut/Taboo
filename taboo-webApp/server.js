@@ -99,6 +99,8 @@ io.on('connection', socket => {
 		const user = getCurrentUser(socket.id);
 		if(state === `<i class="fas fa-play"></i> Start Game`) {
 
+			console.log("Game Started");
+
 			//merge selected decks
 			mergeSelectedDecks();
 

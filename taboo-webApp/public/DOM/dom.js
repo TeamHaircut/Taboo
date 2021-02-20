@@ -1,142 +1,18 @@
 const infoDiv = document.querySelector('.info-div');
 
-const blackCardDiv = document.querySelector('.blackcard-div');
-const czarDeckDiv = document.querySelector('.czardeck-div');
-const judgeHandDiv = document.querySelector('.judgehand-div');
-const whiteCardsDiv = document.querySelector('.whitecards-div');
-
 const roomUserTable = document.querySelector('.userlist-table');
 
-const chatMessages = document.querySelector('.chat-messages');
+//const chatMessages = document.querySelector('.chat-messages');
 
-var myBlackCard;
+const guessWord = document.querySelector('.guessWord');
+const taboo0 = document.querySelector('.taboo0');
+const taboo1 = document.querySelector('.taboo1');
+const taboo2 = document.querySelector('.taboo2');
+const taboo3 = document.querySelector('.taboo3');
+const taboo4 = document.querySelector('.taboo4');
+
+var myTabooCard;
 var cardSelected = false;
-
-// Add black card to DOM
-function outputBlackCard(GameState) {
-	drawCount = GameState.drawCount;
-	myBlackCard = GameState.blackCard;
-	blackCardDiv.innerHTML = ``;
-	if(GameState.blackCard != false) {
-		var div1;
-		if(GameState.czarHand.length == 0 && (GameState.judgeHand.length <= 1 || GameState.judgeHand.length == 0 )  ) {
-			if(!cardSelected) {
-				div1 = buildCardTaboo('dark', GameState.cardCzar, GameState.blackCard, false, 'next');
-			} else {
-				div1 = buildCardTaboo('dark', GameState.cardCzar, GameState.blackCard, false, '');
-			}
-		} else {
-			div1 = buildCardTaboo('dark', GameState.cardCzar, GameState.blackCard, false, '');
-		}
-		
-		document.querySelector('.blackcard-div').appendChild(div1);
-	}
-}
-
-function outputCzarHand(GameState, flag) {
-	outputBlackCard(GameState);
-	czarDeckDiv.innerHTML =``;
-	GameState.czarHand.forEach(player => {
-		player.clientCardArray.forEach(card => {
-			const cardBorder = document.createElement('div');
-			cardBorder.classList.add("card");
-			cardBorder.style.height = "13rem";
-			cardBorder.style.minWidth = "8rem";
-			cardBorder.style.maxWidth = "8rem";
-			cardBorder.style.borderColor = "black";
-			cardBorder.style.backgroundColor = "border-dark";
-			cardBorder.style.marginRight ="-7rem";
-			cardBorder.style.boxShadow = "1px 1px 1px 1px black";
-
-			const cardHead = getCardHeader();
-
-			const cardB = getCardBody(card);
-			cardB.querySelector('.card-title').style.fontSize = "large";
-			cardB.querySelector('.card-title').innerHTML = "Cards<br>Against<br>Humanity<br>";
-
-			setUserWaitList(GameState.gameusers, GameState.czarHand, GameState.cardCzar);
-
-				infoDiv.innerHTML = "Waiting for";
-
-				getUserWaitList().forEach(name => {
-					infoDiv.innerHTML+=` ... ${name} `; 
-				});
-
-			const inter = updateCardButton(getUserWaitList(), GameState.cardCzar, GameState.czarHand, GameState.gameusers, cardB, flag);
-			
-			cardBorder.appendChild(inter);
-			cardBorder.appendChild(cardHead);
-			document.querySelector('.czardeck-div').appendChild(cardBorder);
-		});
-	});
-}
-
-// Add white cards to DOM
-function outputWhiteCards(GameState, flag) {
-	whiteCardsDiv.innerHTML = ``;
-	whiteCardsDiv.style.overflowX = "auto";
-	if(flag) {
-		GameState.gameusers.forEach(user => {
-			if(getClientUsername() == user.username) {
-				user.whiteCards.forEach(whiteCard=>{
-						if (cardSelected) {
-							document.querySelector('.whitecards-div').appendChild(buildCard('light', GameState.cardCzar, whiteCard, user, 'play'));
-						} 
-						else {
-								if((getClientUsername() == GameState.cardCzar.username) && GameState.options) {
-									document.querySelector('.whitecards-div').appendChild(buildCard('light', GameState.cardCzar, whiteCard, user, 'exchange'));
-								}
-								else {
-									document.querySelector('.whitecards-div').appendChild(buildCard('light', GameState.cardCzar, whiteCard, user, ''));	
-								}
-						}
-				});
-			}
-		});
-	}
-}
-
-// Remove exchange button from DOM
-function removeExchangeButton(czar, user) {
-	if (getClientUsername() == czar.username) {
-		whiteCardsDiv.innerHTML = ``;
-		whiteCardsDiv.style.overflowX = "auto";
-		user.whiteCards.forEach(whiteCard=>{
-			var localArray = getClientCardArray();
-			var localMap = new Map();	
-			localArray.forEach(card => {
-				localMap.set(card.whiteCard, true);
-			});	
-			if(localMap.get(whiteCard)) {
-				document.querySelector('.whitecards-div').appendChild(buildCard('light', czar, whiteCard, user, false));
-			} else {
-				document.querySelector('.whitecards-div').appendChild(buildCard('light', czar, whiteCard, user, 'exchange'));
-			}
-
-		});
-	}
-}
-
-// Remove play button from DOM
-function removePlayButton(czar, user) {
-	if (getClientUsername() != czar.username) {
-		whiteCardsDiv.innerHTML = ``;
-		whiteCardsDiv.style.overflowX = "auto";
-		user.whiteCards.forEach(whiteCard=>{
-			var localArray = getClientCardArray();
-			var localMap = new Map();	
-			localArray.forEach(card => {
-				localMap.set(card.whiteCard, true);
-			});	
-			if(localMap.get(whiteCard) || (cardCount == drawCount)) {
-				document.querySelector('.whitecards-div').appendChild(buildCard('light', czar, whiteCard, user, false));
-			} else {
-				document.querySelector('.whitecards-div').appendChild(buildCard('light', czar, whiteCard, user, 'play'));
-			}
-
-		});
-	}
-}
 
 // Show each room user in the room user table
 function outputRoomUserTable(GameState) {
@@ -204,154 +80,32 @@ function outputRoomUserTable(GameState) {
 	document.querySelector('.chat-messages').appendChild(div);
 }
 */
+/////////////////////////////////////////////////////////////////////////////////////////
 
-function outputJudgeHand(GameState) {
-	judgeHandDiv.innerHTML =``;
-	judgeHandDiv.style.overflowX = "auto";//auto
-	
-	GameState.judgeHand.slice().reverse().forEach(player => {
-		var count = 0;	
-		player.clientCardArray.forEach(card => {
+// Add black card to DOM
+function outputTabooCard(GameState) {
+	card = GameState.blackCard;
+	guessWord.innerHTML = ``;
+	taboo0.innerHTML = ``;
+	taboo1.innerHTML = ``;
+	taboo2.innerHTML = ``;
+	taboo3.innerHTML = ``;
+	taboo4.innerHTML = ``;
 
-			count++;
-			judgeHandDiv.style.maxWidth = `210rem`;
-			var cardBorder;
-			var cardHead;
-			var cardButton;
-			var cardB;
-			
-			if(GameState.judgeHand.length === (GameState.gameusers.length-1)  && (getClientUsername() == GameState.cardCzar.username) )  {
-				cardBorder = document.createElement('div');
-				cardBorder.classList.add("card");
-				cardBorder.style.height = "13rem";
-				cardBorder.style.minWidth = "8rem";
-				cardBorder.style.maxWidth = "8rem";
-				cardBorder.style.borderColor = "black";
-				cardBorder.style.backgroundColor = "border-dark";
-				if(count==1) {
-					cardBorder.style.marginLeft ="1rem";//set margin-left =2 to increase separation between judge cardArrays
-				}
-				cardBorder.style.marginRight ="0rem";
-				cardBorder.style.boxShadow = "1px 1px 1px 1px black";
-
-				cardHead = getCardHeader();
-				if(count==1) {
-					cardButton = getCardButton(GameState.cardCzar, card, false, 'select');
-					cardHead.appendChild(cardButton);
-				} else {
-					cardHead.appendChild(document.createElement('p'));
-				}
-				cardB = getCardBody(card);
-				
-				cardBorder.appendChild(cardB);
-				cardBorder.appendChild(cardHead);				
-
-			} else {
-				cardBorder = document.createElement('div');
-				cardBorder.classList.add("card");
-				cardBorder.style.height = "13rem";
-				cardBorder.style.minWidth = "8rem";
-				cardBorder.style.maxWidth = "8rem";
-				cardBorder.style.borderColor = "black";
-				cardBorder.style.backgroundColor = "border-dark";
-				if(count==1) {
-					cardBorder.style.marginLeft ="1rem";//set margin-left =2 to increase separation between judge cardArrays
-				}
-				cardBorder.style.marginRight ="0rem";//-7, 1.5?
-				cardBorder.style.boxShadow = "1px 1px 1px 1px black";
-
-				cardHead = getCardHeader();
-				if(count==1) {
-					cardButton = getCardButton(GameState.cardCzar, card, false, 'client');
-					cardHead.appendChild(cardButton);
-				} else {
-					cardHead.appendChild(document.createElement('p'));
-				}
-				cardB = getCardBody(card);
-				
-				cardBorder.appendChild(cardB);
-				cardBorder.appendChild(cardHead);				
-			}
-
-			if(getClientUsername() != GameState.cardCzar.username) {
-				cardBorder = document.createElement('div');
-				cardBorder.classList.add("card");
-				cardBorder.style.height = "13rem";
-				cardBorder.style.minWidth = "8rem";
-				cardBorder.style.maxWidth = "8rem";
-				cardBorder.style.borderColor = "black";
-				cardBorder.style.backgroundColor = "border-dark";
-				if(count==1) {
-					cardBorder.style.marginLeft ="1rem";//set margin-left =2 to increase separation between judge cardArrays
-				}
-				cardBorder.style.marginRight ="0rem";//-7, 1.5?
-				cardBorder.style.boxShadow = "1px 1px 1px 1px black";
-
-				cardHead = getCardHeader();
-				if(count==1) {
-					cardButton = getCardButton(GameState.cardCzar, card, false, 'client');
-					cardHead.appendChild(cardButton);
-				} else {
-					cardHead.appendChild(document.createElement('p'));
-				}
-				cardB = getCardBody(card);
-				
-				cardBorder.appendChild(cardB);
-				cardBorder.appendChild(cardHead);				
-			}
-
-			document.querySelector('.judgehand-div').appendChild(cardBorder);
-		});
-	});
+	if(GameState.blackCard != false) {
+		var tabooCard = card.split(",");
+			//if(!cardSelected) {
+				// if card is not selected do not show a card
+			//} else {
+				guessWord.innerHTML = `${tabooCard[0]}`;
+				taboo0.innerHTML = `${tabooCard[1]}`;
+				taboo1.innerHTML = `${tabooCard[2]}`;
+				taboo2.innerHTML = `${tabooCard[3]}`;
+				taboo3.innerHTML = `${tabooCard[4]}`;
+				taboo4.innerHTML = `${tabooCard[5]}`;
+			//}
+	}
 }
-
-function outputWinner(winnerArray) {
-
-	infoDiv.innerHTML = ``;
-	judgeHandDiv.innerHTML = ``;
-	judgeHandDiv.style.overflowX = "visible";
-
-	//assume winner is an array with multiple cards
-	var count = 0;
-	winnerArray.forEach(winner => {
-		winner.forEach(card=> {
-
-			count++;
-			var multiplier = 1;
-			switch(count) {
-				case 1:
-					multiplier = 1; break;
-				case 2:
-					multiplier = 4; break;
-				case 3:
-					multiplier = 5; break;
-				default:
-					multiplier = 9; break;
-			}
-			var scrollSize = multiplier*count;
-			judgeHandDiv.style.maxWidth = `${scrollSize}rem`;
-
-			const cardBorder = document.createElement('div');
-			cardBorder.classList.add("card");
-			cardBorder.classList.add("bg-success");
-			cardBorder.style.height = "13rem";
-			cardBorder.style.minWidth = "8rem";
-			cardBorder.style.maxWidth = "8rem";
-			cardBorder.style.borderColor = "black";
-			cardBorder.style.marginRight ="0rem";
-			cardBorder.style.boxShadow = "1px 1px 1px 1px black";
-
-			const cardHead = getCardHeader();
-
-			const cardB = getCardBody(card.whiteCard);
-			cardB.querySelector('.card-text').innerHTML = `${card.username} Wins!`;
-
-			cardBorder.appendChild(cardB);
-			cardBorder.appendChild(cardHead);
-
-			document.querySelector('.judgehand-div').appendChild(cardBorder);
-			cardCount = 0;
-			clientCardArray = [];
-		});
-	});
-}
+function passCard() {
+	drawBlackCard();
+  }

@@ -76,7 +76,7 @@ function drawBlackCard() {
 
 socket.on('drawBlackCard', ({GameState})=> {
 	// Update DOM with new black card
-	outputBlackCard(GameState);
+	outputTabooCard(GameState);
 });
 
 function sendWhiteCardToServer(clientCardArray) {
@@ -131,10 +131,10 @@ socket.on('refreshDOM', ({GameState, bcSelected}) => {
 	outputRoomUserTable(GameState);
 
 	// Update DOM with new black card
-	outputBlackCard(GameState);
+	outputTabooCard(GameState);
 
-	outputCzarHand(GameState, true);
-	outputJudgeHand(GameState);
+	//outputCzarHand(GameState, true);
+	//outputJudgeHand(GameState);
 
 	//There are three conditions when the idle user would not have the play card button
 	//1. if they are the czar.
@@ -157,10 +157,10 @@ socket.on('refreshDOM', ({GameState, bcSelected}) => {
 	});
 
 	// Update DOM with new white cards
-	outputWhiteCards(GameState, true);
+	//outputWhiteCards(GameState, true);
 	if(!flag) {
 		//console.log("REMOVING BUTTON");
-		removePlayButton(GameState.user, GameState.user);
+		//removePlayButton(GameState.user, GameState.user);
 	}
 
 });
@@ -195,8 +195,8 @@ function initializeGame(GameState) {
 
 	gameControl.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	outputRoomUserTable(GameState);
-	outputBlackCard(GameState);
-	outputWhiteCards(GameState, true);
+	outputTabooCard(GameState);
+	//outputWhiteCards(GameState, true);
 }
 
 // Termination event from server
@@ -209,11 +209,11 @@ socket.on('terminate', ({GameState}) => {
 function terminateGame(GameState) {
 
 	gameControl.innerHTML = `<i class="fas fa-play"></i> Start Game`;
-	outputBlackCard(GameState);
-	outputWhiteCards(GameState, false);
+	outputTabooCard(GameState);
+	//outputWhiteCards(GameState, false);
 	infoDiv.innerHTML = ``;
-	czarDeckDiv.innerHTML =``;
-	judgeHandDiv.innerHTML = ``;
+	//czarDeckDiv.innerHTML =``;
+	//judgeHandDiv.innerHTML = ``;
 	outputRoomUserTable(GameState);
 }
 
