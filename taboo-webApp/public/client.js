@@ -1,4 +1,6 @@
 const gameControl = document.getElementById('gamecontrol');
+const gameControl1 = document.getElementById('gamecontrol1');
+
 const logoutControl = document.getElementById('logoutcontrol');
 
 const chatForm = document.getElementById('chat-form');
@@ -44,6 +46,13 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 gameControl.addEventListener("click", function(){ 
 	//Emit game control state to server
 	const state = gameControl.innerHTML;
+	socket.emit('gameControlState', {state});
+	
+});
+
+gameControl1.addEventListener("click", function(){ 
+	//Emit game control state to server
+	const state = gameControl1.innerHTML;
 	socket.emit('gameControlState', {state});
 	
 });
@@ -194,6 +203,7 @@ socket.on('launch', ({GameState}) => {
 function initializeGame(GameState) {
 
 	gameControl.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
+	gameControl1.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	outputRoomUserTable(GameState);
 	outputTabooCard(GameState);
 	//outputWhiteCards(GameState, true);
@@ -209,6 +219,7 @@ socket.on('terminate', ({GameState}) => {
 function terminateGame(GameState) {
 
 	gameControl.innerHTML = `<i class="fas fa-play"></i> Start Game`;
+	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	outputTabooCard(GameState);
 	//outputWhiteCards(GameState, false);
 	infoDiv.innerHTML = ``;

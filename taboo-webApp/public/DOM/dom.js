@@ -4,6 +4,11 @@ const roomUserTable = document.querySelector('.userlist-table');
 
 //const chatMessages = document.querySelector('.chat-messages');
 
+const timer = document.getElementById("timer");
+const giverControl0 = document.getElementById("giverControl0");
+const giverControl1 = document.getElementById("giverControl1");
+const buzzerControl = document.getElementById("buzzerControl");
+
 const cardColor = document.getElementById("tabooCardColor");
 const guessWord = document.querySelector('.guessWord');
 const taboo0 = document.querySelector('.taboo0');
@@ -85,6 +90,10 @@ function outputRoomUserTable(GameState) {
 
 // Add black card to DOM
 function outputTabooCard(GameState) {
+	// role should be defined in GameState
+	// role: giver, receiver, buzzer
+	var role = "giver";
+	console.log("role: "+role);
 	card = GameState.blackCard;
 	guessWord.innerHTML = ``;
 	taboo0.innerHTML = ``;
@@ -94,29 +103,51 @@ function outputTabooCard(GameState) {
 	taboo4.innerHTML = ``;
 
 	if(GameState.blackCard != false) {
+		timer.style.display = "block";
+
 		var tabooCard = card.split(",");
-			//if(!cardSelected) {
-				// if card is not selected do not show a card
-			//} else {
-				if(tabooCard[1] == "GREEN") {
-					cardColor.src = "img_cardbackground_green.PNG";
-				} else {
-					cardColor.src = "img_cardbackground_purple.PNG";
-				}
-				guessWord.innerHTML = `${tabooCard[2]}`;
-				taboo0.innerHTML = `${tabooCard[3]}`;
-				taboo1.innerHTML = `${tabooCard[4]}`;
-				taboo2.innerHTML = `${tabooCard[5]}`;
-				taboo3.innerHTML = `${tabooCard[6]}`;
-				taboo4.innerHTML = `${tabooCard[7]}`;
-			//}
+		if(tabooCard[1] == "GREEN") {
+			cardColor.src = "img_cardbackground_green.PNG";
+		} else {
+			cardColor.src = "img_cardbackground_purple.PNG";
+		}
+
+		if(role != "receiver") {
+			guessWord.innerHTML = `${tabooCard[2]}`;
+			taboo0.innerHTML = `${tabooCard[3]}`;
+			taboo1.innerHTML = `${tabooCard[4]}`;
+			taboo2.innerHTML = `${tabooCard[5]}`;
+			taboo3.innerHTML = `${tabooCard[6]}`;
+			taboo4.innerHTML = `${tabooCard[7]}`;
+		}
+
+		if(role == "giver") {
+			giverControl0.style.display = "block";
+			giverControl1.style.display = "block";
+			buzzerControl.style.display = "none";
+		}
+
+		if(role == "buzzer") {
+			giverControl0.style.display = "none";
+			giverControl1.style.display = "none";
+			buzzerControl.style.display = "block";
+		}
+
+
 	}
 }
 function passCard() {
+	console.log("card passed");
 	drawBlackCard();
   }
 
 function checkCard() {
+	console.log("point scored");
 	drawBlackCard();
 	//addPoint();
+}
+
+function buzzCard() {
+	console.log("buzzzz");
+	//playBuzzer();
 }

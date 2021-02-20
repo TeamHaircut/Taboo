@@ -15,7 +15,7 @@
 				<p class="nav-link"><i class="fas fa-home"></i> The <span id="client-room"><%= user.last_room %></span> room</p>
 			</li>
 			<li class="nav-item active">
-				<a id="gamecontrol" href="#" class="nav-link"><i class="fas fa-play"></i> Start Game</a>
+				<a id="gamecontrol" href="#" class="nav-link" style="display: none;"><i class="fas fa-play"></i> Start Game</a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Game Options</a>
@@ -33,12 +33,13 @@
 <div>
 
 		<div class="info-div mb-1" style="font-size: small; color: red;"></div>
-		<div>
+		<a id="gamecontrol1" href="#" class="nav-link"><i class="fas fa-play"></i> Start Game</a>
 			<div class="grid-container card card-body" style="margin-left: auto; margin-right: auto;  max-width:30rem;" >
-				<div class="item1">1:00</div>
+				<div class="item1" id="timer" style="display: none;">1:00</div>
+				
 				<div class="container item2" style="margin-left: auto; margin-right: auto; width: 15rem;">
 					<div class="card img-fluid" style="width:250px">
-					  <img class="card-img-top" id="tabooCardColor" src="img_cardbackground_green.PNG" style="width:100%">
+					  <img class="card-img-top" id="tabooCardColor" src="img_cardbackground_purple.PNG" style="width:100%">
 					  <div class="card-img-overlay"  style="text-align: center;">
 						<p class="card-title guessWord" style="font-size: xx-large; color: white; line-height: 1.5;"></p>
 						<p class="card-text taboo0" style="font-size: large; line-height: 1.8;"></p>
@@ -48,11 +49,14 @@
 						<p class="card-text taboo4" style="font-size: large; line-height: 1.8;"></p>
 					  </div>
 					</div>
-				  </div>
-				  <div class="item3"><button onclick="passCard()" class="btn"><i class="fas fa-arrow-alt-circle-right fa-4x" style="color: blue;"></i></button></div>
-				  <div class="item4"><button onclick="checkCard()" class="btn"><i class="fas fa-check fa-4x" style="color: green;"></i></button></div>
+				</div>
+				  
+				<div class="item3" id="giverControl0"; style="display: none;"><button onclick="passCard()" class="btn"><i class="fas fa-arrow-alt-circle-right fa-4x" style="color: blue;"></i></button></div>
+				<div class="item4" id="giverControl1"; style="display: none;"><button onclick="checkCard()" class="btn"><i class="fas fa-check fa-4x" style="color: green;"></i></button></div>
+				<div class="item5" id="buzzerControl" style="display: none;"><button onclick="buzzCard()" class="btn"><i class="fas fa-times fa-4x" style="color: red;"></i></button></div>
+
 			  </div>
-		</div>	
+		
 
 
 	<div class="card card-body" style="margin-left: auto; margin-right: auto; max-width:30rem;">Scorecard
