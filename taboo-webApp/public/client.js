@@ -227,6 +227,12 @@ socket.on('terminate', ({GameState}) => {
 	terminateGame(GameState);
 });
 
+socket.on('countdown', remaining => {
+	timer.innerHTML = remaining;
+	//console.log(remaining);
+	//terminateGame(GameState);
+});
+
 // Apply game termination to DOM
 function terminateGame(GameState) {
 

@@ -108,6 +108,30 @@ io.on('connection', socket => {
 			console.log("Game Started");
 			setUserRoles(user);
 
+			//////////////////////////////
+			var counter = 0;
+			// We want to send the countdown in seconds to the client and we start at 30
+			var seconds = 30;
+			// temporary variable for storing how far we have go in the countdown
+			var remaining;
+			// set a new interval to go off every second and keep the countdown synced among all players
+			var interval = setInterval(function() {
+				// perform the calculation for how many seconds left
+				remaining = seconds - Math.ceil(counter / 1000);
+				// broadcast how advanced the countdown is
+				io.to(user.room).emit('countdown', remaining);
+				if (counter >= 30000) {
+					// countdown is finished tell the client to change the views.
+					io.to(user.room).emit('terminate', { 
+						GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+					});
+					clearInterval(interval);
+				}
+				counter += 1000;
+			}, 1000);
+
+			/////////////////////////////
+
 			//merge selected decks
 			mergeSelectedDecks();
 
