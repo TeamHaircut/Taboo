@@ -18,6 +18,12 @@ p, tr, th, .normalFont {
 	/*font-size: 105%;*/
 }
 
+.custombg{
+  background-image: url("IMG_0455.PNG");
+  width:100%;
+  height:auto;
+}
+
 .grid-container {
   display: grid;
   width: 100%;
