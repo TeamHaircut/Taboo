@@ -6,6 +6,18 @@ body {
   /*background-color: rgb(98, 56, 109);*/
 }
 
+@font-face {
+	font-family:"Gufftaboo-Regular";
+	src:url("Gufftaboo-Regular.ttf") format("truetype");
+	font-weight:normal;font-style:normal;
+}
+
+/* Fonts for everything generic */
+p, tr, th, .normalFont {
+	font-family: "Gufftaboo-Regular";
+	/*font-size: 105%;*/
+}
+
 .grid-container {
   display: grid;
   width: 100%;
