@@ -3,7 +3,7 @@ body {
   display: flex ;
   flex-direction: column;
   align-items: center;
-  /*background-color: rgb(98, 56, 109);*/
+  background-color: rgba(1, 150, 186, 1);
 }
 
 @font-face {
@@ -24,7 +24,7 @@ p, tr, th, .normalFont {
   grid-template-columns: auto auto;
   grid-template-rows: auto auto auto auto auto auto;
   grid-gap: 10px;
-  background-color: #cfe3f3;
+  background-color: rgba(1, 150, 186, 1);
   padding: 10px 30px 10px 30px;
 }
 
