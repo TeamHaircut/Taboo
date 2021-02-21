@@ -93,26 +93,13 @@ function outputRoomUserTable(GameState) {
 function outputTabooCard(GameState) {
 	// role should be defined in GameState
 	// role: giver, receiver, buzzer
-	var role = "";
+	var role;
+	GameState.users.forEach(user => {
+		if(user.username == getClientUsername()) {
+			role = user.role;
+		}
+	});
 
-	if(getClientUsername() == 'p0') {
-		role = "giver";
-	}
-
-	if(getClientUsername() == 'p1') {
-		role = "receiver";
-	}
-
-	if(getClientUsername() == 'p2') {
-		role = "buzzer";
-	}
-
-	if(getClientUsername() == 'p3') {
-		role = "buzzer";
-	}
-
-
-	console.log("role: "+role);
 	card = GameState.blackCard;
 	guessWord.innerHTML = ``;
 	taboo0.innerHTML = ``;
@@ -131,6 +118,7 @@ function outputTabooCard(GameState) {
 			cardColor.src = "img_cardbackground_purple.PNG";
 		}
 
+		console.log(role);
 		if(role != "receiver") {
 			guessWord.innerHTML = `${tabooCard[2]}`;
 			taboo0.innerHTML = `${tabooCard[3]}`;

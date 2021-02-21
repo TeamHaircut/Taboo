@@ -7,7 +7,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const socket = require('socket.io');
 const formatMessage = require('./utils/messages');
-const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updateRoomUsersWhiteCards, updatePoints, updatePoints1, setUserTeamName  } = require('./utils/users');
+const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updateRoomUsersWhiteCards, updatePoints, updatePoints1, setUserTeamName, setUserRoles  } = require('./utils/users');
 const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, initializeWhiteCards, appendCzarHand, clearHand, nextCardCzar, replaceWhiteCards, popCzarHand, appendCards, getJudgeHand} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
@@ -96,12 +96,8 @@ io.on('connection', socket => {
 
 	// Listen for game control event
 	socket.on('teamControlState', ({state}) => {
-		console.log(state);
-		
 		const user = getCurrentUser(socket.id);
-		
 		setUserTeamName(user,state);
-		//console.log(user);
 	});
 	
 	// Listen for game control event
@@ -110,6 +106,7 @@ io.on('connection', socket => {
 		if(state === `<i class="fas fa-play"></i> Start Game`) {
 
 			console.log("Game Started");
+			setUserRoles(user);
 
 			//merge selected decks
 			mergeSelectedDecks();

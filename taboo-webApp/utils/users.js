@@ -14,6 +14,21 @@ function setUserTeamName(currentUser, teamName) {
 			user.teamName = teamName;
 		}
 	});
+	console.log(users);
+}
+
+function setUserRoles(currentUser) {
+	var team = currentUser.teamName;
+	users.forEach(user => {
+		if(user.username == currentUser.username) {
+			user.role = "giver";
+		} else if (user.teamName == team) {
+			user.role = "receiver";
+		} else {
+			user.role = "buzzer";
+		}
+	});
+	console.log(users);
 }
 
 function getCurrentUserByUsername(username) {
@@ -51,7 +66,8 @@ function userJoin(id, username, room) {
 	const whiteCards = [];
 	const status = 'active';
 	const teamName = '';
-	const user = { id, username, room, points, whiteCards, status, teamName};
+	const role = '';
+	const user = { id, username, room, points, whiteCards, status, teamName, role};
 	users.push(user);
 	return user;
 }
@@ -103,5 +119,6 @@ module.exports = {
   getCurrentUserByUsername, 
   setUserStatus,
   updatePoints1,
-  setUserTeamName
+  setUserTeamName,
+  setUserRoles
 };
