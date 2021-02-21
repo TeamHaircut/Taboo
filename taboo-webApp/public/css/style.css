@@ -43,8 +43,6 @@ body {
   grid-area: 6 / 1 / span 1 / span 2;
 }
 
-
-
 .sbHeaderitem1 { grid-area: header; }
 .sbNameAitem2 { grid-area: teamA; }
 .sbNameBitem3 { grid-area: teamB; }
@@ -71,6 +69,9 @@ body {
   padding: 5px 0;
   font-size: 12px;
 }
+/****************************************************************************************/
+​
+/***************************************************************************************/
 
 .messages {
   margin-top: 5px;

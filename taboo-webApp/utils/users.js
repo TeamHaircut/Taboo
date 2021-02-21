@@ -8,6 +8,14 @@ function setUserStatus(currentUser, status) {
 	});
 }
 
+function setUserTeamName(currentUser, teamName) {
+	users.forEach(user => {
+		if(user.username == currentUser.username) {
+			user.teamName = teamName;
+		}
+	});
+}
+
 function getCurrentUserByUsername(username) {
 	return users.find(user => user.username === username);
 }
@@ -18,6 +26,16 @@ function updatePoints(name) {
 			user.points = user.points + 1;
 		}
 	});
+}
+
+function updatePoints1(teamName) {
+	console.log(teamName);
+	users.forEach(user => {
+		if(user.teamName == teamName) {
+			user.points = user.points + 1;
+		}
+	});
+	console.log(users);
 }
 
 // Reset Points to 0
@@ -32,7 +50,8 @@ function userJoin(id, username, room) {
 	const points = '-';
 	const whiteCards = [];
 	const status = 'active';
-	const user = { id, username, room, points, whiteCards, status};
+	const teamName = '';
+	const user = { id, username, room, points, whiteCards, status, teamName};
 	users.push(user);
 	return user;
 }
@@ -82,5 +101,7 @@ module.exports = {
   updatePoints,
   userRejoin,
   getCurrentUserByUsername, 
-  setUserStatus
+  setUserStatus,
+  updatePoints1,
+  setUserTeamName
 };

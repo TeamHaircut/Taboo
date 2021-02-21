@@ -9,7 +9,17 @@
 				<p class="nav-link"></p>
 			</li>
 			<li class="nav-item active">
-				<p class="nav-link"><i class="fas fa-user"></i> <span id="client-username"><%= user.name %></span></p>
+				<p class="nav-link"><i class="fas fa-user"></i> <span id="client-username"><%= user.name %></span>		
+				</p>
+			</li>
+			<li class="nav-item active">
+				<p class="nav-link">Team: 
+				<select name="teams" id="teams">
+					<option value="unassigned">Unassigned</option>
+					<option value="teamA">Team A</option>
+					<option value="teamB">Team B</option>
+				</select>
+				</p>
 			</li>
 			<li class="nav-item active">
 				<p class="nav-link"><i class="fas fa-home"></i> The <span id="client-room"><%= user.last_room %></span> room</p>
@@ -33,7 +43,8 @@
 <div>
 
 		<div class="info-div mb-1" style="font-size: small; color: red;"></div>
-		<a id="gamecontrol1" href="#" class="nav-link"><i class="fas fa-play"></i> Start Game</a>
+			<a id="gamecontrol1" href="#" class="nav-link"><i class="fas fa-play"></i> Start Game</a>
+		
 			<div class="grid-container card card-body" style="margin-left: auto; margin-right: auto;  max-width:30rem;" >
 				<div class="item1" id="timer" style="display: none;">1:00</div>
 				

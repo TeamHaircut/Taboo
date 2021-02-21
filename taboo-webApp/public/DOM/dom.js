@@ -4,6 +4,7 @@ const roomUserTable = document.querySelector('.userlist-table');
 
 //const chatMessages = document.querySelector('.chat-messages');
 
+const teams = document.getElementById("teams");
 const timer = document.getElementById("timer");
 const giverControl0 = document.getElementById("giverControl0");
 const giverControl1 = document.getElementById("giverControl1");
@@ -154,6 +155,7 @@ function outputTabooCard(GameState) {
 
 	}
 }
+
 function passCard() {
 	console.log("card passed");
 	drawBlackCard();
@@ -162,6 +164,9 @@ function passCard() {
 function checkCard() {
 	console.log("point scored");
 	drawBlackCard();
+	console.log(teams.value);
+	//teams.value holds client team value
+	sendWinnerInfoToServer1(teams.value);
 	//addPoint();
 }
 

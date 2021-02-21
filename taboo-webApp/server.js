@@ -7,7 +7,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const socket = require('socket.io');
 const formatMessage = require('./utils/messages');
-const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updateRoomUsersWhiteCards, updatePoints  } = require('./utils/users');
+const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updateRoomUsersWhiteCards, updatePoints, updatePoints1, setUserTeamName  } = require('./utils/users');
 const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, initializeWhiteCards, appendCzarHand, clearHand, nextCardCzar, replaceWhiteCards, popCzarHand, appendCards, getJudgeHand} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
@@ -92,6 +92,16 @@ io.on('connection', socket => {
 	socket.on('chatMessage', msg => {
 		const user = getCurrentUser(socket.id);
 		io.to(user.room).emit('message', formatMessage(user.username, msg));
+	});
+
+	// Listen for game control event
+	socket.on('teamControlState', ({state}) => {
+		console.log(state);
+		
+		const user = getCurrentUser(socket.id);
+		
+		setUserTeamName(user,state);
+		//console.log(user);
 	});
 	
 	// Listen for game control event
@@ -277,6 +287,49 @@ io.on('connection', socket => {
 				getCardCzar(), getGameUserList(user.room)
 			)
 		);
+				
+		/* Send GameState, room user list, and czar to all the room's clients*/
+		io.to(user.room).emit('gamestate', {
+			gameState,
+			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+		});
+
+	});
+
+	// Listen for winner event
+	socket.on('declareWinner1', ({team}) => {
+		cardSelected = false;
+		const user = getCurrentUser(socket.id);
+
+		const cardArray = [];
+		//getJudgeHand().forEach(cardArray0 => {
+		//	if (cardArray0.user.username == card.username) {
+		//		cardArray.push(cardArray0.clientCardArray);
+		//	}
+		//});
+
+		//extract user from card
+		var teamName = team;
+		//console.log(user);
+		//update points for name
+		//updatePoints(name);
+		updatePoints1(teamName);
+		
+		// Replace Used White Cards
+		//updateRoomUsersWhiteCards(replaceWhiteCards(getRoomUserList(user.room), getJudgeHand()));
+		
+		//Emit updated DOM to all users
+		io.to(user.room).emit('updateDOM', {
+			winnerArray: cardArray, 
+			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+		});
+
+		// Update card czar
+		//setCardCzar(
+		//	nextCardCzar(
+		//		getCardCzar(), getGameUserList(user.room)
+		//	)
+		//);
 				
 		/* Send GameState, room user list, and czar to all the room's clients*/
 		io.to(user.room).emit('gamestate', {

@@ -57,6 +57,14 @@ gameControl1.addEventListener("click", function(){
 	
 });
 
+teams.addEventListener("change", function(){ 
+	console.log(teams.value);
+	//Emit game control state to server
+	const state = teams.value;
+	socket.emit('teamControlState', {state});
+	
+});
+
 logoutControl.addEventListener("click", function() {
 	socket.emit('logoutUser');
 });
@@ -104,6 +112,10 @@ function sendWinnerInfoToServer(card) {
 	socket.emit('declareWinner', {card});
 }
 
+function sendWinnerInfoToServer1(team) {
+	socket.emit('declareWinner1', {team});
+}
+
 function clearHand() {
 	socket.emit('clearHand');
 }
@@ -122,13 +134,13 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 	outputRoomUserTable(GameState);
 
 	// Update DOM with new black card
-	outputBlackCard(GameState);
+	outputTabooCard(GameState);
 
 	// Update DOM with wiiner info
-	outputWinner(winnerArray);
+	//outputWinner(winnerArray);
 
 	// Update DOM with new white cards
-	outputWhiteCards(GameState, true);
+	//outputWhiteCards(GameState, true);
 });
 
 //  Update points in user table, and braodcast winner to room users
