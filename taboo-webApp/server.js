@@ -111,7 +111,7 @@ io.on('connection', socket => {
 			//////////////////////////////
 			var counter = 0;
 			// We want to send the countdown in seconds to the client and we start at 60
-			var seconds = 60;
+			var seconds = 15;
 			// temporary variable for storing how far we have go in the countdown
 			var remaining;
 			// set a new interval to go off every second and keep the countdown synced among all players
@@ -120,7 +120,7 @@ io.on('connection', socket => {
 				remaining = seconds - Math.ceil(counter / 1000);
 				// broadcast how advanced the countdown is
 				io.to(user.room).emit('countdown', remaining);
-				if (counter >= 60000) {
+				if (counter >= 15000) {
 					// countdown is finished tell the client to change the views.
 					io.to(user.room).emit('terminate', { 
 						GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))

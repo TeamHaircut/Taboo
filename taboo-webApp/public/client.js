@@ -223,7 +223,7 @@ function initializeGame(GameState) {
 
 // Termination event from server
 socket.on('terminate', ({GameState}) => {
-	timer.innerHTML = 60;
+	timer.innerHTML = ``;
 	terminateGame(GameState);
 });
 
