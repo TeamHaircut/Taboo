@@ -229,6 +229,7 @@ socket.on('terminate', ({GameState}) => {
 
 socket.on('countdown', remaining => {
 	timer.innerHTML = remaining;
+
 	//console.log(remaining);
 	//terminateGame(GameState);
 });
@@ -240,6 +241,12 @@ function terminateGame(GameState) {
 	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	outputTabooCard(GameState);
 	timer.style.display = "none";
+	guessWord.innerHTML = ``;
+	taboo0.innerHTML = ``;
+	taboo1.innerHTML = ``;
+	taboo2.innerHTML = ``;
+	taboo3.innerHTML = ``;
+	taboo4.innerHTML = ``;
 	giverControl0.style.display = "none";
 	giverControl1.style.display = "none";
 	buzzerControl.style.display = "none";
