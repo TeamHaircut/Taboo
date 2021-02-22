@@ -215,7 +215,7 @@ socket.on('launch', ({GameState}) => {
 function initializeGame(GameState) {
 
 	gameControl.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
-	gameControl1.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
+	gameControl1.innerHTML = ``;
 	outputRoomUserTable(GameState);
 	outputTabooCard(GameState);
 	//outputWhiteCards(GameState, true);
@@ -223,7 +223,7 @@ function initializeGame(GameState) {
 
 // Termination event from server
 socket.on('terminate', ({GameState}) => {
-
+	timer.innerHTML = 60;
 	terminateGame(GameState);
 });
 

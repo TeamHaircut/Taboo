@@ -65,7 +65,7 @@ function userJoin(id, username, room) {
 	const points = '-';
 	const whiteCards = [];
 	const status = 'active';
-	const teamName = '';
+	const teamName = 'teamA';
 	const role = '';
 	const user = { id, username, room, points, whiteCards, status, teamName, role};
 	users.push(user);
