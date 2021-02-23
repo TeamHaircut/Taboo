@@ -55,9 +55,12 @@ function updatePoints1(teamName) {
 
 // Reset Points to 0
 function resetPoints() {
-	users.forEach(user =>
-		user.points = 0
-	)
+	users.forEach(user => {
+		if(user.points == '-'){
+			user.points = 0;
+		}
+		//user.points = 0
+	});
 }
 
 // Join user to chat
