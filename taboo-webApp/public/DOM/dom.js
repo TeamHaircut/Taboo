@@ -91,6 +91,7 @@ function outputRoomUserTable(GameState) {
 
 // Add black card to DOM
 function outputTabooCard(GameState) {
+	console.log(serverTime);
 	// role should be defined in GameState
 	// role: giver, receiver, buzzer
 	var role;
