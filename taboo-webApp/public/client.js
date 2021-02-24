@@ -87,28 +87,17 @@ document.addEventListener("visibilitychange", function() {
 		)
 	}	
 	
-  })
+})
 
+//keep
 function drawBlackCard() {
 	socket.emit('drawBlackCard');
 }
-
+//keep
 socket.on('drawBlackCard', ({GameState})=> {
 	// Update DOM with new black card
 	outputTabooCard(GameState);
 });
-
-function sendWhiteCardToServer(clientCardArray) {
-	socket.emit('sendWhiteCardToServer', {clientCardArray});
-}
-
-function exchangeWhiteCards(clientCardArray) {
-	socket.emit('exchangeWhiteCards', {clientCardArray});
-}
-
-function turnCzarCard() {
-	socket.emit('removeCzarCard');
-}
 
 function sendWinnerInfoToServer(card) {
 	socket.emit('declareWinner', {card});
@@ -118,17 +107,7 @@ function sendWinnerInfoToServer1(team) {
 	socket.emit('declareWinner1', {team});
 }
 
-function clearHand() {
-	socket.emit('clearHand');
-}
-
-// Clear Divs
-socket.on('clear', () => {
-	czarDeckDiv.innerHTML = ``;
-	judgeHandDiv.innerHTML = ``;
-	infoDiv.innerHTML = ``;
-});
-
+//keep
 //  Update points in user table, and braodcast winner to room users
 socket.on('updateDOM', ({winnerArray, GameState}) => {
 	cardSelected = false;
@@ -138,13 +117,9 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 	// Update DOM with new black card
 	outputTabooCard(GameState);
 
-	// Update DOM with wiiner info
-	//outputWinner(winnerArray);
-
-	// Update DOM with new white cards
-	//outputWhiteCards(GameState, true);
 });
 
+//keep
 //  Update points in user table, and braodcast winner to room users
 socket.on('refreshDOM', ({GameState, bcSelected}) => {
 	cardSelected = bcSelected;
@@ -155,64 +130,15 @@ socket.on('refreshDOM', ({GameState, bcSelected}) => {
 
 	// Update DOM with new black card
 	outputTabooCard(GameState);
-
-	//outputCzarHand(GameState, true);
-	//outputJudgeHand(GameState);
-
-	//There are three conditions when the idle user would not have the play card button
-	//1. if they are the czar.
-	//2. if czarHand contains a card from idleUser.
-	//3. if judgeHand contains a card from idleUser.
-
-	var flag = true;
-	if(GameState.cardCzar.username == getClientUsername()) {
-		flag = false;
-	}
-	GameState.czarHand.forEach(card => {
-		if (card.user.username == getClientUsername()) {
-			flag = false;
-		}
-	});
-	GameState.judgeHand.forEach(card => {
-		if (card.user.username == getClientUsername()) {
-			flag = false;
-		}
-	});
-
-	// Update DOM with new white cards
-	//outputWhiteCards(GameState, true);
-	if(!flag) {
-		//console.log("REMOVING BUTTON");
-		//removePlayButton(GameState.user, GameState.user);
-	}
-
 });
 
-//  Broadcast white cards received by server
-socket.on('czarHand', ({GameState}) => {
-	// Update DOM with czar info
-	outputCzarHand(GameState, true);
-});
-
-//  Broadcast white cards received by server
-socket.on('drawCzarCards', ({GameState}) => {
-
-	// Update DOM with czar info
-	outputCzarHand(GameState, false);
-});
-
-//  Broadcast white cards received by server
-socket.on('displayCards', ({GameState}) => {
-
-	// Update DOM with czar info
-	outputJudgeHand(GameState);
-});
-
+//keep
 // Launch event from server
 socket.on('launch', ({GameState}) => {
 	initializeGame(GameState);
 });
 
+//keep
 // Apply game intialization to DOM
 function initializeGame(GameState) {
 
@@ -220,9 +146,9 @@ function initializeGame(GameState) {
 	gameControl1.innerHTML = ``;
 	outputRoomUserTable(GameState);
 	outputTabooCard(GameState);
-	//outputWhiteCards(GameState, true);
 }
 
+//keep
 // Termination event from server
 socket.on('terminate', ({GameState}) => {
 	timer.innerHTML = ``;
@@ -237,6 +163,7 @@ socket.on('countdown', remaining => {
 	//terminateGame(GameState);
 });
 
+//keep
 // Apply game termination to DOM
 function terminateGame(GameState) {
 
@@ -253,13 +180,11 @@ function terminateGame(GameState) {
 	giverControl0.style.display = "none";
 	giverControl1.style.display = "none";
 	buzzerControl.style.display = "none";
-	//outputWhiteCards(GameState, false);
 	infoDiv.innerHTML = ``;
-	//czarDeckDiv.innerHTML =``;
-	//judgeHandDiv.innerHTML = ``;
 	outputRoomUserTable(GameState);
 }
 
+//keep
 // get gamestate from server
 socket.on('gamestate', ({gameState, GameState}) => {
 	

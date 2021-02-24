@@ -99,7 +99,7 @@ io.on('connection', socket => {
 		const user = getCurrentUser(socket.id);
 		setUserTeamName(user,state);
 	});
-	
+	//keep
 	// Listen for game control event
 	socket.on('gameControlState', ({state}) => {
 		const user = getCurrentUser(socket.id);
@@ -129,7 +129,6 @@ io.on('connection', socket => {
 				}
 				counter += 1000;
 			}, 1000);
-
 			/////////////////////////////
 
 			//merge selected decks
@@ -150,7 +149,7 @@ io.on('connection', socket => {
 			//Initialize White Cards for all clients in the room
 			var roomUserList = getRoomUserList(user.room);
 			updateRoomUsersWhiteCards(initializeWhiteCards(roomUserList, true));
-
+//keep
 			//Send czar and room info to everybody in the room
 			io.to(user.room).emit('launch', {
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
@@ -231,50 +230,8 @@ io.on('connection', socket => {
 		);
 
 	});
-	
-	// Exchange WhiteCards
-	socket.on('exchangeWhiteCards', ({clientCardArray}) => {
-		const user = getCurrentUser(socket.id);
-		var hand = [];
-		hand.push({user, clientCardArray});
-		replaceWhiteCards(getRoomUserList(user.room), hand);
-		// Refresh user UI
-		socket.emit('refreshDOM', { 
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-			bcSelected: cardSelected
-		});
-	});
 
-	// Listen for incoming white cards
-	socket.on('sendWhiteCardToServer', ({clientCardArray}) => {
-		const user = getCurrentUser(socket.id);
-		// push white card and sending user to czar's hand
-		appendCzarHand(user, clientCardArray);
-
-		// Emit czar hand to clients
-		io.to(user.room).emit('czarHand', {
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
-	});
-
-	// Listen Event of czar turnin czarhand cards
-	socket.on('removeCzarCard', () => {
-		const user = getCurrentUser(socket.id);
-		
-		// push white card and sending user to czar's hand
-		appendCards(popCzarHand());
-
-		// Emit judge hand to clients
-		io.to(user.room).emit('displayCards', {
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
-
-		// Emit czar hand to clients
-		io.to(user.room).emit('drawCzarCards', {
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
-	});
-	
+	//keep
 	// Listen for winner event
 	socket.on('declareWinner', ({card}) => {
 		cardSelected = false;
@@ -323,34 +280,16 @@ io.on('connection', socket => {
 		const user = getCurrentUser(socket.id);
 
 		const cardArray = [];
-		//getJudgeHand().forEach(cardArray0 => {
-		//	if (cardArray0.user.username == card.username) {
-		//		cardArray.push(cardArray0.clientCardArray);
-		//	}
-		//});
 
 		//extract user from card
 		var teamName = team;
-		//console.log(user);
-		//update points for name
-		//updatePoints(name);
 		updatePoints1(teamName);
-		
-		// Replace Used White Cards
-		//updateRoomUsersWhiteCards(replaceWhiteCards(getRoomUserList(user.room), getJudgeHand()));
 		
 		//Emit updated DOM to all users
 		io.to(user.room).emit('updateDOM', {
 			winnerArray: cardArray, 
 			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 		});
-
-		// Update card czar
-		//setCardCzar(
-		//	nextCardCzar(
-		//		getCardCzar(), getGameUserList(user.room)
-		//	)
-		//);
 				
 		/* Send GameState, room user list, and czar to all the room's clients*/
 		io.to(user.room).emit('gamestate', {
@@ -359,7 +298,7 @@ io.on('connection', socket => {
 		});
 
 	});
-
+//keep
 	// Listen for draw black card event
 	socket.on('drawBlackCard', () => {
 		const user = getCurrentUser(socket.id);
@@ -368,15 +307,6 @@ io.on('connection', socket => {
 		io.to(user.room).emit('drawBlackCard', {
 			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 		});
-	});
-
-	// Listen for clear czarHand event
-	socket.on('clearHand', () => {
-		const user = getCurrentUser(socket.id);
-		clearHand();
-
-		io.to(user.room).emit('clear');
-
 	});
 	
 	// Listen for rejoin event

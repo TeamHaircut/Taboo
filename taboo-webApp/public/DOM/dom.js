@@ -21,6 +21,7 @@ const taboo4 = document.querySelector('.taboo4');
 var myTabooCard;
 var cardSelected = false;
 
+//keep
 // Show each room user in the room user table
 function outputRoomUserTable(GameState) {
     // Clear the outdated table
