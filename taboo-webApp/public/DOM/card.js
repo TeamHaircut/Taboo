@@ -1,4 +1,3 @@
-var drawCount = 1;
 var cardCount = 0;
 var clientCardArray = [];
 
@@ -80,10 +79,7 @@ function getCardButton(czar, card, user, buttonType) {
                 button0.addEventListener('click', () => {
 					cardCount++;
 					clientCardArray.push({whiteCard: card, username: user.username});
-					removePlayButton(czar, user);
-					if(cardCount == drawCount) {
-						sendWhiteCardToServer(clientCardArray);
-					}	
+					removePlayButton(czar, user);	
                 });
             }
             break;

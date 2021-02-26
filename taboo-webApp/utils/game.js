@@ -9,7 +9,6 @@ var discardBlackDeck = [];
 
 var cardCzar = false;
 var blackCard = '';
-var drawCount = 1;
 
 var czarHand = [];
 var judgeHand =[];
@@ -50,7 +49,10 @@ function getGameState(user, users, gameusers) {
 	//only used in DOM.outputWhiteCards conditional statement 
 	//TODO - implement options as array of house rules
 	options = isWCRebootOptionEnabled(); //0 || 1
-	const gamestate = {cardCzar, blackCard, drawCount, czarHand, judgeHand, user, users, gameusers, options};
+	const gamestate = {cardCzar, blackCard, czarHand, judgeHand, user, users, gameusers, options};
+	console.log("================================================================================");
+	console.log(gamestate);
+	console.log("================================================================================");
 	return gamestate;
 }
 
