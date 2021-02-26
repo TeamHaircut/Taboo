@@ -60,7 +60,7 @@ gameControl1.addEventListener("click", function(){
 });
 
 teams.addEventListener("change", function(){ 
-	console.log(teams.value);
+	//console.log(teams.value);
 	//Emit game control state to server
 	const state = teams.value;
 	socket.emit('teamControlState', {state});

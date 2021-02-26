@@ -121,7 +121,7 @@ function outputTabooCard(GameState) {
 			cardColor.src = "img_cardbackground_purple.PNG";
 		}
 
-		console.log(role);
+		//console.log(role);
 		if(role != "receiver") {
 			if(typeof tabooCard[2] == 'undefined') {
 				guessWord.innerHTML = `GAMEOVER`;
@@ -178,21 +178,21 @@ function outputTabooCard(GameState) {
 }
 
 function passCard() {
-	console.log("card passed");
+	//console.log("card passed");
 	drawBlackCard();
   }
 
 function checkCard() {
-	console.log("point scored");
+	//console.log("point scored");
 	drawBlackCard();
-	console.log(teams.value);
+	//console.log(teams.value);
 	//teams.value holds client team value
 	sendWinnerInfoToServer1(teams.value);
 	//addPoint();
 }
 
 function buzzCard() {
-	console.log("buzzzz");
+	//console.log("buzzzz");
 	buzzServer();
 	//playBuzzer();
 }
