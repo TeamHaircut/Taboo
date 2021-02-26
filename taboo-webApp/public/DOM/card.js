@@ -1,3 +1,4 @@
+/*
 var cardCount = 0;
 var clientCardArray = [];
 
@@ -253,3 +254,4 @@ function getCardBorderTaboo(type) {
     cardBorderDiv.style.maxWidth = "15rem";
 	return cardBorderDiv;
 }
+*/
