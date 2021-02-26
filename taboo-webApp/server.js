@@ -53,6 +53,7 @@ io.on('connection', socket => {
 			username = "Grumpy Nutz Joe";
 		}
 		var user = getCurrentUserByUsername(username);
+		//if new user
 		if (!user) {
 			const user = userJoin(socket.id, username, room);
 
@@ -60,13 +61,14 @@ io.on('connection', socket => {
 			socket.join(user.room);
 
 			// Welcome current user to the room
-			socket.emit('message', formatMessage(`Mr. ${user.room}`, `Welcome to the ${user.room} room.`));
+			//socket.emit('message', formatMessage(`Mr. ${user.room}`, `Welcome to the ${user.room} room.`));
 
 			/* Send GameState, room user list, and czar to all the room's clients*/
 			io.to(user.room).emit('gamestate', {
 				gameState,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});	
+		//else rejoining user
 		} else {
 			userRejoin(socket.id, user);
 
