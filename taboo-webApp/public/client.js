@@ -5,8 +5,6 @@ const logoutControl = document.getElementById('logoutcontrol');
 
 const chatForm = document.getElementById('chat-form');
 
-var serverTime;
-
 const socket = io('http://teamhaircut.org:5000', {
 	'reconnection': true,
 	'reconnectionDelay': 50,
@@ -211,7 +209,6 @@ socket.on('terminate', ({GameState}) => {
 });
 
 socket.on('countdown', remaining => {
-	serverTime = remaining;
 	timer.innerHTML = remaining;
 
 	//console.log(remaining);
