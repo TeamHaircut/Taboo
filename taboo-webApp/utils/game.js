@@ -105,44 +105,6 @@ function clearHand() {
 	judgeHand = [];
 }
 
-// Initialize White Cards
-function initializeWhiteCards(roomusers,flag) {
-	roomusers.forEach(user => {
-		var i;
-		for(i = 0; i < 10 ; i++) {
-			if(flag) {
-				var whiteCard = getWhiteDeck().pop();
-				user.whiteCards.push(whiteCard);
-			}
-		}
-		if(!flag) {
-			user.whiteCards = [];
-		}
-	});
-	return roomusers;
-
-}
-
-// Replace White Cards
-function replaceWhiteCards(roomUserList, czarHand) {
-	czarHand.forEach(card => {
-		var userIndex = roomUserList.findIndex(user => user.username === card.user.username);
-		var cardIndex = -1;
-		card.clientCardArray.forEach(c => {
-
-			roomUserList[userIndex].whiteCards.forEach(whiteCard => {
-				if(c.whiteCard === whiteCard) {
-					cardIndex = roomUserList[userIndex].whiteCards.findIndex(w => w === c.whiteCard);
-					roomUserList[userIndex].whiteCards[cardIndex] = getWhiteDeck().pop();
-				}
-			});
-
-		});
-	});
-	return roomUserList;
-
-}
-
 // Return the Card Czar's Hand
 function getCzarHand() {
 	return czarHand;
@@ -211,12 +173,10 @@ function getCardCzar() {
 module.exports = {
   setCardCzar,
   getCardCzar,
-  drawBlackCard,
-  initializeWhiteCards, 
+  drawBlackCard, 
   appendCzarHand,
   clearHand,
   nextCardCzar,
-  replaceWhiteCards,
   popCzarHand,
   appendCards,
   getJudgeHand,

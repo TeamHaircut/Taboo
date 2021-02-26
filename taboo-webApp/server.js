@@ -7,8 +7,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const socket = require('socket.io');
 const formatMessage = require('./utils/messages');
-const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updateRoomUsersWhiteCards, updatePoints, updatePoints1, setUserTeamName, setUserRoles  } = require('./utils/users');
-const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, initializeWhiteCards, appendCzarHand, clearHand, nextCardCzar, replaceWhiteCards, popCzarHand, appendCards, getJudgeHand} = require('./utils/game');
+const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updatePoints, updatePoints1, setUserTeamName, setUserRoles  } = require('./utils/users');
+const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, appendCzarHand, clearHand, nextCardCzar, popCzarHand, appendCards, getJudgeHand} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
 const { Console } = require('console');
@@ -151,7 +151,7 @@ io.on('connection', socket => {
 			
 			//Initialize White Cards for all clients in the room
 			var roomUserList = getRoomUserList(user.room);
-			updateRoomUsersWhiteCards(initializeWhiteCards(roomUserList, true));
+			//updateRoomUsersWhiteCards(initializeWhiteCards(roomUserList, true));
 //keep
 			//Send czar and room info to everybody in the room
 			io.to(user.room).emit('launch', {
@@ -176,7 +176,7 @@ io.on('connection', socket => {
 
 			// Clear white cards
 			var roomUserList = getRoomUserList(user.room);
-			updateRoomUsersWhiteCards(initializeWhiteCards(roomUserList, false));
+			//updateRoomUsersWhiteCards(initializeWhiteCards(roomUserList, false));
 
 			clearDiscardBlackDeck();
 
@@ -254,7 +254,7 @@ io.on('connection', socket => {
 		updatePoints(name);
 		
 		// Replace Used White Cards
-		updateRoomUsersWhiteCards(replaceWhiteCards(getRoomUserList(user.room), getJudgeHand()));
+		//updateRoomUsersWhiteCards(replaceWhiteCards(getRoomUserList(user.room), getJudgeHand()));
 		
 		//Emit updated DOM to all users
 		io.to(user.room).emit('updateDOM', {

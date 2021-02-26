@@ -66,11 +66,10 @@ function resetPoints() {
 // Join user to chat
 function userJoin(id, username, room) {
 	const points = '-';
-	const whiteCards = [];
 	const status = 'active';
 	const teamName = 'teamA';
 	const role = '';
-	const user = { id, username, room, points, whiteCards, status, teamName, role};
+	const user = { id, username, room, points, status, teamName, role};
 	users.push(user);
 	return user;
 }
@@ -99,24 +98,12 @@ function getGameUserList(room) {
 	return temp.filter(user => user.status !== 'offline');
   }
 
-// Update Room Users
-function updateRoomUsersWhiteCards(roomusers) {
-	users.forEach(user => {
-		roomusers.forEach(roomuser => {
-			if(roomuser.username == user.username) {
-				user.whiteCards = roomuser.whiteCards;
-			}
-		});
-	});
-}
-
 module.exports = {
   userJoin,
   getCurrentUser,
   getRoomUserList,
   getGameUserList,
   resetPoints,
-  updateRoomUsersWhiteCards,
   updatePoints,
   userRejoin,
   getCurrentUserByUsername, 
