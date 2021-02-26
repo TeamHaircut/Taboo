@@ -120,7 +120,7 @@ io.on('connection', socket => {
 				remaining = seconds - Math.ceil(counter / 1000);
 				// broadcast how advanced the countdown is
 				io.to(user.room).emit('countdown', remaining);
-				if (counter >= 15000) {
+				if (counter >= (seconds*1000)) {
 					// countdown is finished tell the client to change the views.
 					io.to(user.room).emit('terminate', { 
 						GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
