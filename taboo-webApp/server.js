@@ -113,7 +113,7 @@ io.on('connection', socket => {
 			// We want to send the countdown in seconds to the client and we start at 60
 			var seconds = 15;
 			// temporary variable for storing how far we have go in the countdown
-			var remaining;
+			var remaining = 0;
 			// set a new interval to go off every second and keep the countdown synced among all players
 			var interval = setInterval(function() {
 				// perform the calculation for how many seconds left
@@ -305,6 +305,13 @@ io.on('connection', socket => {
 		drawBlackCard(true);
 
 		io.to(user.room).emit('drawBlackCard', {
+			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+		});
+	});
+
+	socket.on('buzzServer', () => {
+		const user = getCurrentUser(socket.id);
+		io.to(user.room).emit('buzzFromServer', {
 			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 		});
 	});

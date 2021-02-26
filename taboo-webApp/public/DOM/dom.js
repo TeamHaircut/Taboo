@@ -111,7 +111,8 @@ function outputTabooCard(GameState) {
 	taboo4.innerHTML = ``;
 
 	if(GameState.blackCard != false) {
-		timer.style.display = "block";
+		//timer.style.display = "block";
+		//timer.style.visibility = "visible";
 
 		var tabooCard = card.split(",");
 		if(tabooCard[1] == "GREEN") {
@@ -128,18 +129,6 @@ function outputTabooCard(GameState) {
 			taboo2.innerHTML = `${tabooCard[5]}`;
 			taboo3.innerHTML = `${tabooCard[6]}`;
 			taboo4.innerHTML = `${tabooCard[7]}`;
-		}
-
-		if(role == "giver") {
-			giverControl0.style.display = "block";
-			giverControl1.style.display = "block";
-			buzzerControl.style.display = "none";
-		}
-
-		if(role == "buzzer") {
-			giverControl0.style.display = "none";
-			giverControl1.style.display = "none";
-			buzzerControl.style.display = "block";
 		}
 
 
@@ -162,5 +151,6 @@ function checkCard() {
 
 function buzzCard() {
 	console.log("buzzzz");
+	buzzServer();
 	//playBuzzer();
 }

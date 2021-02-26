@@ -99,6 +99,15 @@ socket.on('drawBlackCard', ({GameState})=> {
 	outputTabooCard(GameState);
 });
 
+socket.on('buzzFromServer', ({GameState})=> {
+	guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
+	taboo0.innerHTML = ``;
+	taboo1.innerHTML = ``;
+	taboo2.innerHTML = ``;
+	taboo3.innerHTML = ``;
+	taboo4.innerHTML = ``;
+});
+
 function sendWinnerInfoToServer(card) {
 	socket.emit('declareWinner', {card});
 }
@@ -138,20 +147,48 @@ socket.on('launch', ({GameState}) => {
 	initializeGame(GameState);
 });
 
+function buzzServer() {
+	socket.emit('buzzServer');
+}
+
 //keep
 // Apply game intialization to DOM
 function initializeGame(GameState) {
 
 	gameControl.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
-	gameControl1.innerHTML = ``;
-	outputRoomUserTable(GameState);
+	gameControl1.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
+	gameControl1.style.display = "block";
+	gameControl1.style.visibility = "hidden";
+	timer.style.display = "block";
+	timer.style.visibility = "visible";
+	var role;
+	GameState.users.forEach(user => {
+		if(user.username == getClientUsername()) {
+			role = user.role;
+		}
+	});
 	outputTabooCard(GameState);
+	if(role == "giver") {
+		giverControl0.style.display = "block";
+		giverControl0.style.visibility = "visible";
+		giverControl1.style.display = "block";
+		giverControl1.style.visibility = "visible";
+		buzzerControl.style.display = "none";
+	}
+
+	if(role == "buzzer") {
+		giverControl0.style.display = "none";
+		giverControl1.style.display = "none";
+		buzzerControl.style.display = "block";
+		buzzerControl.style.visibility = "visible";
+	}
+	outputRoomUserTable(GameState);
 }
 
 //keep
 // Termination event from server
 socket.on('terminate', ({GameState}) => {
-	timer.innerHTML = ``;
+	timer.innerHTML = `0`;
 	terminateGame(GameState);
 });
 
@@ -169,17 +206,23 @@ function terminateGame(GameState) {
 
 	gameControl.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
+	gameControl1.style.display = "block";
+	gameControl1.style.visibility = "visible";
 	outputTabooCard(GameState);
-	timer.style.display = "none";
+	timer.style.display = "block";
+	timer.style.visibility = "hidden";
 	guessWord.innerHTML = ``;
 	taboo0.innerHTML = ``;
 	taboo1.innerHTML = ``;
 	taboo2.innerHTML = ``;
 	taboo3.innerHTML = ``;
 	taboo4.innerHTML = ``;
-	giverControl0.style.display = "none";
-	giverControl1.style.display = "none";
+	giverControl0.style.display = "block";
+	giverControl0.style.visibility = "hidden";
+	giverControl1.style.display = "block";
+	giverControl1.style.visibility = "hidden";
 	buzzerControl.style.display = "none";
+	buzzerControl.style.visibility = "hidden";
 	infoDiv.innerHTML = ``;
 	outputRoomUserTable(GameState);
 }
