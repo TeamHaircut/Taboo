@@ -40,6 +40,9 @@ var gameState = GameState.TERMINATE;
 
 var cardSelected;
 
+//mergeSelectedDecks on server start
+mergeSelectedDecks();
+
 //Run when client connects
 io.on('connection', socket => {
 
@@ -111,7 +114,7 @@ io.on('connection', socket => {
 			//////////////////////////////
 			var counter = 0;
 			// We want to send the countdown in seconds to the client and we start at 60
-			var seconds = 15;
+			var seconds = 60;
 			// temporary variable for storing how far we have go in the countdown
 			var remaining = 0;
 			// set a new interval to go off every second and keep the countdown synced among all players
@@ -132,7 +135,7 @@ io.on('connection', socket => {
 			/////////////////////////////
 
 			//merge selected decks
-			mergeSelectedDecks();
+			//mergeSelectedDecks();
 
 			cardSelected = false;
 			gameState = GameState.INITIALIZE;

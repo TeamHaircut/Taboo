@@ -92,7 +92,7 @@ function outputRoomUserTable(GameState) {
 
 // Add black card to DOM
 function outputTabooCard(GameState) {
-	console.log(serverTime);
+	
 	// role should be defined in GameState
 	// role: giver, receiver, buzzer
 	var role;
@@ -123,12 +123,54 @@ function outputTabooCard(GameState) {
 
 		console.log(role);
 		if(role != "receiver") {
-			guessWord.innerHTML = `${tabooCard[2]}`;
-			taboo0.innerHTML = `${tabooCard[3]}`;
-			taboo1.innerHTML = `${tabooCard[4]}`;
-			taboo2.innerHTML = `${tabooCard[5]}`;
-			taboo3.innerHTML = `${tabooCard[6]}`;
-			taboo4.innerHTML = `${tabooCard[7]}`;
+			if(typeof tabooCard[2] == 'undefined') {
+				guessWord.innerHTML = `GAMEOVER`;
+				guessWord.style.color = "red";
+				taboo0.innerHTML = `There are no more cards left in the deck!`;
+				taboo1.innerHTML = `Maybe next time you should skip fewer cards.<br><i class="far fa-grin-wink fa-2x"></i>`;
+				taboo2.innerHTML = ``;
+				taboo3.innerHTML = ``;
+				taboo4.innerHTML = ``;
+				timer.style.display = "block";
+				timer.style.visibility = "hidden";
+
+				if(role == "giver") {
+					giverControl0.style.display = "block";
+					giverControl0.style.visibility = "hidden";
+					giverControl1.style.display = "block";
+					giverControl1.style.visibility = "hidden";
+					buzzerControl.style.display = "none";
+				}
+
+				if(role == "buzzer") {
+					giverControl0.style.display = "none";
+					giverControl1.style.display = "none";
+					buzzerControl.style.display = "block";
+					buzzerControl.style.visibility = "hidden";
+				}
+					
+			} else {
+				guessWord.innerHTML = `${tabooCard[2]}`;
+				taboo0.innerHTML = `${tabooCard[3]}`;
+				taboo1.innerHTML = `${tabooCard[4]}`;
+				taboo2.innerHTML = `${tabooCard[5]}`;
+				taboo3.innerHTML = `${tabooCard[6]}`;
+				taboo4.innerHTML = `${tabooCard[7]}`;
+			}
+		} else {
+			if(typeof tabooCard[2] == 'undefined') {
+				guessWord.innerHTML = `GAMEOVER`;
+				guessWord.style.color = "red";
+				taboo0.innerHTML = `There are no more cards left in the deck!`;
+				taboo1.innerHTML = `Maybe next time you should skip fewer cards.<br><i class="far fa-grin-wink fa-2x"></i>`;
+				taboo2.innerHTML = ``;
+				taboo3.innerHTML = ``;
+				taboo4.innerHTML = ``;
+				timer.style.display = "block";
+				timer.style.visibility = "hidden";
+
+
+			}
 		}
 
 

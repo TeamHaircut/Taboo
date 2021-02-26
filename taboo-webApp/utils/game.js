@@ -164,13 +164,14 @@ function drawBlackCard(flag) {
 		blackCard = getBlackDeck().pop();
 		//if no cards left set black deck = to discard black deck
 		if(typeof blackCard == 'undefined') {
-			blackDeck = discardBlackDeck;
-			discardBlackDeck = [];
-			blackCard = getBlackDeck().pop();
+			blackCard = 'NONE';
+			//blackDeck = discardBlackDeck;
+			//discardBlackDeck = [];
+			//blackCard = getBlackDeck().pop();
 			//if no cards in discard pile,  reshuffle black deck
-			if(typeof blackCard == 'undefined') {
-				blackDeck = mergeSelectedBlackDecks();
-			}
+			//if(typeof blackCard == 'undefined') {
+			//	blackDeck = mergeSelectedBlackDecks();
+			//}
 		}
 		if(!blackCard) {
 			var tempCount = 0;

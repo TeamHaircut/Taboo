@@ -14,7 +14,7 @@ function setUserTeamName(currentUser, teamName) {
 			user.teamName = teamName;
 		}
 	});
-	console.log(users);
+	//console.log(users);
 }
 
 function setUserRoles(currentUser) {
@@ -28,7 +28,7 @@ function setUserRoles(currentUser) {
 			user.role = "buzzer";
 		}
 	});
-	console.log(users);
+	//console.log(users);
 }
 
 function getCurrentUserByUsername(username) {
@@ -44,13 +44,13 @@ function updatePoints(name) {
 }
 
 function updatePoints1(teamName) {
-	console.log(teamName);
+	//console.log(teamName);
 	users.forEach(user => {
 		if(user.teamName == teamName) {
 			user.points = user.points + 1;
 		}
 	});
-	console.log(users);
+	//console.log(users);
 }
 
 // Reset Points to 0

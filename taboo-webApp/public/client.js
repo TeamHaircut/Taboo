@@ -168,19 +168,37 @@ function initializeGame(GameState) {
 		}
 	});
 	outputTabooCard(GameState);
+	card = GameState.blackCard;
+	var tabooCard = card.split(",");
+
 	if(role == "giver") {
-		giverControl0.style.display = "block";
-		giverControl0.style.visibility = "visible";
-		giverControl1.style.display = "block";
-		giverControl1.style.visibility = "visible";
-		buzzerControl.style.display = "none";
+		if(typeof tabooCard[2] == 'undefined') {
+			giverControl0.style.display = "block";
+			giverControl0.style.visibility = "hidden";
+			giverControl1.style.display = "block";
+			giverControl1.style.visibility = "hidden";
+			buzzerControl.style.display = "none";
+		} else {
+			giverControl0.style.display = "block";
+			giverControl0.style.visibility = "visible";
+			giverControl1.style.display = "block";
+			giverControl1.style.visibility = "visible";
+			buzzerControl.style.display = "none";
+		}
 	}
 
 	if(role == "buzzer") {
-		giverControl0.style.display = "none";
-		giverControl1.style.display = "none";
-		buzzerControl.style.display = "block";
-		buzzerControl.style.visibility = "visible";
+		if(typeof tabooCard[2] == 'undefined') {
+			giverControl0.style.display = "none";
+			giverControl1.style.display = "none";
+			buzzerControl.style.display = "block";
+			buzzerControl.style.visibility = "hidden";
+		} else {
+			giverControl0.style.display = "none";
+			giverControl1.style.display = "none";
+			buzzerControl.style.display = "block";
+			buzzerControl.style.visibility = "visible";
+		}
 	}
 	outputRoomUserTable(GameState);
 }
