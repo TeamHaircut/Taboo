@@ -8,7 +8,7 @@ const session = require('express-session');
 const socket = require('socket.io');
 const formatMessage = require('./utils/messages');
 const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updatePoints, updatePoints1, setUserTeamName, setUserRoles  } = require('./utils/users');
-const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, appendCzarHand, clearHand, nextCardCzar, popCzarHand, appendCards, getJudgeHand} = require('./utils/game');
+const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
 const { Console } = require('console');
@@ -182,8 +182,6 @@ io.on('connection', socket => {
 
 			clearDiscardBlackDeck();
 
-			// Clear czar and judge hand
-			clearHand();
 			io.to(user.room).emit('terminate', { 
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
@@ -243,20 +241,12 @@ io.on('connection', socket => {
 		const user = getCurrentUser(socket.id);
 
 		const cardArray = [];
-		getJudgeHand().forEach(cardArray0 => {
-			if (cardArray0.user.username == card.username) {
-				cardArray.push(cardArray0.clientCardArray);
-			}
-		});
 
 		//extract user from card
 		var name = card.username;
 
 		//update points for name
 		updatePoints(name);
-		
-		// Replace Used White Cards
-		//updateRoomUsersWhiteCards(replaceWhiteCards(getRoomUserList(user.room), getJudgeHand()));
 		
 		//Emit updated DOM to all users
 		io.to(user.room).emit('updateDOM', {

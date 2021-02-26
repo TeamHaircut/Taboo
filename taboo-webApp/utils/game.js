@@ -10,9 +10,6 @@ var discardBlackDeck = [];
 var cardCzar = false;
 var blackCard = '';
 
-var czarHand = [];
-var judgeHand =[];
-
 var options = [];
 
 function mergeSelectedDecks() {
@@ -49,7 +46,7 @@ function getGameState(user, users, gameusers) {
 	//only used in DOM.outputWhiteCards conditional statement 
 	//TODO - implement options as array of house rules
 	options = isWCRebootOptionEnabled(); //0 || 1
-	const gamestate = {cardCzar, blackCard, czarHand, judgeHand, user, users, gameusers, options};
+	const gamestate = {cardCzar, blackCard, user, users, gameusers, options};
 	console.log("================================================================================");
 	console.log(gamestate);
 	console.log("================================================================================");
@@ -68,27 +65,6 @@ function nextCardCzar(currentCzar, roomUserList) {
 	return czar;
 }
 
-// Push white card info to czarHand Array
-function appendCzarHand(user, clientCardArray) {
-	czarHand.push({user, clientCardArray});
-}
-
-//Grab a top card from czar hand
-function popCzarHand() {
-	czarHand = shuffleCards(getCzarHand());
-	return czarHand.pop();
-}
-
-// Push white card info to judge set
-function appendCards(card) {
-	judgeHand.push(card);
-}
-
-// Return the display cards
-function getJudgeHand() {
-	return judgeHand;
-}
-
 // Fisher-Yates Randomize In Place
 function shuffleCards(cards) {
 	var i = cards.length, k, temp;
@@ -99,17 +75,6 @@ function shuffleCards(cards) {
 		cards[i] = temp;
 	}
 	return cards;
-}
-
-// Clear czar hand and display card arrays
-function clearHand() {
-	czarHand = [];
-	judgeHand = [];
-}
-
-// Return the Card Czar's Hand
-function getCzarHand() {
-	return czarHand;
 }
 
 // Clear Discarded Black Card Deck
@@ -175,13 +140,8 @@ function getCardCzar() {
 module.exports = {
   setCardCzar,
   getCardCzar,
-  drawBlackCard, 
-  appendCzarHand,
-  clearHand,
+  drawBlackCard,
   nextCardCzar,
-  popCzarHand,
-  appendCards,
-  getJudgeHand,
   getGameState,
   mergeSelectedDecks,
   popDiscardBlackDeck,
