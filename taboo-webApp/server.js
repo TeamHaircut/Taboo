@@ -77,14 +77,6 @@ io.on('connection', socket => {
 			// get updated current user and sent it to gamestate
 			user = getCurrentUser(socket.id);
 
-			//socket.emit('clearTimeout');
-			
-			// Refresh user UI
-			//socket.emit('refreshDOM', { 
-			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-			//	bcSelected: cardSelected
-			//});
-
 			io.to(user.room).emit('gamestate', {
 				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
@@ -137,9 +129,6 @@ io.on('connection', socket => {
 			}, 1000);
 			/////////////////////////////
 
-			//merge selected decks
-			//mergeSelectedDecks();
-
 			cardSelected = false;
 			gameState = GameState.INITIALIZE;
 
@@ -154,18 +143,12 @@ io.on('connection', socket => {
 			
 			//Initialize White Cards for all clients in the room
 			var roomUserList = getRoomUserList(user.room);
-			//updateRoomUsersWhiteCards(initializeWhiteCards(roomUserList, true));
 //keep
 			//Send czar and room info to everybody in the room
 			io.to(user.room).emit('launch', {
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 
-			// Refresh user UI
-			//socket.emit('refreshDOM', { 
-			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-			//	bcSelected: cardSelected
-			//});
 			io.to(user.room).emit('gamestate', {
 				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
@@ -326,12 +309,6 @@ io.on('connection', socket => {
 
 			// get updated current user and sent it to gamestate
 			user = getCurrentUser(socket.id);
-			
-			// Refresh user UI
-			//socket.emit('refreshDOM', { 
-			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-			//	bcSelected: cardSelected
-			//});
 
 			io.to(user.room).emit('gamestate', {
 				gameState: GameState.REFRESH,
@@ -345,10 +322,7 @@ io.on('connection', socket => {
 		popDiscardBlackDeck();
 		var user = getCurrentUserByUsername(username);
 		if(user){
-			//io.to(user.room).emit('refreshDOM', { 
-			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-			//	bcSelected: blackCardSelected
-			//});
+
 			io.to(user.room).emit('gamestate', {
 				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))

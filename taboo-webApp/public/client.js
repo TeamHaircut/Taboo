@@ -126,21 +126,9 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 
 });
 
-
-//  Update points in user table, and braodcast winner to room users
-//socket.on('refreshDOM', ({GameState, bcSelected}) => {
-//	cardSelected = bcSelected;
-	
-//	infoDiv.innerHTML =``;
-	// Update DOM with updated room user table
-//	outputRoomUserTable(GameState);
-
-	// Update DOM with new black card
-//	outputTabooCard(GameState);
-//});
-
 //keep
 function refreshDOM(GameState) {
+	//infoDiv.innerHTML =``;
 	// Update DOM with updated room user table
 	outputRoomUserTable(GameState);
 	// Update DOM with new black card
