@@ -114,7 +114,7 @@ io.on('connection', socket => {
 			//////////////////////////////
 			var counter = 0;
 			// We want to send the countdown in seconds to the client and we start at 60
-			var seconds = 30;
+			var seconds = 240;
 			// temporary variable for storing how far we have go in the countdown
 			var remaining = 0;
 			// set a new interval to go off every second and keep the countdown synced among all players
