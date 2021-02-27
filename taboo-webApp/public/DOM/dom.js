@@ -27,7 +27,136 @@ function outputRoomUserTable(GameState) {
     // Clear the outdated table
     roomUserTable.innerHTML = '';
     
+	//////////////////////TEAMA///////////////////
+	const aTeamRow = document.createElement('tr');
+	aTeamRow.classList.add('table-light');
+
+	const aTeamHeader = document.createElement('th');
+	aTeamHeader.setAttribute("scope","row");
+	aTeamHeader.innerHTML = ``;
+    aTeamRow.appendChild(aTeamHeader);
+
+	const aTeamData = document.createElement('td');
+	aTeamData.style.color = "black";
+	aTeamData.innerHTML = `TEAM A`;
+	aTeamRow.appendChild(aTeamData);
+
+	const aPointData = document.createElement('td');
+	aPointData.style.color = "black";
+	//calc team A points
+	var ateamPoints = 0;
+	GameState.users.forEach(user=>{
+		if(user.teamName == "teamA" && ateamPoints == 0) {
+			ateamPoints = user.points;
+		}
+	});
+	aPointData.innerHTML = `${ateamPoints}`;
+	aTeamRow.appendChild(aPointData);
+	document.querySelector('.userlist-table').appendChild(aTeamRow);
+	///////////////////////TEAM A MEMBER LIST//////////////////////
     // Build a table row for each user in the room
+	GameState.users.forEach(user=>{
+		if(user.teamName == "teamA") {
+			const tr = document.createElement('tr');
+			tr.classList.add('table-light');
+			
+			// Indicate who is the current card czar
+			const th = document.createElement('th');
+			th.setAttribute("scope","row");
+			if(user.username == GameState.cardCzar.username) {
+				th.innerHTML = ``;
+			} else {
+				th.innerHTML = ``;
+			}
+			tr.appendChild(th);
+			
+			//  Append username and point data to the table row
+			const tdName = document.createElement('td');
+			if(user.status == 'active') {
+				tdName.style.color = "black";
+				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
+			} else if(user.status == 'idle'){
+				tdName.style.color = "red";
+				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (busy)`;
+			} else {
+				//tdName.style.color = "red";
+				//tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (offline)`;		
+			}
+			tr.appendChild(tdName);
+			const tdPoints = document.createElement('td');
+			tdPoints.innerHTML = ``;
+			tr.appendChild(tdPoints);
+			document.querySelector('.userlist-table').appendChild(tr);
+		}
+		
+	});
+	///////////////////////TEAMB////////////////////
+	const bTeamRow = document.createElement('tr');
+	bTeamRow.classList.add('table-light');
+
+	const bTeamHeader = document.createElement('th');
+	bTeamHeader.setAttribute("scope","row");
+	bTeamHeader.innerHTML = ``;
+    bTeamRow.appendChild(bTeamHeader);
+
+	const bTeamData = document.createElement('td');
+	bTeamData.style.color = "black";
+	bTeamData.innerHTML = `TEAM B`;
+	bTeamRow.appendChild(bTeamData);
+
+	const bPointData = document.createElement('td');
+	bPointData.style.color = "black";
+	//calc team A points
+	var bteamPoints = 0;
+	GameState.users.forEach(user=>{
+		if(user.teamName == "teamB" && bteamPoints == 0) {
+			bteamPoints = user.points;
+		}
+	});
+	bPointData.innerHTML = `${bteamPoints}`;
+	bTeamRow.appendChild(bPointData);
+	document.querySelector('.userlist-table').appendChild(bTeamRow);
+	///////////////////TEAM B MEMBER LIST///////////////////
+    // Build a table row for each user in the room
+	GameState.users.forEach(user=>{
+		if(user.teamName == "teamB") {
+			const tr = document.createElement('tr');
+			tr.classList.add('table-light');
+			
+			// Indicate who is the current card czar
+			const th = document.createElement('th');
+			th.setAttribute("scope","row");
+			if(user.username == GameState.cardCzar.username) {
+				th.innerHTML = ``;
+			} else {
+				th.innerHTML = ``;
+			}
+			tr.appendChild(th);
+			
+			//  Append username and point data to the table row
+			const tdName = document.createElement('td');
+			if(user.status == 'active') {
+				tdName.style.color = "black";
+				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
+			} else if(user.status == 'idle'){
+				tdName.style.color = "red";
+				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (busy)`;
+			} else {
+				//tdName.style.color = "red";
+				//tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (offline)`;		
+			}
+			tr.appendChild(tdName);
+			const tdPoints = document.createElement('td');
+			tdPoints.innerHTML = ``;
+			tr.appendChild(tdPoints);
+			document.querySelector('.userlist-table').appendChild(tr);
+		}
+		
+	});
+	/////////////////////////////////////////////
+
+    // Build a table row for each user in the room
+	/*
 	GameState.users.forEach(user=>{
 	const tr = document.createElement('tr');
 	tr.classList.add('table-light');
@@ -46,13 +175,13 @@ function outputRoomUserTable(GameState) {
 	const tdName = document.createElement('td');
 	if(user.status == 'active') {
 		tdName.style.color = "black";
-		tdName.innerHTML = `${user.username}`;
+		tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
 	} else if(user.status == 'idle'){
 		tdName.style.color = "red";
-		tdName.innerHTML = `${user.username} (busy)`;
+		tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (busy)`;
 	} else {
 		tdName.style.color = "red";
-		tdName.innerHTML = `${user.username} (offline)`;		
+		tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (offline)`;		
 	}
 	tr.appendChild(tdName);
 	const tdPoints = document.createElement('td');
@@ -60,8 +189,12 @@ function outputRoomUserTable(GameState) {
 	tr.appendChild(tdPoints);
 
     //  Append table row to the userlist table
-	document.querySelector('.userlist-table').appendChild(tr);
+	//document.querySelector('.userlist-table').appendChild(aTeamRow);
+	//document.querySelector('.userlist-table').appendChild(aTeamMember);
+	document.querySelector('.userlist-table').appendChild(bTeamRow);
+	//document.querySelector('.userlist-table').appendChild(tr);
 	});  
+	*/
 }
 
 // Output message to DOM
