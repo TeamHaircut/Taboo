@@ -8,7 +8,7 @@ const session = require('express-session');
 const socket = require('socket.io');
 const formatMessage = require('./utils/messages');
 const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updatePoints, updatePoints1, setUserTeamName, setUserRoles  } = require('./utils/users');
-const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar} = require('./utils/game');
+const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar, setServerGameInitialized, setServerBuzzer} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
 const { Console } = require('console');
@@ -84,7 +84,7 @@ io.on('connection', socket => {
 		}
 		
 	});
-
+	
 	// Listen for chatMessage
 	socket.on('chatMessage', msg => {
 		const user = getCurrentUser(socket.id);
@@ -108,7 +108,7 @@ io.on('connection', socket => {
 			//////////////////////////////
 			var counter = 0;
 			// We want to send the countdown in seconds to the client and we start at 60
-			var seconds = 15;
+			var seconds = 30;
 			// temporary variable for storing how far we have go in the countdown
 			var remaining = 0;
 			// set a new interval to go off every second and keep the countdown synced among all players
@@ -130,7 +130,6 @@ io.on('connection', socket => {
 			/////////////////////////////
 
 			cardSelected = false;
-			gameState = GameState.INITIALIZE;
 
 			// Set card czar to current user
 			setCardCzar(user);
@@ -145,12 +144,12 @@ io.on('connection', socket => {
 			var roomUserList = getRoomUserList(user.room);
 //keep
 			//Send czar and room info to everybody in the room
-			io.to(user.room).emit('launch', {
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-			});
+			//io.to(user.room).emit('launch', {
+			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			//});
 
 			io.to(user.room).emit('gamestate', {
-				gameState: GameState.REFRESH,
+				gameState: GameState.INITIALIZE,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 			
@@ -269,14 +268,14 @@ io.on('connection', socket => {
 		updatePoints1(teamName);
 		
 		//Emit updated DOM to all users
-		io.to(user.room).emit('updateDOM', {
-			winnerArray: cardArray, 
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
+		//io.to(user.room).emit('updateDOM', {
+		//	winnerArray: cardArray, 
+		//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+		//});
 				
 		/* Send GameState, room user list, and czar to all the room's clients*/
 		io.to(user.room).emit('gamestate', {
-			gameState,
+			gameState: GameState.REFRESH,
 			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 		});
 
@@ -292,9 +291,27 @@ io.on('connection', socket => {
 		});
 	});
 
-	socket.on('buzzServer', () => {
+	// Listen for changes in game state initialization
+	socket.on('setServerGameInitialized', (flag) => {
+		//const user = getCurrentUser(socket.id);
+		console.log(flag);
+		setServerGameInitialized(flag);
+	});
+
+	socket.on('setBuzzer', () => {
 		const user = getCurrentUser(socket.id);
-		io.to(user.room).emit('buzzFromServer', {
+		setServerBuzzer(true);
+		io.to(user.room).emit('gamestate', {
+			gameState: GameState.REFRESH,
+			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+		});
+	});
+
+	socket.on('clearServerBuzzer', () => {
+		const user = getCurrentUser(socket.id);
+		setServerBuzzer(false);
+		io.to(user.room).emit('gamestate', {
+			gameState: GameState.REFRESH,
 			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 		});
 	});

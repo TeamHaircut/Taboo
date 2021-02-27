@@ -12,6 +12,10 @@ var blackCard = '';
 
 var options = [];
 
+var serverGameInitialized = false;
+
+var serverBuzzer = false;
+
 function mergeSelectedDecks() {
 	blackDeck = mergeSelectedBlackDecks();
 	whiteDeck = mergeSelectedWhiteDecks();
@@ -41,14 +45,26 @@ function getWhiteDeck() {
 	return whiteDeck;
 }
 
+function isServerGameInitialized(flag) {
+	return serverGameInitialized;
+}
+
+function setServerGameInitialized(flag) {
+	serverGameInitialized = flag;
+}
+
+function setServerBuzzer(flag) {
+	serverBuzzer = flag;
+}
+
 function getGameState(user, users, gameusers) {
 	//currently there is only one house rule established. 
 	//only used in DOM.outputWhiteCards conditional statement 
 	//TODO - implement options as array of house rules
 	options = isWCRebootOptionEnabled(); //0 || 1
-	const gamestate = {cardCzar, blackCard, user, users, gameusers, options};
+	const gamestate = {cardCzar, blackCard, serverGameInitialized, serverBuzzer, user, users, gameusers, options};
 	console.log("================================================================================");
-	console.log(gamestate);
+	//console.log(gamestate);
 	console.log("================================================================================");
 	return gamestate;
 }
@@ -145,5 +161,7 @@ module.exports = {
   getGameState,
   mergeSelectedDecks,
   popDiscardBlackDeck,
-  clearDiscardBlackDeck
+  clearDiscardBlackDeck,
+  setServerGameInitialized,
+  setServerBuzzer
 };

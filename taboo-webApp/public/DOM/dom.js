@@ -150,12 +150,12 @@ function outputTabooCard(GameState) {
 				}
 					
 			} else {
-				guessWord.innerHTML = `${tabooCard[2]}`;
-				taboo0.innerHTML = `${tabooCard[3]}`;
-				taboo1.innerHTML = `${tabooCard[4]}`;
-				taboo2.innerHTML = `${tabooCard[5]}`;
-				taboo3.innerHTML = `${tabooCard[6]}`;
-				taboo4.innerHTML = `${tabooCard[7]}`;
+					guessWord.innerHTML = `${tabooCard[2]}`;
+					taboo0.innerHTML = `${tabooCard[3]}`;
+					taboo1.innerHTML = `${tabooCard[4]}`;
+					taboo2.innerHTML = `${tabooCard[5]}`;
+					taboo3.innerHTML = `${tabooCard[6]}`;
+					taboo4.innerHTML = `${tabooCard[7]}`;
 			}
 		} else {
 			if(typeof tabooCard[2] == 'undefined') {
@@ -175,10 +175,20 @@ function outputTabooCard(GameState) {
 
 
 	}
+	if(GameState.serverBuzzer) {
+		console.log("HERE");
+		guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
+		taboo0.innerHTML = ``;
+		taboo1.innerHTML = ``;
+		taboo2.innerHTML = ``;
+		taboo3.innerHTML = ``;
+		taboo4.innerHTML = ``;
+	}
 }
 
 function passCard() {
 	//console.log("card passed");
+	clearServerBuzzer();
 	drawBlackCard();
   }
 

@@ -97,6 +97,10 @@ socket.on('drawBlackCard', ({GameState})=> {
 	outputTabooCard(GameState);
 });
 
+function buzzServer() {
+	socket.emit('setBuzzer');
+}
+
 socket.on('buzzFromServer', ({GameState})=> {
 	guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
 	taboo0.innerHTML = ``;
@@ -114,6 +118,10 @@ function sendWinnerInfoToServer1(team) {
 	socket.emit('declareWinner1', {team});
 }
 
+function clearServerBuzzer() {
+	socket.emit('clearServerBuzzer');
+}
+
 //keep
 //  Update points in user table, and braodcast winner to room users
 socket.on('updateDOM', ({winnerArray, GameState}) => {
@@ -128,11 +136,20 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 
 //keep
 function refreshDOM(GameState) {
+	console.log("refeshDOM message received");
+	console.log(GameState.serverGameInitialized);
+	var flag = GameState.serverGameInitialized;
+	if(flag) {
+		initializeGame(GameState);
+	}
+	if(!flag){
+		terminateGame(GameState);
+	}
 	//infoDiv.innerHTML =``;
-	// Update DOM with updated room user table
-	outputRoomUserTable(GameState);
 	// Update DOM with new black card
-	outputTabooCard(GameState);
+	//outputTabooCard(GameState);
+	// Update DOM with updated room user table
+	//outputRoomUserTable(GameState);
 }
 
 //keep
@@ -141,14 +158,11 @@ socket.on('launch', ({GameState}) => {
 	initializeGame(GameState);
 });
 
-function buzzServer() {
-	socket.emit('buzzServer');
-}
-
 //keep
 // Apply game intialization to DOM
 function initializeGame(GameState) {
 
+	socket.emit('setServerGameInitialized', true);
 	gameControl.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	gameControl1.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	gameControl1.style.display = "block";
@@ -194,6 +208,10 @@ function initializeGame(GameState) {
 			buzzerControl.style.visibility = "visible";
 		}
 	}
+	if(GameState.serverBuzzer) {
+		giverControl1.style.display = "none";
+		giverControl1.style.visibility = "hidden";
+	}
 	outputRoomUserTable(GameState);
 }
 
@@ -214,7 +232,8 @@ socket.on('countdown', remaining => {
 //keep
 // Apply game termination to DOM
 function terminateGame(GameState) {
-
+	console.log("terminate game called");
+	socket.emit('setServerGameInitialized', false);
 	gameControl.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.style.display = "block";
@@ -241,7 +260,8 @@ function terminateGame(GameState) {
 //keep
 // get gamestate from server
 socket.on('gamestate', ({gameState, GameState}) => {
-	
+	console.log("socket on gamestate message received");
+	console.log(GameState);
 	switch (gameState) {
 		case 1:
 			terminateGame(GameState);
