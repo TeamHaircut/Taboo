@@ -60,8 +60,8 @@ gameControl1.addEventListener("click", function(){
 teams.addEventListener("change", function(){ 
 	//console.log(teams.value);
 	//Emit game control state to server
-	const state = teams.value;
-	socket.emit('teamControlState', {state});
+	const teamSelection = teams.value;
+	socket.emit('teamControlState', {teamSelection});
 	
 });
 
@@ -136,8 +136,10 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 
 //keep
 function refreshDOM(GameState) {
-	console.log("refeshDOM message received");
-	console.log(GameState.serverGameInitialized);
+	//console.log("refeshDOM message received");
+	//console.log(GameState.user.teamName);
+	teams.value = GameState.user.teamName;
+
 	var flag = GameState.serverGameInitialized;
 	if(flag) {
 		initializeGame(GameState);
@@ -232,7 +234,7 @@ socket.on('countdown', remaining => {
 //keep
 // Apply game termination to DOM
 function terminateGame(GameState) {
-	console.log("terminate game called");
+	//console.log("terminate game called");
 	socket.emit('setServerGameInitialized', false);
 	gameControl.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
@@ -260,8 +262,8 @@ function terminateGame(GameState) {
 //keep
 // get gamestate from server
 socket.on('gamestate', ({gameState, GameState}) => {
-	console.log("socket on gamestate message received");
-	console.log(GameState);
+	//console.log("socket on gamestate message received");
+	//console.log(GameState);
 	switch (gameState) {
 		case 1:
 			terminateGame(GameState);

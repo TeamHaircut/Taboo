@@ -92,9 +92,15 @@ io.on('connection', socket => {
 	});
 
 	// Listen for game control event
-	socket.on('teamControlState', ({state}) => {
-		const user = getCurrentUser(socket.id);
-		setUserTeamName(user,state);
+	socket.on('teamControlState', ({teamSelection}) => {
+		var user = getCurrentUser(socket.id);
+		setUserTeamName(user,teamSelection);
+		//resetPoints();
+		user = getCurrentUser(socket.id);
+		io.to(user.room).emit('gamestate', {
+			gameState: GameState.REFRESH,
+			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+		});
 	});
 	//keep
 	// Listen for game control event
@@ -294,7 +300,7 @@ io.on('connection', socket => {
 	// Listen for changes in game state initialization
 	socket.on('setServerGameInitialized', (flag) => {
 		//const user = getCurrentUser(socket.id);
-		console.log(flag);
+		//console.log(flag);
 		setServerGameInitialized(flag);
 	});
 

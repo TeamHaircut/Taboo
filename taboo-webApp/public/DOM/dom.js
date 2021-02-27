@@ -309,7 +309,7 @@ function outputTabooCard(GameState) {
 
 	}
 	if(GameState.serverBuzzer) {
-		console.log("HERE");
+		//console.log("HERE");
 		guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
 		taboo0.innerHTML = ``;
 		taboo1.innerHTML = ``;
