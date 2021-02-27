@@ -126,18 +126,26 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 
 });
 
-//keep
+
 //  Update points in user table, and braodcast winner to room users
-socket.on('refreshDOM', ({GameState, bcSelected}) => {
-	cardSelected = bcSelected;
+//socket.on('refreshDOM', ({GameState, bcSelected}) => {
+//	cardSelected = bcSelected;
 	
-	infoDiv.innerHTML =``;
+//	infoDiv.innerHTML =``;
 	// Update DOM with updated room user table
-	outputRoomUserTable(GameState);
+//	outputRoomUserTable(GameState);
 
 	// Update DOM with new black card
+//	outputTabooCard(GameState);
+//});
+
+//keep
+function refreshDOM(GameState) {
+	// Update DOM with updated room user table
+	outputRoomUserTable(GameState);
+	// Update DOM with new black card
 	outputTabooCard(GameState);
-});
+}
 
 //keep
 // Launch event from server
@@ -252,7 +260,9 @@ socket.on('gamestate', ({gameState, GameState}) => {
 			break;
 		case 2:
 			initializeGame(GameState);
-			break;			
+			break;	
+		case 3:
+			refreshDOM(GameState);		
 		default:
 			break;
 	}

@@ -17,6 +17,8 @@ function setUserTeamName(currentUser, teamName) {
 	//console.log(users);
 }
 
+//Player who initiated the round is the giver, thier teammates are the recievers
+//everyone else have buzzers
 function setUserRoles(currentUser) {
 	var team = currentUser.teamName;
 	users.forEach(user => {
@@ -28,7 +30,6 @@ function setUserRoles(currentUser) {
 			user.role = "buzzer";
 		}
 	});
-	//console.log(users);
 }
 
 function getCurrentUserByUsername(username) {

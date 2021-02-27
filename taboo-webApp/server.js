@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 const GameState = {
 	TERMINATE: 1,
 	INITIALIZE: 2,
-	REJOIN: 3
+	REFRESH: 3
 };
 var gameState = GameState.TERMINATE;
 
@@ -65,7 +65,7 @@ io.on('connection', socket => {
 
 			/* Send GameState, room user list, and czar to all the room's clients*/
 			io.to(user.room).emit('gamestate', {
-				gameState,
+				gameState: "default",
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});	
 		//else rejoining user
@@ -80,13 +80,13 @@ io.on('connection', socket => {
 			//socket.emit('clearTimeout');
 			
 			// Refresh user UI
-			socket.emit('refreshDOM', { 
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-				bcSelected: cardSelected
-			});
+			//socket.emit('refreshDOM', { 
+			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
+			//	bcSelected: cardSelected
+			//});
 
 			io.to(user.room).emit('gamestate', {
-				gameState: GameState.REJOIN,
+				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 		}
@@ -116,7 +116,7 @@ io.on('connection', socket => {
 			//////////////////////////////
 			var counter = 0;
 			// We want to send the countdown in seconds to the client and we start at 60
-			var seconds = 60;
+			var seconds = 15;
 			// temporary variable for storing how far we have go in the countdown
 			var remaining = 0;
 			// set a new interval to go off every second and keep the countdown synced among all players
@@ -127,7 +127,8 @@ io.on('connection', socket => {
 				io.to(user.room).emit('countdown', remaining);
 				if (counter >= (seconds*1000)) {
 					// countdown is finished tell the client to change the views.
-					io.to(user.room).emit('terminate', { 
+					io.to(user.room).emit('gamestate', { 
+						gameState: GameState.TERMINATE,
 						GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 					});
 					clearInterval(interval);
@@ -161,14 +162,17 @@ io.on('connection', socket => {
 			});
 
 			// Refresh user UI
-			socket.emit('refreshDOM', { 
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-				bcSelected: cardSelected
+			//socket.emit('refreshDOM', { 
+			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
+			//	bcSelected: cardSelected
+			//});
+			io.to(user.room).emit('gamestate', {
+				gameState: GameState.REFRESH,
+				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 			
 		} else {
 			const user = getCurrentUser(socket.id);
-			gameState = GameState.TERMINATE;
 
 			// Remove card czar
 			setCardCzar(false);
@@ -182,7 +186,8 @@ io.on('connection', socket => {
 
 			clearDiscardBlackDeck();
 
-			io.to(user.room).emit('terminate', { 
+			io.to(user.room).emit('gamestate', { 
+				gameState: GameState.TERMINATE,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 		}
@@ -323,13 +328,13 @@ io.on('connection', socket => {
 			user = getCurrentUser(socket.id);
 			
 			// Refresh user UI
-			socket.emit('refreshDOM', { 
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-				bcSelected: cardSelected
-			});
+			//socket.emit('refreshDOM', { 
+			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
+			//	bcSelected: cardSelected
+			//});
 
 			io.to(user.room).emit('gamestate', {
-				gameState: GameState.REJOIN,
+				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 		}
@@ -340,9 +345,13 @@ io.on('connection', socket => {
 		popDiscardBlackDeck();
 		var user = getCurrentUserByUsername(username);
 		if(user){
-			io.to(user.room).emit('refreshDOM', { 
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
-				bcSelected: blackCardSelected
+			//io.to(user.room).emit('refreshDOM', { 
+			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room)),
+			//	bcSelected: blackCardSelected
+			//});
+			io.to(user.room).emit('gamestate', {
+				gameState: GameState.REFRESH,
+				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 		}
 	});
