@@ -14,8 +14,8 @@ router.get('/selectroom', ensureAuthenticated, (req, res) =>
 );
 
 // CAH App Page
-router.get('/cah', ensureAuthenticated, (req, res) =>
-{res.render('cah', { user: req.user}); /*console.log(req);*/}
+router.get('/taboo', ensureAuthenticated, (req, res) =>
+{res.render('taboo', { user: req.user}); /*console.log(req);*/}
 );
 
 // Select Room
@@ -38,7 +38,7 @@ router.post('/selectroom', (req, res) => {
 			user.last_room = room;
 			user.name = name;
 			user.save();
-			res.redirect('/cah');
+			res.redirect('/taboo');
 			//res.render('cah', {user: user, room: room});
 		}
 	});//end User findOne
