@@ -136,9 +136,9 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 
 //keep
 function refreshDOM(GameState) {
-	//console.log("refeshDOM message received");
-	//console.log(GameState.user.teamName);
-	teams.value = GameState.user.teamName;
+	if(GameState.user.username == getClientUsername()) {
+		teams.value = GameState.user.teamName;
+	}
 
 	var flag = GameState.serverGameInitialized;
 	if(flag) {
