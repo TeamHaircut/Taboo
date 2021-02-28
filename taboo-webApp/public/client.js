@@ -110,10 +110,6 @@ socket.on('buzzFromServer', ({GameState})=> {
 	taboo4.innerHTML = ``;
 });
 
-function sendWinnerInfoToServer(card) {
-	socket.emit('declareWinner', {card});
-}
-
 function sendWinnerInfoToServer1(team) {
 	socket.emit('declareWinner1', {team});
 }

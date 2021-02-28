@@ -44,13 +44,9 @@ function outputRoomUserTable(GameState) {
 	const aPointData = document.createElement('td');
 	aPointData.style.color = "black";
 	//calc team A points
-	var ateamPoints = 0;
-	GameState.users.forEach(user=>{
-		if(user.teamName == "teamA" && ateamPoints == 0) {
-			ateamPoints = user.points;
-		}
-	});
-	aPointData.innerHTML = `${ateamPoints}`;
+	var aTeamPoints = 0;
+	aTeamPoints = GameState.aTeamPoints;
+	aPointData.innerHTML = `${aTeamPoints}`;
 	aTeamRow.appendChild(aPointData);
 	document.querySelector('.userlist-table').appendChild(aTeamRow);
 	///////////////////////TEAM A MEMBER LIST//////////////////////
@@ -107,13 +103,9 @@ function outputRoomUserTable(GameState) {
 	const bPointData = document.createElement('td');
 	bPointData.style.color = "black";
 	//calc team A points
-	var bteamPoints = 0;
-	GameState.users.forEach(user=>{
-		if(user.teamName == "teamB" && bteamPoints == 0) {
-			bteamPoints = user.points;
-		}
-	});
-	bPointData.innerHTML = `${bteamPoints}`;
+	var bTeamPoints = 0;
+	bTeamPoints = GameState.bTeamPoints;
+	bPointData.innerHTML = `${bTeamPoints}`;
 	bTeamRow.appendChild(bPointData);
 	document.querySelector('.userlist-table').appendChild(bTeamRow);
 	///////////////////TEAM B MEMBER LIST///////////////////

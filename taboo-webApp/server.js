@@ -7,8 +7,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const socket = require('socket.io');
 const formatMessage = require('./utils/messages');
-const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, resetPoints, updatePoints, updatePoints1, setUserTeamName, setUserRoles  } = require('./utils/users');
-const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar, setServerGameInitialized, setServerBuzzer} = require('./utils/game');
+const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, setUserTeamName, setUserRoles  } = require('./utils/users');
+const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar, setServerGameInitialized, setServerBuzzer, addTeamPoints} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
 const { Console } = require('console');
@@ -95,7 +95,6 @@ io.on('connection', socket => {
 	socket.on('teamControlState', ({teamSelection}) => {
 		var user = getCurrentUser(socket.id);
 		setUserTeamName(user,teamSelection);
-		//resetPoints();
 		user = getCurrentUser(socket.id);
 		io.to(user.room).emit('gamestate', {
 			gameState: GameState.REFRESH,
@@ -114,7 +113,7 @@ io.on('connection', socket => {
 			//////////////////////////////
 			var counter = 0;
 			// We want to send the countdown in seconds to the client and we start at 60
-			var seconds = 60;
+			var seconds = 15;
 			// temporary variable for storing how far we have go in the countdown
 			var remaining = 0;
 			// set a new interval to go off every second and keep the countdown synced among all players
@@ -141,7 +140,7 @@ io.on('connection', socket => {
 			setCardCzar(user);
 			
 			// Set points for all users to 0
-			resetPoints();
+			//resetPoints();
 			
 			// Draw a Black Card
 			drawBlackCard(true);
@@ -227,57 +226,14 @@ io.on('connection', socket => {
 
 	});
 
-	//keep
-	// Listen for winner event
-	socket.on('declareWinner', ({card}) => {
-		cardSelected = false;
-		const user = getCurrentUser(socket.id);
-
-		const cardArray = [];
-
-		//extract user from card
-		var name = card.username;
-
-		//update points for name
-		updatePoints(name);
-		
-		//Emit updated DOM to all users
-		io.to(user.room).emit('updateDOM', {
-			winnerArray: cardArray, 
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
-
-		// Update card czar
-		setCardCzar(
-			nextCardCzar(
-				getCardCzar(), getGameUserList(user.room)
-			)
-		);
-				
-		/* Send GameState, room user list, and czar to all the room's clients*/
-		io.to(user.room).emit('gamestate', {
-			gameState,
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
-
-	});
-
 	// Listen for winner event
 	socket.on('declareWinner1', ({team}) => {
 		cardSelected = false;
 		const user = getCurrentUser(socket.id);
 
-		const cardArray = [];
-
-		//extract user from card
+		//extract teamName from card
 		var teamName = team;
-		updatePoints1(teamName);
-		
-		//Emit updated DOM to all users
-		//io.to(user.room).emit('updateDOM', {
-		//	winnerArray: cardArray, 
-		//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		//});
+		addTeamPoints(teamName);
 				
 		/* Send GameState, room user list, and czar to all the room's clients*/
 		io.to(user.room).emit('gamestate', {
