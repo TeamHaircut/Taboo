@@ -45,7 +45,7 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 });
 */
 
-/////////////////////////////////////
+/////////////////////////////SOUND//////////////////////////////////////////////////////
 			var buzzerSound = new Audio("buzzer.mp3");
 			
 			var allAudio = [];
@@ -73,7 +73,7 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 			var playBuzzer = function() {
 				buzzerSound.play();
 			}
-//////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 gameControl.addEventListener("click", function(){ 
 	//Emit game control state to server
