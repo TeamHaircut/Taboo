@@ -46,16 +46,12 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 */
 
 /////////////////////////////////////
-			var music = new Audio("buzzer.mp3")
-			var chime = new Audio("buzzer.mp3")
-			var nothing = new Audio("buzzer.mp3")
+			var buzzerSound = new Audio("buzzer.mp3")
 			
 			var allAudio = []
-			allAudio.push(music)
-			allAudio.push(chime)
+			allAudio.push(buzzerSound)
 
 			var tapped = function() {
-				//messagediv.innerHTML = "tapped"
 				// Play all audio files on the first tap and stop them immediately.
 				if(allAudio) {
 					for(var audio of allAudio) {
@@ -65,39 +61,18 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 					}
 					allAudio = null
 				}
-				// We should be able to play music delayed now (not during the tap event).
-				setTimeout(function() {
-					music.play()
-				}, 2000)
 			}
 
 			document.body.addEventListener('touchstart', tapped, false)
 			document.body.addEventListener('click', tapped, false)
 
-			var stop = function() {
-				music.pause()
-				loop = null
-				document.body.removeEventListener('touchstart', tapped, false)
-				document.body.removeEventListener('click', tapped, false)
+			var stopBuzzer = function() {
+				buzzerSound.pause()
 			}
 
-			// Check if audio starts already unlocked by playing a blank wav.
-			//nothing.play().then(function() {
-			//	lockeddiv.innerHTML = "Audio started unlocked!"
-			//}).catch(function(){
-			//	lockeddiv.innerHTML = "Audio started locked :("
-			//})
-
-			var loop = function() {
-				// Try to play chimes whenever we want (not during user action).
-				if(Math.random() < .01) {
-					chime.play().then(function(){
-						//lockeddiv.innerHTML = "Audio is now unlocked!"
-					})
-				}
-				setTimeout(loop, 16)
+			var playBuzzer = function() {
+				buzzerSound.play()
 			}
-			loop()
 //////////////////////////////////////
 
 gameControl.addEventListener("click", function(){ 
@@ -191,10 +166,11 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 function refreshDOM(GameState) {
 	console.log(GameState.serverBuzzer);
 	if(GameState.serverBuzzer) {
-		soundNotification();
+		playBuzzer();
+		//soundNotification();
 		//myBuzzer.play();
 	} else {
-		myBuzzer.stop();
+		stopBuzzer();
 	}
 
 	if(GameState.user.username == getClientUsername()) {
