@@ -46,32 +46,32 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 */
 
 /////////////////////////////////////
-			var buzzerSound = new Audio("buzzer.mp3")
+			var buzzerSound = new Audio("buzzer.mp3");
 			
-			var allAudio = []
-			allAudio.push(buzzerSound)
+			var allAudio = [];
+			allAudio.push(buzzerSound);
 
 			var tapped = function() {
 				// Play all audio files on the first tap and stop them immediately.
 				if(allAudio) {
 					for(var audio of allAudio) {
-						audio.play()
-						audio.pause()
-						audio.currentTime = 0
+						audio.play();
+						audio.pause();
+						audio.currentTime = 0;
 					}
-					allAudio = null
+					allAudio = null;
 				}
 			}
 
-			document.body.addEventListener('touchstart', tapped, false)
-			document.body.addEventListener('click', tapped, false)
+			document.body.addEventListener('touchstart', tapped, false);
+			document.body.addEventListener('click', tapped, false);
 
 			var stopBuzzer = function() {
-				buzzerSound.pause()
+				buzzerSound.pause();
 			}
 
 			var playBuzzer = function() {
-				buzzerSound.play()
+				buzzerSound.play();
 			}
 //////////////////////////////////////
 
