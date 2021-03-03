@@ -72,6 +72,9 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 
 			var playBuzzer = function() {
 				buzzerSound.play();
+				setTimeout(function() {
+					buzzerSound.pause();
+				}, 1000)
 			}
 /////////////////////////////////////////////////////////////////////////////
 
@@ -167,8 +170,6 @@ function refreshDOM(GameState) {
 	console.log(GameState.serverBuzzer);
 	if(GameState.serverBuzzer) {
 		playBuzzer();
-		//soundNotification();
-		//myBuzzer.play();
 	} else {
 		stopBuzzer();
 	}
