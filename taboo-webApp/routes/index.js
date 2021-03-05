@@ -35,11 +35,11 @@ router.post('/selectroom', (req, res) => {
 	} else {
 	User.findOne({ email: req.user.email }).then(user => {
 		if (user) {
-			user.last_room = room;
+			user.last_room = room.toUpperCase();
+			console.log(user.last_room);
 			user.name = name;
 			user.save();
 			res.redirect('/taboo');
-			//res.render('cah', {user: user, room: room});
 		}
 	});//end User findOne
   }	
