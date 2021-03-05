@@ -89,17 +89,21 @@ p, tr, th, .normalFont {
 }
 /****************************************************************************************/
 .startcontrol { grid-area: start; }
+.timercontrol { grid-area: timer; font-size:30px;}
 .teamcontrol { grid-area: team; }
 
 .gamecontrolcontainer {
   display: grid;
   grid-template-areas:
-    'start team';
+    'start timer team';
   grid-gap: 10px;
+  height: 1rem;
 }
 
 .gamecontrolcontainer > div {
   text-align: center;
+  margin-left:auto;
+  margin-right:auto;
 }
 /***************************************************************************************/
 

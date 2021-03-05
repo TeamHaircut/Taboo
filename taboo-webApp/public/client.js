@@ -207,6 +207,8 @@ function initializeGame(GameState) {
 	gameControl1.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	gameControl1.style.display = "block";
 	gameControl1.style.visibility = "hidden";
+	teams.style.display = "block";
+	teams.style.visibility = "hidden";
 	timer.style.display = "block";
 	timer.style.visibility = "visible";
 	var role;
@@ -278,6 +280,8 @@ function terminateGame(GameState) {
 	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.style.display = "block";
 	gameControl1.style.visibility = "visible";
+	teams.style.display = "block";
+	teams.style.visibility = "visible";
 	outputTabooCard(GameState);
 	timer.style.display = "block";
 	timer.style.visibility = "hidden";
