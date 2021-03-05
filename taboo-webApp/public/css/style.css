@@ -88,18 +88,18 @@ p, tr, th, .normalFont {
   font-size: 12px;
 }
 /****************************************************************************************/
-​.gamecontrol-container {
-  width: 100%;
-  margin: auto;
+.startcontrol { grid-area: start; }
+.teamcontrol { grid-area: team; }
+
+.gamecontrolcontainer {
+  display: grid;
+  grid-template-areas:
+    'start team';
+  grid-gap: 10px;
 }
 
-.itemL {
-  width: 15%;
-  float: left;
-}
-
-.itemR {
-  margin-left: 60%;
+.gamecontrolcontainer > div {
+  text-align: center;
 }
 /***************************************************************************************/
 

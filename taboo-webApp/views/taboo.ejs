@@ -40,11 +40,18 @@
 		</form>
 	</div>
 </nav>
-<div>
 
 		<div class="info-div mb-1" style="font-size: small; color: red;"></div>
-		<a id="gamecontrol1" href="#" class="nav-link" style="color: black;"><i class="fas fa-play"></i> Start Game</a>
-		
+		<div class="gamecontrolcontainer">
+			<div class="startcontrol"><a id="gamecontrol1" href="#" class="itemL" style="color: black;"><i class="fas fa-play"></i> Start Game</a></div>  
+			<div class="teamcontrol">
+				<select name="teams" id="teams">
+					<option value="teamA">Team A</option>
+					<option value="teamB">Team B</option>
+				</select>
+			</div>
+		</div>
+
 			<div class="grid-container card-body" style="margin-left: auto; margin-right: auto;  max-width:30rem;" >
 				<div class="item1" id="timer" style="display: block; visibility: visible;"></div>
 				
