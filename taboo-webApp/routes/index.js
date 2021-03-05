@@ -36,7 +36,6 @@ router.post('/selectroom', (req, res) => {
 	User.findOne({ email: req.user.email }).then(user => {
 		if (user) {
 			user.last_room = room.toUpperCase();
-			console.log(user.last_room);
 			user.name = name;
 			user.save();
 			res.redirect('/taboo');
