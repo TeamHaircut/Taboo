@@ -28,6 +28,10 @@ router.post('/selectroom', (req, res) => {
 		errors.push({ msg: 'Please enter a username' });
 	}
 
+	if (!room) {
+		errors.push({ msg: 'Please enter a room code' });
+	}
+
 	const selectRoomRegex = RegExp('^[A-Za-z]');
 	if (!selectRoomRegex.test(name)) {
 		errors.push({ msg: 'Username must start with a letter' });
