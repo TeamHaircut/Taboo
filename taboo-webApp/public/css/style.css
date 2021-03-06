@@ -7,14 +7,14 @@ body {
 }
 
 @font-face {
-	font-family:"Guffaboo-Regular";
-	src:url("Guffaboo-Regular.ttf") format("truetype");
+	font-family:"Gufftron-Regular";
+	src:url("Gufftron-Regular.ttf") format("truetype");
 	font-weight:normal;font-style:normal;
 }
 /**/
 /* Fonts for everything generic */
 div, option, p, tr, th, .normalFont {
-	font-family: "Guffaboo-Regular";
+	font-family: "Gufftron-Regular";
 	/*font-size: 105%;*/
 }
 
