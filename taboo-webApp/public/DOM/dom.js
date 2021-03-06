@@ -31,11 +31,6 @@ function outputRoomUserTable(GameState) {
 	const aTeamRow = document.createElement('tr');
 	aTeamRow.classList.add('table-light');
 
-	const aTeamHeader = document.createElement('th');
-	aTeamHeader.setAttribute("scope","row");
-	aTeamHeader.innerHTML = ``;
-    aTeamRow.appendChild(aTeamHeader);
-
 	const aTeamData = document.createElement('td');
 	aTeamData.style.color = "black";
 	aTeamData.innerHTML = `TEAM A`;
@@ -56,18 +51,9 @@ function outputRoomUserTable(GameState) {
 			const tr = document.createElement('tr');
 			tr.classList.add('table-light');
 			
-			// Indicate who is the current card czar
-			const th = document.createElement('th');
-			th.setAttribute("scope","row");
-			if(user.username == GameState.cardCzar.username) {
-				th.innerHTML = ``;
-			} else {
-				th.innerHTML = ``;
-			}
-			tr.appendChild(th);
-			
 			//  Append username and point data to the table row
 			const tdName = document.createElement('td');
+			tdName.style.fontSize = "small";
 			if(user.status == 'active') {
 				tdName.style.color = "black";
 				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
@@ -90,11 +76,6 @@ function outputRoomUserTable(GameState) {
 	const bTeamRow = document.createElement('tr');
 	bTeamRow.classList.add('table-light');
 
-	const bTeamHeader = document.createElement('th');
-	bTeamHeader.setAttribute("scope","row");
-	bTeamHeader.innerHTML = ``;
-    bTeamRow.appendChild(bTeamHeader);
-
 	const bTeamData = document.createElement('td');
 	bTeamData.style.color = "black";
 	bTeamData.innerHTML = `TEAM B`;
@@ -115,17 +96,8 @@ function outputRoomUserTable(GameState) {
 			const tr = document.createElement('tr');
 			tr.classList.add('table-light');
 			
-			// Indicate who is the current card czar
-			const th = document.createElement('th');
-			th.setAttribute("scope","row");
-			if(user.username == GameState.cardCzar.username) {
-				th.innerHTML = ``;
-			} else {
-				th.innerHTML = ``;
-			}
-			tr.appendChild(th);
-			
 			//  Append username and point data to the table row
+			tdName.style.fontSize = "small";
 			const tdName = document.createElement('td');
 			if(user.status == 'active') {
 				tdName.style.color = "black";
