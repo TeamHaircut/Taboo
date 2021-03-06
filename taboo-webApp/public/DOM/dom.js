@@ -54,21 +54,22 @@ function outputRoomUserTable(GameState) {
 			//  Append username and point data to the table row
 			const tdName = document.createElement('td');
 			tdName.style.fontSize = "small";
+			console.log(user);
 			if(user.status == 'active') {
 				tdName.style.color = "black";
 				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
 			} else if(user.status == 'idle'){
 				tdName.style.color = "red";
 				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (busy)`;
-			} else {
-				//tdName.style.color = "red";
-				//tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (offline)`;		
 			}
-			tr.appendChild(tdName);
-			const tdPoints = document.createElement('td');
-			tdPoints.innerHTML = ``;
-			tr.appendChild(tdPoints);
-			document.querySelector('.userlist-table').appendChild(tr);
+
+			if(user.status != 'offline'){
+				tr.appendChild(tdName);
+				const tdPoints = document.createElement('td');
+				tdPoints.innerHTML = ``;
+				tr.appendChild(tdPoints);
+				document.querySelector('.userlist-table').appendChild(tr);
+			}
 		}
 		
 	});
@@ -97,23 +98,23 @@ function outputRoomUserTable(GameState) {
 			tr.classList.add('table-light');
 			
 			//  Append username and point data to the table row
-			tdName.style.fontSize = "small";
 			const tdName = document.createElement('td');
+			tdName.style.fontSize = "small";
 			if(user.status == 'active') {
 				tdName.style.color = "black";
 				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
 			} else if(user.status == 'idle'){
 				tdName.style.color = "red";
 				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (busy)`;
-			} else {
-				//tdName.style.color = "red";
-				//tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (offline)`;		
 			}
-			tr.appendChild(tdName);
-			const tdPoints = document.createElement('td');
-			tdPoints.innerHTML = ``;
-			tr.appendChild(tdPoints);
-			document.querySelector('.userlist-table').appendChild(tr);
+
+			if(user.status != 'offline'){
+				tr.appendChild(tdName);
+				const tdPoints = document.createElement('td');
+				tdPoints.innerHTML = ``;
+				tr.appendChild(tdPoints);
+				document.querySelector('.userlist-table').appendChild(tr);
+			}
 		}
 		
 	});
