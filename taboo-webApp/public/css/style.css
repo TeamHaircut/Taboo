@@ -13,7 +13,7 @@ body {
 }
 /**/
 /* Fonts for everything generic */
-p, tr, th, .normalFont {
+div, option, p, tr, th, .normalFont {
 	font-family: "Guffaboo-Regular";
 	/*font-size: 105%;*/
 }
