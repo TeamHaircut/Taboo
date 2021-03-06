@@ -87,6 +87,7 @@ gameControl.addEventListener("click", function(){
 
 gameControl1.addEventListener("click", function(){ 
 	//Emit game control state to server
+	clearServerBuzzer();
 	const state = gameControl1.innerHTML;
 	socket.emit('gameControlState', {state});
 	
@@ -167,7 +168,6 @@ socket.on('updateDOM', ({winnerArray, GameState}) => {
 
 //keep
 function refreshDOM(GameState) {
-	console.log(GameState.serverBuzzer);
 	if(GameState.serverBuzzer) {
 		playBuzzer();
 	} else {
@@ -201,7 +201,6 @@ socket.on('launch', ({GameState}) => {
 //keep
 // Apply game intialization to DOM
 function initializeGame(GameState) {
-
 	socket.emit('setServerGameInitialized', true);
 	gameControl.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	gameControl1.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
