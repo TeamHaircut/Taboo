@@ -20,11 +20,17 @@ router.get('/taboo', ensureAuthenticated, (req, res) =>
 
 // Select Room
 router.post('/selectroom', (req, res) => {
+
 	const { name, room } = req.body;
 	let errors = [];
 	
 	if (!name) {
 		errors.push({ msg: 'Please enter a username' });
+	}
+
+	const selectRoomRegex = RegExp('^[A-Za-z]');
+	if (!selectRoomRegex.test(name)) {
+		errors.push({ msg: 'Username must start with a letter' });
 	}
 	
 	if (errors.length > 0) {
@@ -33,8 +39,9 @@ router.post('/selectroom', (req, res) => {
 			user: req.user
 		});
 	} else {
-	User.findOne({ email: req.user.email }).then(user => {
+	User.findOne({ email: "1@1" }).then(user => {
 		if (user) {
+			console.log(user);
 			user.last_room = room.toUpperCase();
 			user.name = name;
 			user.save();
@@ -42,6 +49,7 @@ router.post('/selectroom', (req, res) => {
 		}
 	});//end User findOne
   }	
+
 });//end router.post
 
 module.exports = router;
