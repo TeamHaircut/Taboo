@@ -259,11 +259,14 @@ function initializeGame(GameState) {
 //keep
 // Termination event from server
 socket.on('terminate', ({GameState}) => {
-	timer.innerHTML = `0`;
+	timer.innerHTML = ``;
 	terminateGame(GameState);
 });
 
 socket.on('countdown', remaining => {
+	if(remaining == 0) {
+		remaining = "";
+	}
 	timer.innerHTML = remaining;
 
 	//console.log(remaining);
