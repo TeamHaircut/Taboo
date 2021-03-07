@@ -50,7 +50,7 @@ socket1.on('serverRulesData', rulesData => {
 
 function buttonPressed(element) {
     var val = '';
-    console.log(element.style.color);
+    //console.log(element.style.color);
     if(element.style.color==="rgb(235, 104, 100)") {
         val = 1;
     } else {

@@ -45,7 +45,7 @@ router.post('/selectroom', (req, res) => {
 	} else {
 	User.findOne({ email: "1@1" }).then(user => {
 		if (user) {
-			console.log(user);
+			//console.log(user);
 			user.last_room = room.toUpperCase();
 			user.name = name;
 			user.save();

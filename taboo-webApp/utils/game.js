@@ -32,7 +32,7 @@ function getBlackDeck() {
 		blackDeck[k] = blackDeck[i];
 		blackDeck[i] = temp;
 	}
-	//console.log("Black Cards Left: " +blackDeck.length);
+	console.log("Black Cards Left: " +blackDeck.length);
 	return blackDeck;
 }
 
@@ -44,7 +44,6 @@ function getWhiteDeck() {
 		whiteDeck[k] = whiteDeck[i];
 		whiteDeck[i] = temp;
 	}
-	//console.log("White Cards Left: " + whiteDeck.length);
 	return whiteDeck;
 }
 
@@ -75,9 +74,7 @@ function getGameState(user, users, gameusers) {
 	//TODO - implement options as array of house rules
 	options = isWCRebootOptionEnabled(); //0 || 1
 	const gamestate = {cardCzar, blackCard, serverGameInitialized, serverBuzzer, aTeamPoints, bTeamPoints, serverBuzzer, user, users, gameusers, options};
-	//console.log("================================================================================");
 	//console.log(gamestate);
-	//console.log("================================================================================");
 	return gamestate;
 }
 

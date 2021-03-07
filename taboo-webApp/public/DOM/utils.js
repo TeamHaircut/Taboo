@@ -13,7 +13,7 @@ function buzzer(src) {
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
     this.play = function(){
-        console.log("inside play function");
+      //console.log("inside play function");
       this.sound.play();
     }
     this.stop = function(){

@@ -54,7 +54,7 @@ function outputRoomUserTable(GameState) {
 			//  Append username and point data to the table row
 			const tdName = document.createElement('td');
 			tdName.style.fontSize = "small";
-			console.log(user);
+			//console.log(user);
 			if(user.status == 'active') {
 				tdName.style.color = "black";
 				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;

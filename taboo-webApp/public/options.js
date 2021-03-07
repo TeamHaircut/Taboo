@@ -37,8 +37,8 @@ socket1.on('serverDeckData', deckData => {
         deckMap.set(key, value);
 
         var element = map2.get(key);
-        console.log(key);
-        console.log(element);
+        //console.log(key);
+        //console.log(element);
             if(value == 0) {
                 element.style.backgroundColor= "white";
                 element.style.color = "rgb(235,104,100)";
@@ -52,7 +52,7 @@ socket1.on('serverDeckData', deckData => {
 
 function buttonPressed(element) {
     var val = '';
-    console.log(element.style.color);
+    //console.log(element.style.color);
     if(element.style.color==="rgb(235, 104, 100)") {
         val = 1;
     } else {
