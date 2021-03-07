@@ -7,8 +7,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const socket = require('socket.io');
 const formatMessage = require('./utils/messages');
-const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, setUserTeamName, setUserRoles  } = require('./utils/users');
-const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar, setServerGameInitialized, setServerBuzzer, addTeamPoints} = require('./utils/game');
+const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, setUserTeamName, setUserRoles, resetUserList  } = require('./utils/users');
+const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar, setServerGameInitialized, setServerBuzzer, addTeamPoints, resetTeamPoints} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
 const { Console } = require('console');
@@ -212,6 +212,26 @@ io.on('connection', socket => {
 			getRuleMap()
 			)
 		);
+
+	});
+
+	socket.on('requestRulesInfo0', ({id}) => {
+		const user = getCurrentUser(socket.id);
+		switch (id) {
+			case "resetpoints":
+				console.log("Reset Points on server");
+				resetTeamPoints();
+				break;
+			case "resetuserlist":
+				console.log("Reset user list on server");
+				resetUserList();
+				break;
+			default:
+		}
+		io.to(user.room).emit('gamestate', {
+			gameState: GameState.REFRESH,
+			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+		});
 
 	});
 

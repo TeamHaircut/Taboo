@@ -68,6 +68,11 @@ function addTeamPoints(team) {
 	}
 }
 
+function resetTeamPoints() {
+	aTeamPoints = 0;
+	bTeamPoints = 0;
+}
+
 function getGameState(user, users, gameusers) {
 	//currently there is only one house rule established. 
 	//only used in DOM.outputWhiteCards conditional statement 
@@ -173,5 +178,6 @@ module.exports = {
   clearDiscardBlackDeck,
   setServerGameInitialized,
   setServerBuzzer,
-  addTeamPoints
+  addTeamPoints,
+  resetTeamPoints
 };

@@ -4,7 +4,8 @@ const  ruleMap = new Map();
 const localRuleMap = new Map();
 
 var houseRules = [
-    {id:'WhitecardReboot', text:'<h4>Trade In White Cards:</h4><br> The Card Czar is allowed to trade in as many White Cards as they\'d like to the deck and draw back up to ten.'}
+    {id:'resetpoints', text:'<h4>Reset Points:</h4><br> Reset points for both teams to 0.'},
+    {id:'resetuserlist', text:'<h4>Refresh Room User List:</h4><br> Manually refresh room user list.'}
 ];
 
 createToggleButtons(houseRules, rulesBtnGroup);
@@ -29,6 +30,7 @@ const socket1 = io('http://teamhaircut.org:5000', {
 });
 
 //Request List of Enabled Rules from Server
+/*
 socket1.emit('getServerRules');
 
 socket1.on('serverRulesData', rulesData => {
@@ -47,14 +49,16 @@ socket1.on('serverRulesData', rulesData => {
     }
 
 });
+*/
 
 function buttonPressed(element) {
-    var val = '';
+    //var val = '';
     //console.log(element.style.color);
-    if(element.style.color==="rgb(235, 104, 100)") {
-        val = 1;
-    } else {
-        val = 0;
-    }
-    socket1.emit('requestRulesInfo', {key: element.id, val});
+    //if(element.style.color==="rgb(235, 104, 100)") {
+    //    val = 1;
+    //} else {
+    //    val = 0;
+    //}
+    //socket1.emit('requestRulesInfo', {key: element.id, val});
+    socket1.emit('requestRulesInfo0', {id: element.id});
 }

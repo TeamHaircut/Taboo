@@ -8,6 +8,15 @@ function setUserStatus(currentUser, status) {
 	});
 }
 
+function resetUserList() {
+	users.forEach(user => {
+		console.log(user.status);
+		if(user.status == 'idle') {
+			user.status = 'offline';
+		}
+	});
+}
+
 function setUserTeamName(currentUser, teamName) {
 	users.forEach(user => {
 		if(user.username == currentUser.username) {
@@ -107,5 +116,6 @@ module.exports = {
   getCurrentUserByUsername, 
   setUserStatus,
   setUserTeamName,
-  setUserRoles
+  setUserRoles,
+  resetUserList
 };

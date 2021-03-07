@@ -3,6 +3,9 @@ const gameControl1 = document.getElementById('gamecontrol1');
 
 const logoutControl = document.getElementById('logoutcontrol');
 
+const resetPointLink = document.getElementById('resetPointLink');
+const refreshUserListLink = document.getElementById('refreshUserListLink');
+
 const chatForm = document.getElementById('chat-form');
 
 const socket = io('http://teamhaircut.org:5000', {
@@ -77,6 +80,17 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 				}, 1000)
 			}
 /////////////////////////////////////////////////////////////////////////////
+resetPointLink.addEventListener("click", function(){ 
+	console.log("reset point link clicked");
+	socket.emit('requestRulesInfo0', {id: "resetpoints"});
+	
+});
+
+refreshUserListLink.addEventListener("click", function(){ 
+	console.log("refresh user list link clicked");
+	socket.emit('requestRulesInfo0', {id: "resetuserlist"});
+	
+});
 
 gameControl.addEventListener("click", function(){ 
 	//Emit game control state to server
