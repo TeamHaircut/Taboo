@@ -17,7 +17,7 @@ const socket = io('http://teamhaircut.org:5000', {
 var myBuzzer = new buzzer("buzzer.mp3");
 
 socket.on('reconnecting', () => {
-		console.log("reconnecting");
+		console.log("reconnecting.");
 		socket.emit('rejoinRoom', { username: getClientUsername() });
 });
 
