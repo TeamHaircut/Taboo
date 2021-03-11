@@ -46,22 +46,30 @@ mergeSelectedDecks();
 //Run when client connects
 io.on('connection', socket => {
 
+	//////////////////////////////////
+
+  // clean up when a user leaves, and broadcast it to other users
+  socket.on('disconnect', function () {
+	 console.log("Disconnected");
+  });
+
+	///////////////////////////////////
+
 	socket.on('joinRoom', ({ username, room }) => {
+		console.log("username: "+username+ " socket.id: "+socket.id);
 		const regex = RegExp('.*(J|j)oe.*');
 		//if username contains Joe or joe then username = Grumpy Nutz Joe
 		if(regex.test(username)) {
 			username = "Grumpy Nutz Joe";
 		}
 		var user = getCurrentUserByUsername(username);
+		
 		//if new user
 		if (!user) {
 			const user = userJoin(socket.id, username, room);
 
 			//Add the connecting socket to the defined room
 			socket.join(user.room);
-
-			// Welcome current user to the room
-			//socket.emit('message', formatMessage(`Mr. ${user.room}`, `Welcome to the ${user.room} room.`));
 
 			/* Send GameState, room user list, and czar to all the room's clients*/
 			io.to(user.room).emit('gamestate', {
@@ -300,6 +308,7 @@ io.on('connection', socket => {
 	
 	// Listen for rejoin event
 	socket.on('rejoinRoom', ({ username }) => {
+		console.log("Rejoin Room on Server");
 		var user = getCurrentUserByUsername(username);
 		if(user) {
 			// set current user to active in user.js
@@ -347,11 +356,15 @@ io.on('connection', socket => {
 
 	var logoutUser;
 	// Runs when client closes browser
-	socket.on('disconnect', (reason) => {
-		//console.log(reason);
-/*
-		var user = getCurrentUser(socket.id);
+//	socket.on('disconnect', (reason) => {
+//		console.log(reason);
 
+//        userIsConnected = false;
+//        setTimeout(function () {
+//            if (!userIsConnected) currentUIDS.pop(currentUID);
+//        }, 15000);
+
+/*
 		if(user) {
 			logoutUser = setTimeout(() => {
 				console.log(user.username+" inside timeout");
@@ -365,21 +378,21 @@ io.on('connection', socket => {
 				15000//90000
 			)*/
 
-		var user = getCurrentUser(socket.id);
+		//var user = getCurrentUser(socket.id);
 
-		if (user) {
+		//if (user) {
 			//console.log(user.status);
 //			setUserStatus(user, 'offline');
 //			user = getCurrentUser(socket.id);
 
 			// Send users and room info
-			io.to(user.room).emit('gamestate', {
-				gameState: "default",
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-			});
-		}
+			//io.to(user.room).emit('gamestate', {
+			//	gameState: "default",
+			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			//});
+		//}
 
-	});
+	//});
 
 	// Runs when client changes tab or app
 	socket.on('goIdle', () => {

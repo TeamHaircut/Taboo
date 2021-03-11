@@ -33,6 +33,7 @@ function getClientRoom() {
 
 // Get username from template
 const clientUsername = document.getElementById('client-username');
+clientUsername.innerHTML = localStorage.getItem("uname");
 var username = clientUsername.innerHTML;
 
 // Set ClientUsername to username

@@ -16,38 +16,8 @@ const socket = io('http://teamhaircut.org:5000', {
 
 var myBuzzer = new buzzer("buzzer.mp3");
 
-socket.on('reconnecting', () => {
-		console.log("reconnecting.");
-		socket.emit('rejoinRoom', { username: getClientUsername() });
-});
-
-/* Send an object containing the client's username, and room name as soon as they join the room*/
+console.log(localStorage.getItem("uname"));
 socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() });
-
-// Message from server
-/*socket.on('message', message => {
-	outputMessage(message);
-	
-	// Scroll down
-	chatMessages.scrollTop = chatMessages.scrollHeight;
-});
-*/
-
-// Message submit
-/*chatForm.addEventListener('submit', e => {
-	e.preventDefault();
-	
-	// Get message text
-	const msg = e.target.elements.msg.value;
-	
-	//Emit message to server
-	socket.emit('chatMessage', msg);
-	
-	// Clear input
-	e.target.elements.msg.value = '';
-	e.target.elements.msg.focus();
-});
-*/
 
 /////////////////////////////SOUND//////////////////////////////////////////////////////
 			var buzzerSound = new Audio("buzzer.mp3");
@@ -132,7 +102,7 @@ document.addEventListener("visibilitychange", function() {
 		logoutUser = setTimeout(() => {
 				socket.emit('logoutUser');
 		},
-			90000
+			3000
 		)
 	}	
 	
