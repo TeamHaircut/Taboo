@@ -2,7 +2,8 @@
 
 // Get room from template
 const clientRoom = document.getElementById('client-room');
-const room = clientRoom.innerHTML;
+clientRoom.innerHTML = localStorage.getItem("uroom");
+var room = clientRoom.innerHTML;
 
 function buzzer(src) {
     this.sound = document.createElement("audio");

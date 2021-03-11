@@ -96,14 +96,14 @@ document.addEventListener("visibilitychange", function() {
 
 	if (document.visibilityState === 'visible') {
 		socket.emit('rejoinRoom', { username: getClientUsername() });
-		clearTimeout(logoutUser);
+		//clearTimeout(logoutUser);
 	} else {
 		socket.emit('goIdle');
-		logoutUser = setTimeout(() => {
-				socket.emit('logoutUser');
-		},
-			3000
-		)
+		//logoutUser = setTimeout(() => {
+		//		socket.emit('logoutUser');
+		//},
+		//	3000
+		//)
 	}	
 	
 })
