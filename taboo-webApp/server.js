@@ -65,7 +65,7 @@ io.on('connection', socket => {
 
 			/* Send GameState, room user list, and czar to all the room's clients*/
 			io.to(user.room).emit('gamestate', {
-				gameState: "default",
+				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});	
 		//else rejoining user
