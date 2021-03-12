@@ -36,9 +36,6 @@ const GameState = {
 	INITIALIZE: 2,
 	REFRESH: 3
 };
-var gameState = GameState.TERMINATE;
-
-var cardSelected;
 
 //mergeSelectedDecks on server start
 mergeSelectedDecks();
@@ -46,17 +43,12 @@ mergeSelectedDecks();
 //Run when client connects
 io.on('connection', socket => {
 
-	//////////////////////////////////
-
-  // clean up when a user leaves, and broadcast it to other users
-  socket.on('disconnect', function () {
-	 console.log("Disconnected");
-  });
-
-	///////////////////////////////////
+	socket.on('disconnect', function () {
+		console.log("Disconnected");
+	});
 
 	socket.on('joinRoom', ({ username, room }) => {
-		console.log("username: "+username+ " socket.id: "+socket.id);
+		//console.log("username: "+username+ " socket.id: "+socket.id);
 		const regex = RegExp('.*(J|j)oe.*');
 		//if username contains Joe or joe then username = Grumpy Nutz Joe
 		if(regex.test(username)) {
@@ -78,7 +70,7 @@ io.on('connection', socket => {
 			});	
 		//else rejoining user
 		} else {
-			userRejoin(socket.id, user);
+			userRejoin(socket.id, user, room);
 
 			//Add the connecting socket to the defined room			
 			socket.join(user.room);
@@ -92,99 +84,79 @@ io.on('connection', socket => {
 		}
 		
 	});
-	
-	// Listen for chatMessage
-	socket.on('chatMessage', msg => {
-		const user = getCurrentUser(socket.id);
-		io.to(user.room).emit('message', formatMessage(user.username, msg));
-	});
 
 	// Listen for game control event
 	socket.on('teamControlState', ({teamSelection}) => {
 		var user = getCurrentUser(socket.id);
-		setUserTeamName(user,teamSelection);
-		user = getCurrentUser(socket.id);
-		io.to(user.room).emit('gamestate', {
-			gameState: GameState.REFRESH,
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
+		if(user) {
+			setUserTeamName(user,teamSelection);
+			user = getCurrentUser(socket.id);
+			io.to(user.room).emit('gamestate', {
+				gameState: GameState.REFRESH,
+				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			});
+		}
 	});
 	//keep
 	// Listen for game control event
 	socket.on('gameControlState', ({state}) => {
 		const user = getCurrentUser(socket.id);
-		if(state === `<i class="fas fa-play"></i> Start Game`) {
+		if(user) {
+			if(state === `<i class="fas fa-play"></i> Start Game`) {
 
-			//console.log("Game Started");
-			setUserRoles(user);
+				setUserRoles(user);
+				//////////////////////////////
+				var counter = 0;
+				// We want to send the countdown in seconds to the client and we start at 60
+				var seconds = 59;
+				// temporary variable for storing how far we have go in the countdown
+				var remaining = 0;
+				// set a new interval to go off every second and keep the countdown synced among all players
+				var interval = setInterval(function() {
+					// perform the calculation for how many seconds left
+					remaining = seconds - Math.ceil(counter / 1000);
+					// broadcast how advanced the countdown is
+					io.to(user.room).emit('countdown', remaining);
+					if (counter >= (seconds*1000)) {
+						// countdown is finished tell the client to change the views.
+						io.to(user.room).emit('gamestate', { 
+							gameState: GameState.TERMINATE,
+							GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+						});
+						clearInterval(interval);
+					}
+					counter += 1000;
+				}, 1000);
+				/////////////////////////////
+				cardSelected = false;
 
-			//////////////////////////////
-			var counter = 0;
-			// We want to send the countdown in seconds to the client and we start at 60
-			var seconds = 59;
-			// temporary variable for storing how far we have go in the countdown
-			var remaining = 0;
-			// set a new interval to go off every second and keep the countdown synced among all players
-			var interval = setInterval(function() {
-				// perform the calculation for how many seconds left
-				remaining = seconds - Math.ceil(counter / 1000);
-				// broadcast how advanced the countdown is
-				io.to(user.room).emit('countdown', remaining);
-				if (counter >= (seconds*1000)) {
-					// countdown is finished tell the client to change the views.
-					io.to(user.room).emit('gamestate', { 
-						gameState: GameState.TERMINATE,
-						GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-					});
-					clearInterval(interval);
-				}
-				counter += 1000;
-			}, 1000);
-			/////////////////////////////
+				// Set card czar to current user
+				setCardCzar(user);
+				
+				// Draw a Black Card
+				drawBlackCard(true);
 
-			cardSelected = false;
+				io.to(user.room).emit('gamestate', {
+					gameState: GameState.INITIALIZE,
+					GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+				});
+				
+			} else {
+				const user = getCurrentUser(socket.id);
 
-			// Set card czar to current user
-			setCardCzar(user);
-			
-			// Set points for all users to 0
-			//resetPoints();
-			
-			// Draw a Black Card
-			drawBlackCard(true);
-			
-			//Initialize White Cards for all clients in the room
-			var roomUserList = getRoomUserList(user.room);
-//keep
-			//Send czar and room info to everybody in the room
-			//io.to(user.room).emit('launch', {
-			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-			//});
+				// Remove card czar
+				setCardCzar(false);
 
-			io.to(user.room).emit('gamestate', {
-				gameState: GameState.INITIALIZE,
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-			});
-			
-		} else {
-			const user = getCurrentUser(socket.id);
+				// Clear black card
+				drawBlackCard(false);
 
-			// Remove card czar
-			setCardCzar(false);
+				clearDiscardBlackDeck();
 
-			// Clear black card
-			drawBlackCard(false);
-
-			// Clear white cards
-			var roomUserList = getRoomUserList(user.room);
-			//updateRoomUsersWhiteCards(initializeWhiteCards(roomUserList, false));
-
-			clearDiscardBlackDeck();
-
-			io.to(user.room).emit('gamestate', { 
-				gameState: GameState.TERMINATE,
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-			});
+				io.to(user.room).emit('gamestate', { 
+					gameState: GameState.TERMINATE,
+					GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+				});
+			}
 		}
 	});
 
@@ -225,21 +197,23 @@ io.on('connection', socket => {
 
 	socket.on('requestRulesInfo0', ({id}) => {
 		const user = getCurrentUser(socket.id);
-		switch (id) {
-			case "resetpoints":
-				console.log("Reset Points on server");
-				resetTeamPoints();
-				break;
-			case "resetuserlist":
-				console.log("Reset user list on server");
-				resetUserList();
-				break;
-			default:
+		if(user) {
+			switch (id) {
+				case "resetpoints":
+					//console.log("Reset Points on server");
+					resetTeamPoints();
+					break;
+				case "resetuserlist":
+					//console.log("Reset user list on server");
+					resetUserList();
+					break;
+				default:
+			}
+			io.to(user.room).emit('gamestate', {
+				gameState: GameState.REFRESH,
+				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			});
 		}
-		io.to(user.room).emit('gamestate', {
-			gameState: GameState.REFRESH,
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
 
 	});
 
@@ -256,68 +230,42 @@ io.on('connection', socket => {
 
 	// Listen for winner event
 	socket.on('declareWinner1', ({team}) => {
-		cardSelected = false;
+		//cardSelected = false;
 		const user = getCurrentUser(socket.id);
-
-		//extract teamName from card
-		var teamName = team;
-		addTeamPoints(teamName);
-				
-		/* Send GameState, room user list, and czar to all the room's clients*/
-		io.to(user.room).emit('gamestate', {
-			gameState: GameState.REFRESH,
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
-
+		if(user) {
+			//extract teamName from card
+			var teamName = team;
+			addTeamPoints(teamName);
+					
+			/* Send GameState, room user list, and czar to all the room's clients*/
+			io.to(user.room).emit('gamestate', {
+				gameState: GameState.REFRESH,
+				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			});
+		}
 	});
 //keep
 	// Listen for draw black card event
 	socket.on('drawBlackCard', () => {
 		const user = getCurrentUser(socket.id);
-		drawBlackCard(true);
+		if(user) {
+			drawBlackCard(true);
 
-		io.to(user.room).emit('drawBlackCard', {
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
+			io.to(user.room).emit('drawBlackCard', {
+				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			});
+		}
 	});
 
 	// Listen for changes in game state initialization
 	socket.on('setServerGameInitialized', (flag) => {
-		//const user = getCurrentUser(socket.id);
-		//console.log(flag);
 		setServerGameInitialized(flag);
 	});
 
 	socket.on('setBuzzer', () => {
 		const user = getCurrentUser(socket.id);
-		setServerBuzzer(true);
-		io.to(user.room).emit('gamestate', {
-			gameState: GameState.REFRESH,
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
-	});
-
-	socket.on('clearServerBuzzer', () => {
-		const user = getCurrentUser(socket.id);
-		setServerBuzzer(false);
-		io.to(user.room).emit('gamestate', {
-			gameState: GameState.REFRESH,
-			GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-		});
-	});
-	
-	// Listen for rejoin event
-	socket.on('rejoinRoom', ({ username }) => {
-		console.log("Rejoin Room on Server");
-		var user = getCurrentUserByUsername(username);
 		if(user) {
-			// set current user to active in user.js
-			userRejoin(socket.id, user);
-			socket.join(user.room);
-
-			// get updated current user and sent it to gamestate
-			user = getCurrentUser(socket.id);
-
+			setServerBuzzer(true);
 			io.to(user.room).emit('gamestate', {
 				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
@@ -325,6 +273,43 @@ io.on('connection', socket => {
 		}
 	});
 
+	socket.on('clearServerBuzzer', () => {
+		const user = getCurrentUser(socket.id);
+		if(user) {
+			setServerBuzzer(false);
+			io.to(user.room).emit('gamestate', {
+				gameState: GameState.REFRESH,
+				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			});
+		}
+	});
+	
+	// Listen for rejoin event
+	socket.on('rejoinRoom', ({ username, room }) => {
+		var user = getCurrentUserByUsername(username);
+		//console.log("Rejoined Room From Server");
+		//console.log(user);
+		//console.log(room);
+		if(user) {
+			// set current user to active in user.js
+			userRejoin(socket.id, user, room);
+			socket.join(user.room);
+
+			// get updated current user and sent it to gamestate
+			user = getCurrentUser(socket.id);
+			console.log(user);
+			io.to(user.room).emit('gamestate', {
+				gameState: GameState.REFRESH,
+				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			});
+		}
+	});
+
+	//socket.on('vistate', ({visibilityState}) => {
+	//	console.log(visibilityState);
+	//});
+
+	/*
 	socket.on('startRound', ({ username, blackCardSelected }) => {
 		cardSelected = blackCardSelected;
 		popDiscardBlackDeck();
@@ -337,11 +322,10 @@ io.on('connection', socket => {
 			});
 		}
 	});
+	*/
 
 	socket.on('logoutUser', () => {
-
 		var user = getCurrentUser(socket.id);
-
 		if (user) {
 			setUserStatus(user, 'offline');
 			user = getCurrentUser(socket.id);
@@ -354,51 +338,9 @@ io.on('connection', socket => {
 		}
 	});
 
-	var logoutUser;
-	// Runs when client closes browser
-//	socket.on('disconnect', (reason) => {
-//		console.log(reason);
-
-//        userIsConnected = false;
-//        setTimeout(function () {
-//            if (!userIsConnected) currentUIDS.pop(currentUID);
-//        }, 15000);
-
-/*
-		if(user) {
-			logoutUser = setTimeout(() => {
-				console.log(user.username+" inside timeout");
-				setUserStatus(user, 'offline');
-				user = getCurrentUser(socket.id);
-				io.to(user.room).emit('gamestate', {
-					gameState: "default",
-					GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-				});
-			},
-				15000//90000
-			)*/
-
-		//var user = getCurrentUser(socket.id);
-
-		//if (user) {
-			//console.log(user.status);
-//			setUserStatus(user, 'offline');
-//			user = getCurrentUser(socket.id);
-
-			// Send users and room info
-			//io.to(user.room).emit('gamestate', {
-			//	gameState: "default",
-			//	GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-			//});
-		//}
-
-	//});
-
 	// Runs when client changes tab or app
 	socket.on('goIdle', () => {
-
 		var user = getCurrentUser(socket.id);
-
 		if (user) {
 			if(user.status == 'active'){
 				setUserStatus(user,'idle');

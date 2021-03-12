@@ -91,22 +91,27 @@ logoutControl.addEventListener("click", function() {
 });
 
 var logoutUser;
+var isActive = false;
+
+window.addEventListener("touchstart", function() {
+	//socket.emit('vistate', { visibilityState: isActive });
+	if(!isActive) {
+		//socket.emit('vistate', { visibilityState: document.visibilityState });
+		socket.emit('rejoinRoom', { username: getClientUsername(), room: getClientRoom() });
+		isActive = true;
+	}
+});
 
 document.addEventListener("visibilitychange", function() {
-
+	//socket.emit('vistate', { visibilityState: document.visibilityState });
 	if (document.visibilityState === 'visible') {
-		socket.emit('rejoinRoom', { username: getClientUsername() });
-		//clearTimeout(logoutUser);
+		socket.emit('rejoinRoom', { username: getClientUsername(), room: getClientRoom() });
 	} else {
+		isActive = false;
 		socket.emit('goIdle');
-		//logoutUser = setTimeout(() => {
-		//		socket.emit('logoutUser');
-		//},
-		//	3000
-		//)
 	}	
 	
-})
+}, false);
 
 //keep
 function drawBlackCard() {

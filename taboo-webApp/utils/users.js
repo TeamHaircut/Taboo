@@ -45,34 +45,6 @@ function getCurrentUserByUsername(username) {
 	return users.find(user => user.username === username);
 }
 
-//function updatePoints(name) {
-//	users.forEach(user => {
-//		if(user.username == name) {
-//			user.points = user.points + 1;
-//		}
-//	});
-//}
-
-//function updatePoints1(teamName) {
-//	//console.log(teamName);
-//	users.forEach(user => {
-//		if(user.teamName == teamName) {
-//			user.points = user.points + 1;
-//		}
-//	});
-//	//console.log(users);
-//}
-
-// Reset Points to 0
-//function resetPoints() {
-//	users.forEach(user => {
-//		if(user.points == '-'){
-//			user.points = 0;
-//		}
-//		//user.points = 0
-//	});
-//}
-
 // Join user to chat
 function userJoin(id, username, room) {
 	const status = 'active';
@@ -89,9 +61,10 @@ function getCurrentUser(id) {
 }
 
 // Rejoin user to room
-function userRejoin(id, user) {
+function userRejoin(id, user, room) {
 	user.id = id;
 	user.status = 'active';
+	user.room = room;
 }
 
 // Get room users
