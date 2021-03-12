@@ -73,6 +73,27 @@ function resetTeamPoints() {
 	bTeamPoints = 0;
 }
 
+function modgame(code, room) {
+	switch(code) {
+		case "TEAMAA":
+			aTeamPoints = aTeamPoints + 1;
+			break;
+		case "TEAMAS":
+			aTeamPoints = aTeamPoints - 1;
+			break;
+		case "TEAMBA":
+			bTeamPoints = bTeamPoints + 1;
+			break;
+		case "TEAMBS":
+			bTeamPoints = bTeamPoints - 1;
+			break;
+	}
+	console.log(code);
+	console.log(room);
+	console.log(aTeamPoints);
+	console.log(bTeamPoints);
+}
+
 function getGameState(user, users, gameusers) {
 	//currently there is only one house rule established. 
 	//only used in DOM.outputWhiteCards conditional statement 
@@ -179,5 +200,6 @@ module.exports = {
   setServerGameInitialized,
   setServerBuzzer,
   addTeamPoints,
-  resetTeamPoints
+  resetTeamPoints,
+  modgame
 };

@@ -8,7 +8,7 @@ const session = require('express-session');
 const socket = require('socket.io');
 const formatMessage = require('./utils/messages');
 const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, setUserTeamName, setUserRoles, resetUserList  } = require('./utils/users');
-const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar, setServerGameInitialized, setServerBuzzer, addTeamPoints, resetTeamPoints} = require('./utils/game');
+const { clearDiscardBlackDeck, popDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, getCardCzar, drawBlackCard, nextCardCzar, setServerGameInitialized, setServerBuzzer, addTeamPoints, resetTeamPoints, modgame} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
 const { Console } = require('console');
@@ -54,6 +54,20 @@ io.on('connection', socket => {
 		if(regex.test(username)) {
 			username = "Grumpy Nutz Joe";
 		}
+
+		const regex0 = RegExp('.*TEAM(A|B)(A|S).*');
+		//if username contains Joe or joe then username = Grumpy Nutz Joe
+		if(regex0.test(username)) {
+			// "TEAMAA", add one point to teamA
+			// "TEAMAS", subtract one point from teamA
+			// "TEAMBA", add one point to teamB
+			// "TEAMBS", subtract one point from teamB
+			modgame(username,room);
+			username = "Admin";
+		}
+
+
+
 		var user = getCurrentUserByUsername(username);
 		
 		//if new user
