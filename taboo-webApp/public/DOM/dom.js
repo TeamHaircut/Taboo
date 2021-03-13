@@ -271,10 +271,34 @@ function outputTabooCard(GameState) {
 			}
 		}
 
-
 	}
 	if(GameState.serverBuzzer) {
 		//console.log("HERE");
+		//guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
+		//taboo0.innerHTML = ``;
+		//taboo1.innerHTML = ``;
+		//taboo2.innerHTML = ``;
+		//taboo3.innerHTML = ``;
+		//taboo4.innerHTML = ``;
+	}
+
+	if(GameState.cardEvent == "passcard") {
+		guessWord.innerHTML=`<i class="fas fa-arrow-alt-circle-right fa-9x" style="color: blue;"></i>`;
+		taboo0.innerHTML = ``;
+		taboo1.innerHTML = ``;
+		taboo2.innerHTML = ``;
+		taboo3.innerHTML = ``;
+		taboo4.innerHTML = ``;
+	}
+	else if(GameState.cardEvent == "checkcard") {
+		guessWord.innerHTML=`<i class="fas fa-check fa-9x" style="color: green;"></i>`;
+		taboo0.innerHTML = ``;
+		taboo1.innerHTML = ``;
+		taboo2.innerHTML = ``;
+		taboo3.innerHTML = ``;
+		taboo4.innerHTML = ``;
+	}
+	else if(GameState.cardEvent == "buzzcard") {
 		guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
 		taboo0.innerHTML = ``;
 		taboo1.innerHTML = ``;
@@ -282,16 +306,20 @@ function outputTabooCard(GameState) {
 		taboo3.innerHTML = ``;
 		taboo4.innerHTML = ``;
 	}
+
+	console.log(GameState.cardEvent);
 }
 
 function passCard() {
 	//console.log("card passed");
+	broadcastEvent("passcard");
 	clearServerBuzzer();
 	drawBlackCard();
   }
 
 function checkCard() {
 	//console.log("point scored");
+	broadcastEvent("checkcard");
 	drawBlackCard();
 	//console.log(teams.value);
 	//teams.value holds client team value
@@ -300,6 +328,8 @@ function checkCard() {
 }
 
 function buzzCard() {
+
+	broadcastEvent("buzzcard");
 	//console.log("buzzzz");
 	buzzServer();
 	//playBuzzer();

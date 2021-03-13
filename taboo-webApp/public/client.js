@@ -127,6 +127,11 @@ function buzzServer() {
 	socket.emit('setBuzzer');
 }
 
+function broadcastEvent(str) {
+	//console.log(str);
+	socket.emit('broadcastEvent', {str});
+}
+
 socket.on('buzzFromServer', ({GameState})=> {
 	guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
 	taboo0.innerHTML = ``;

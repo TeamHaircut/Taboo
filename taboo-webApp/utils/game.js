@@ -19,6 +19,8 @@ var serverGameInitialized = false;
 
 var serverBuzzer = false;
 
+var cardEvent = '';
+
 function mergeSelectedDecks() {
 	blackDeck = mergeSelectedBlackDecks();
 	whiteDeck = mergeSelectedWhiteDecks();
@@ -57,6 +59,10 @@ function setServerGameInitialized(flag) {
 
 function setServerBuzzer(flag) {
 	serverBuzzer = flag;
+}
+
+function triggerCardEvent(str) {
+	cardEvent = str;
 }
 
 function addTeamPoints(team) {
@@ -99,7 +105,7 @@ function getGameState(user, users, gameusers) {
 	//only used in DOM.outputWhiteCards conditional statement 
 	//TODO - implement options as array of house rules
 	options = isWCRebootOptionEnabled(); //0 || 1
-	const gamestate = {cardCzar, blackCard, serverGameInitialized, serverBuzzer, aTeamPoints, bTeamPoints, serverBuzzer, user, users, gameusers, options};
+	const gamestate = {cardCzar, blackCard, serverGameInitialized, serverBuzzer, aTeamPoints, bTeamPoints, serverBuzzer, cardEvent, user, users, gameusers, options};
 	//console.log(gamestate);
 	return gamestate;
 }
@@ -201,5 +207,6 @@ module.exports = {
   setServerBuzzer,
   addTeamPoints,
   resetTeamPoints,
-  modgame
+  modgame,
+  triggerCardEvent
 };
