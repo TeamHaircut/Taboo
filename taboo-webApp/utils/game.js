@@ -34,7 +34,7 @@ function getBlackDeck() {
 		blackDeck[k] = blackDeck[i];
 		blackDeck[i] = temp;
 	}
-	console.log("Black Cards Left: " +blackDeck.length);
+	console.log("Taboo Cards Left: " +blackDeck.length);
 	return blackDeck;
 }
 
@@ -94,10 +94,6 @@ function modgame(code, room) {
 			bTeamPoints = bTeamPoints - 1;
 			break;
 	}
-	console.log(code);
-	console.log(room);
-	console.log(aTeamPoints);
-	console.log(bTeamPoints);
 }
 
 function getGameState(user, users, gameusers) {

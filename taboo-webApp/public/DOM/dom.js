@@ -54,7 +54,6 @@ function outputRoomUserTable(GameState) {
 			//  Append username and point data to the table row
 			const tdName = document.createElement('td');
 			tdName.style.fontSize = "small";
-			//console.log(user);
 			if(user.status == 'active') {
 				tdName.style.color = "black";
 				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
@@ -219,7 +218,6 @@ function outputTabooCard(GameState) {
 			cardColor.src = "img_cardbackground_purple.PNG";
 		}
 
-		//console.log(role);
 		if(role != "receiver") {
 			if(typeof tabooCard[2] == 'undefined') {
 				guessWord.innerHTML = `GAMEOVER`;
@@ -272,15 +270,6 @@ function outputTabooCard(GameState) {
 		}
 
 	}
-	if(GameState.serverBuzzer) {
-		//console.log("HERE");
-		//guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
-		//taboo0.innerHTML = ``;
-		//taboo1.innerHTML = ``;
-		//taboo2.innerHTML = ``;
-		//taboo3.innerHTML = ``;
-		//taboo4.innerHTML = ``;
-	}
 
 	if(GameState.cardEvent == "passcard") {
 		guessWord.innerHTML=`<i class="fas fa-arrow-alt-circle-right fa-9x" style="color: blue;"></i>`;
@@ -307,30 +296,21 @@ function outputTabooCard(GameState) {
 		taboo4.innerHTML = ``;
 	}
 
-	console.log(GameState.cardEvent);
 }
 
 function passCard() {
-	//console.log("card passed");
 	broadcastEvent("passcard");
 	clearServerBuzzer();
 	drawBlackCard();
   }
 
 function checkCard() {
-	//console.log("point scored");
 	broadcastEvent("checkcard");
 	drawBlackCard();
-	//console.log(teams.value);
-	//teams.value holds client team value
 	sendWinnerInfoToServer1(teams.value);
-	//addPoint();
 }
 
 function buzzCard() {
-
 	broadcastEvent("buzzcard");
-	//console.log("buzzzz");
 	buzzServer();
-	//playBuzzer();
 }

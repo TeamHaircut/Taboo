@@ -306,6 +306,7 @@ io.on('connection', socket => {
 				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
+			//stop broadcasting card event after 1/2 sec
 			setTimeout(function() {
 				triggerCardEvent(false);
 				io.to(user.room).emit('gamestate', {
@@ -320,8 +321,6 @@ io.on('connection', socket => {
 	socket.on('rejoinRoom', ({ username, room }) => {
 		var user = getCurrentUserByUsername(username);
 		//console.log("Rejoined Room From Server");
-		//console.log(user);
-		//console.log(room);
 		if(user) {
 			// set current user to active in user.js
 			userRejoin(socket.id, user, room);
@@ -329,32 +328,13 @@ io.on('connection', socket => {
 
 			// get updated current user and sent it to gamestate
 			user = getCurrentUser(socket.id);
-			console.log(user);
+			//console.log(user);
 			io.to(user.room).emit('gamestate', {
 				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
 			});
 		}
 	});
-
-	//socket.on('vistate', ({visibilityState}) => {
-	//	console.log(visibilityState);
-	//});
-
-	/*
-	socket.on('startRound', ({ username, blackCardSelected }) => {
-		cardSelected = blackCardSelected;
-		popDiscardBlackDeck();
-		var user = getCurrentUserByUsername(username);
-		if(user){
-
-			io.to(user.room).emit('gamestate', {
-				gameState: GameState.REFRESH,
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
-			});
-		}
-	});
-	*/
 
 	socket.on('logoutUser', () => {
 		var user = getCurrentUser(socket.id);

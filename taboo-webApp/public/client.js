@@ -127,8 +127,8 @@ function buzzServer() {
 	socket.emit('setBuzzer');
 }
 
+//broadcast arrow, check, or x to all clients
 function broadcastEvent(str) {
-	//console.log(str);
 	socket.emit('broadcastEvent', {str});
 }
 
@@ -263,9 +263,6 @@ socket.on('countdown', remaining => {
 		remaining = "";
 	}
 	timer.innerHTML = remaining;
-
-	//console.log(remaining);
-	//terminateGame(GameState);
 });
 
 //keep
