@@ -63,6 +63,9 @@ function setServerBuzzer(flag) {
 
 function triggerCardEvent(str) {
 	cardEvent = str;
+	if(!str) {
+		serverBuzzer = false;
+	}
 }
 
 function addTeamPoints(team) {
