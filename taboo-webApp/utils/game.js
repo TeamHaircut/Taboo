@@ -183,14 +183,8 @@ function setCardCzar(user) {
 	cardCzar = user;
 }
 
-// Get current card czar
-function getCardCzar() {
-	return cardCzar;
-}
-
 module.exports = {
   setCardCzar,
-  getCardCzar,
   drawBlackCard,
   nextCardCzar,
   getGameState,
