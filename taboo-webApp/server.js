@@ -6,7 +6,6 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
 const socket = require('socket.io');
-const formatMessage = require('./utils/messages');
 const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, setUserTeamName, setUserRoles, resetUserList  } = require('./utils/users');
 const { clearDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, drawBlackCard, setServerGameInitialized, setServerBuzzer, addTeamPoints, resetTeamPoints, modgame, triggerCardEvent} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
