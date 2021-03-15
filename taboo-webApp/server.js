@@ -65,8 +65,6 @@ io.on('connection', socket => {
 			username = "Admin";
 		}
 
-
-
 		var user = getCurrentUserByUsername(username);
 		
 		//if new user
