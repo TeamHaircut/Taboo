@@ -109,18 +109,6 @@ function getGameState(user, users, gameusers) {
 	return gamestate;
 }
 
-function nextCardCzar(currentCzar, roomUserList) { 
-	var czar = false;
-	const czarIndex = roomUserList.findIndex(user => user.username === currentCzar.username);
-	var roomUserListLength = roomUserList.length;
-	var nextCzarIndex = czarIndex+1;
-	if(nextCzarIndex >= roomUserListLength) {
-		nextCzarIndex = 0;
-	}
-	czar = roomUserList[nextCzarIndex];
-	return czar;
-}
-
 // Fisher-Yates Randomize In Place
 function shuffleCards(cards) {
 	var i = cards.length, k, temp;
@@ -186,7 +174,6 @@ function setCardCzar(user) {
 module.exports = {
   setCardCzar,
   drawBlackCard,
-  nextCardCzar,
   getGameState,
   mergeSelectedDecks,
   clearDiscardBlackDeck,
