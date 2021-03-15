@@ -1,4 +1,3 @@
-const gameControl = document.getElementById('gamecontrol');
 const gameControl1 = document.getElementById('gamecontrol1');
 
 const logoutControl = document.getElementById('logoutcontrol');
@@ -62,13 +61,6 @@ refreshUserListLink.addEventListener("click", function(){
 	socket.emit('requestRulesInfo0', {id: "resetuserlist"});
 	
 });
-
-//gameControl.addEventListener("click", function(){ 
-//	//Emit game control state to server
-//	const state = gameControl.innerHTML;
-//	socket.emit('gameControlState', {state});
-//	
-//});
 
 gameControl1.addEventListener("click", function(){ 
 	//Emit game control state to server
@@ -197,7 +189,6 @@ socket.on('launch', ({GameState}) => {
 // Apply game intialization to DOM
 function initializeGame(GameState) {
 	socket.emit('setServerGameInitialized', true);
-	//gameControl.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	gameControl1.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	gameControl1.style.display = "block";
 	gameControl1.style.visibility = "hidden";
@@ -270,7 +261,6 @@ socket.on('countdown', remaining => {
 function terminateGame(GameState) {
 	//console.log("terminate game called");
 	socket.emit('setServerGameInitialized', false);
-	//gameControl.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.style.display = "block";
 	gameControl1.style.visibility = "visible";
