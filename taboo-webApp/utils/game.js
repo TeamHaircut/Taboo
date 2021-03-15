@@ -138,11 +138,6 @@ function clearDiscardBlackDeck() {
 	discardBlackDeck = [];
 }
 
-// Pull a card from black discard pile
-function popDiscardBlackDeck() {
-	discardBlackDeck.pop();
-}
-
 // Draw a black card
 function drawBlackCard(flag) {
 	if (flag) {
@@ -200,7 +195,6 @@ module.exports = {
   nextCardCzar,
   getGameState,
   mergeSelectedDecks,
-  popDiscardBlackDeck,
   clearDiscardBlackDeck,
   setServerGameInitialized,
   setServerBuzzer,
