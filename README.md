@@ -1,4 +1,4 @@
 # Taboo
 
-Contributors:<br>
+Contributors:
 TeamHaircut
