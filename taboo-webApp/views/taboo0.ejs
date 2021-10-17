@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-light" style="height:3.5rem;">
+<nav class="navbar navbar-light bg-light" style="height:3.5rem; display: none; visibility: hidden;">
 	<img class="" src="IMG_0455.PNG" style="margin-left:auto; margin-right:auto; text-align: center; height:2.5rem;">
 	<div class="collapse navbar-collapse" id="navbarColor03"> 
 		<ul class="navbar-nav mr-auto">
@@ -26,8 +26,19 @@
 	</div>
 </nav>
 
+<div style="margin-left:auto; margin-right:auto; text-align: center;"><br>
+	<div class="btn-group btn-group-toggle" data-toggle="buttons"  style="width:220px; border-radius:20px;">
+		<label class="btn btn-primary active">
+			<input type="radio" name="options" id="option1" checked>TEAM A
+		</label>
+		<label class="btn btn-primary">
+			<input type="radio" name="options" id="option2"> TEAM B
+		</label>
+	</div>
+</div>
+
 		<div class="info-div mb-1" style="font-size: small; color: red;"></div>
-		<div class="gamecontrolcontainer">
+		<div class="gamecontrolcontainer" style=" display:none;">
 			<div class="startcontrol"><a id="gamecontrol1" href="#" class="itemL" style="color: black;"><i class="fas fa-play"></i> Start Game</a></div> 
 			<div class="timercontrol"><div id="timer"></div> </div> 
 			<div class="teamcontrol">
@@ -38,30 +49,41 @@
 			</div>
 		</div>
 
-			<div class="grid-container card-body" style="margin-left: auto; margin-right: auto;  max-width:30rem;" >
-				<div class="item1" style="display: block; visibility: visible;"></div>
-				
-				<div class="container item2" style="margin-left: auto; margin-right: auto; width: 15rem;">
-					<div class="card img-fluid" style="width:250px">
-					  <img class="card-img-top" id="tabooCardColor" src="img_cardbackground_purple.PNG" style="width:100%">
-					  <div class="card-img-overlay"  style="text-align: center; padding: 0px;">
+		<div class="grid-container card-body" style="margin-left: auto; margin-right: auto;  max-width:30rem;" >
+			<div class="item1" style="display: block; visibility: visible;"></div>
+			
+			<div class="container item2" style="margin-left: auto; margin-right: auto; width: 15rem;">
+				<div class="card img-fluid" style="width:250px">
+					<img class="card-img-top" id="tabooCardColor" src="img_cardbackground_green.PNG" style="width:100%">
+					<div class="card-img-overlay"  style="text-align: center; padding: 0px;">
 						<p class="card-title guessWord" style="font-size: 81%; color: white; line-height: normal; height: 4rem; padding: 12px 0px;"></p>
 						<p class="card-text taboo0" style="font-size: large; line-height: 1.8;"></p>
 						<p class="card-text taboo1" style="font-size: large; line-height: 1.8;"></p>
 						<p class="card-text taboo2" style="font-size: large; line-height: 1.8;"></p>
 						<p class="card-text taboo3" style="font-size: large; line-height: 1.8;"></p>
 						<p class="card-text taboo4" style="font-size: large; line-height: 1.8;"></p>
-					  </div>
+					</div>
+					<div class="overlaystartcontrol">
+						<p class="card-text startcontrol" style="margin-left: auto; margin-right: auto; text-align: center;"><a id="gamecontrol1" href="#" class="itemL" style="color: rgb(59, 151, 121);">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-play fa-4x icon-black"></i></a></p>
+						<p class="card-text startcontrol" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin-left: auto; margin-right: auto; text-align: center; color:rgb(59, 151, 121);">Start Round</p> 
 					</div>
 				</div>
-				  
 				<div class="item3" id="giverControl0"; style="display: none;"><button onclick="passCard()" class="btn"><i class="fas fa-arrow-alt-circle-right fa-4x" style="color: blue;"></i></button></div>
 				<div class="item4" id="giverControl1"; style="display: none;"><button onclick="checkCard()" class="btn"><i class="fas fa-check fa-4x" style="color: green;"></i></button></div>
-				<div class="item5" id="buzzerControl" style="display: none;"><button onclick="buzzCard()" class="btn"><img src="img_buzzer.PNG" style="width:40%; position: relative; top: -65px;"></button></div>
+				<div class="item5" id="buzzerControl"; style="display: block;"><button onclick="buzzCard()" class="btn"><img src="img_buzzer.PNG" style="width:40%; position: relative; top: -150px;"></button></div>
+			</div>
+		</div>
 
-			  </div>
+<div style="margin-left:auto; margin-right:auto; text-align: center;">
+		<label class="btn">
+			<input type="button" value="OPTIONS" style="width:130px; height:50px;">
+		</label>
+		<label class="btn">
+			<input type="button" value="SCORECARD"  style="width:130px; height:50px;">
+		</label>
+</div>
 			  
-	<div class="card card-body">
+	<div class="card card-body" style="display: none; visibility: hidden;">
 		<table class="table">
 		  <thead>
 			<tr>

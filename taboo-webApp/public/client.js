@@ -259,7 +259,7 @@ socket.on('countdown', remaining => {
 //keep
 // Apply game termination to DOM
 function terminateGame(GameState) {
-	//console.log("terminate game called");
+	console.log("terminate game called");
 	socket.emit('setServerGameInitialized', false);
 	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
 	gameControl1.style.display = "block";
