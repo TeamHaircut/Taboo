@@ -199,10 +199,12 @@ th {
   border: 1px solid white;
   border-radius: 2em 2em 2em 2em;
   background-color:rgb(59,151,121);
+  opacity: 1.0;
 }
 .taboobtn:active {
   color: yellow;
   background-color:rgb(123,103,150);
+  opacity: 0.25;
 }
 
 .taboobtn0 {
