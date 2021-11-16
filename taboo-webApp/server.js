@@ -98,10 +98,13 @@ io.on('connection', socket => {
 
 	// Listen for game control event
 	socket.on('teamControlState', ({teamSelection}) => {
+		//console.log(teamSelection);
 		var user = getCurrentUser(socket.id);
 		if(user) {
 			setUserTeamName(user,teamSelection);
 			user = getCurrentUser(socket.id);
+			console.log(getRoomUserList(user.room));
+			//console.log(user);
 			io.to(user.room).emit('gamestate', {
 				gameState: GameState.REFRESH,
 				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
@@ -113,7 +116,7 @@ io.on('connection', socket => {
 	socket.on('gameControlState', ({state}) => {
 		const user = getCurrentUser(socket.id);
 		if(user) {
-			if(state === `<i class="fas fa-play"></i> Start Game`) {
+			if(state === `&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-play fa-4x icon-black"></i>`) {
 
 				setUserRoles(user);
 				//////////////////////////////
@@ -127,7 +130,7 @@ io.on('connection', socket => {
 					// perform the calculation for how many seconds left
 					remaining = seconds - Math.ceil(counter / 1000);
 					// broadcast how advanced the countdown is
-					io.to(user.room).emit('countdown', remaining);
+					io.to(user.room).emit('countdown', {remaining,GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))});
 					if (counter >= (seconds*1000)) {
 						// countdown is finished tell the client to change the views.
 						io.to(user.room).emit('gamestate', { 

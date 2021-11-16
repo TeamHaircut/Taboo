@@ -18,6 +18,8 @@ const taboo2 = document.querySelector('.taboo2');
 const taboo3 = document.querySelector('.taboo3');
 const taboo4 = document.querySelector('.taboo4');
 
+const scorecardOverlay = document.getElementById("scorecardOverlay");
+
 var myTabooCard;
 var cardSelected = false;
 
@@ -26,34 +28,31 @@ var cardSelected = false;
 function outputRoomUserTable(GameState) {
     // Clear the outdated table
     roomUserTable.innerHTML = '';
-    
-	//////////////////////TEAMA///////////////////
-	const aTeamRow = document.createElement('tr');
-	aTeamRow.classList.add('table-light');
 
-	const aTeamData = document.createElement('td');
-	aTeamData.style.color = "black";
-	aTeamData.innerHTML = `TEAM A`;
-	aTeamRow.appendChild(aTeamData);
+	var teamAMembers = [];
+	var teamBMembers = [];
 
-	const aPointData = document.createElement('td');
-	aPointData.style.color = "black";
-	//calc team A points
-	var aTeamPoints = 0;
-	aTeamPoints = GameState.aTeamPoints;
-	aPointData.innerHTML = `${aTeamPoints}`;
-	aTeamRow.appendChild(aPointData);
-	document.querySelector('.userlist-table').appendChild(aTeamRow);
-	///////////////////////TEAM A MEMBER LIST//////////////////////
-    // Build a table row for each user in the room
 	GameState.users.forEach(user=>{
 		if(user.teamName == "teamA") {
-			const tr = document.createElement('tr');
-			tr.classList.add('table-light');
-			
-			//  Append username and point data to the table row
-			const tdName = document.createElement('td');
-			tdName.style.fontSize = "small";
+			teamAMembers.push(user);
+		}
+		else if(user.teamName == "teamB") {
+			teamBMembers.push(user);
+		}
+	});
+
+	var rowCount = Math.max(teamAMembers.length, teamBMembers.length);
+	console.log(rowCount);
+	var i = 0;
+	while(i < rowCount) {
+		var userTableRow = document.createElement('tr');
+		var user = teamAMembers.pop();
+		var userb = teamBMembers.pop();
+		//  Append username and point data to the table row
+		//A
+		if(typeof user != 'undefined'){
+			var tdName = document.createElement('td');
+			tdName.style.fontSize = "x-small";
 			if(user.status == 'active') {
 				tdName.style.color = "black";
 				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
@@ -63,60 +62,135 @@ function outputRoomUserTable(GameState) {
 			}
 
 			if(user.status != 'offline'){
-				tr.appendChild(tdName);
-				const tdPoints = document.createElement('td');
-				tdPoints.innerHTML = ``;
-				tr.appendChild(tdPoints);
-				document.querySelector('.userlist-table').appendChild(tr);
+				userTableRow.appendChild(tdName);
+				//const tdPoints = document.createElement('td');
+				//tdPoints.innerHTML = ``;
+				//tr.appendChild(tdPoints);
+				//document.querySelector('.userlist-table').appendChild(userTableRow);
 			}
+		} else {
+			var tdName = document.createElement('td');
+			userTableRow.appendChild(tdName);
 		}
-		
-	});
-	///////////////////////TEAMB////////////////////
-	const bTeamRow = document.createElement('tr');
-	bTeamRow.classList.add('table-light');
 
-	const bTeamData = document.createElement('td');
-	bTeamData.style.color = "black";
-	bTeamData.innerHTML = `TEAM B`;
-	bTeamRow.appendChild(bTeamData);
+		//b
+		if(typeof userb != 'undefined'){
+			var tdNameb = document.createElement('td');
+			tdNameb.style.fontSize = "x-small";
+			if(userb.status == 'active') {
+				tdNameb.style.color = "black";
+				tdNameb.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${userb.username}`;
+			} else if(userb.status == 'idle'){
+				tdNameb.style.color = "red";
+				tdNameb.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${userb.username} (busy)`;
+			}
 
-	const bPointData = document.createElement('td');
-	bPointData.style.color = "black";
-	//calc team A points
-	var bTeamPoints = 0;
-	bTeamPoints = GameState.bTeamPoints;
-	bPointData.innerHTML = `${bTeamPoints}`;
-	bTeamRow.appendChild(bPointData);
-	document.querySelector('.userlist-table').appendChild(bTeamRow);
-	///////////////////TEAM B MEMBER LIST///////////////////
+			if(userb.status != 'offline'){
+				userTableRow.appendChild(tdNameb);
+				//const tdPoints = document.createElement('td');
+				//tdPoints.innerHTML = ``;
+				//tr.appendChild(tdPoints);
+				//document.querySelector('.userlist-table').appendChild(userTableRow);
+			}
+		} else {
+			var tdName = document.createElement('td');
+			userTableRow.appendChild(tdName);
+		}
+		document.querySelector('.userlist-table').appendChild(userTableRow);
+		i++;
+	}
+
+	//////////////////////TEAMA///////////////////
+	//const aTeamRow = document.createElement('tr');
+	//aTeamRow.classList.add('table-light');
+
+	//const aTeamData = document.createElement('td');
+	//aTeamData.style.color = "black";
+	//aTeamData.innerHTML = `TEAM A`;
+	//aTeamRow.appendChild(aTeamData);
+
+	//const aPointData = document.createElement('td');
+	//aPointData.style.color = "black";
+	////calc team A points
+	//var aTeamPoints = 0;
+	//aTeamPoints = GameState.aTeamPoints;
+	//aPointData.innerHTML = `${aTeamPoints}`;
+	//aTeamRow.appendChild(aPointData);
+	//document.querySelector('.userlist-table').appendChild(aTeamRow);
+
+	///////////////////////TEAM A MEMBER LIST//////////////////////
     // Build a table row for each user in the room
-	GameState.users.forEach(user=>{
-		if(user.teamName == "teamB") {
-			const tr = document.createElement('tr');
-			tr.classList.add('table-light');
+	// GameState.users.forEach(user=>{
+	// 	if(user.teamName == "teamA") {
+	// 		const tr = document.createElement('tr');
+	// 		tr.classList.add('table-light');
 			
-			//  Append username and point data to the table row
-			const tdName = document.createElement('td');
-			tdName.style.fontSize = "small";
-			if(user.status == 'active') {
-				tdName.style.color = "black";
-				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
-			} else if(user.status == 'idle'){
-				tdName.style.color = "red";
-				tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (busy)`;
-			}
+	// 		//  Append username and point data to the table row
+	// 		const tdName = document.createElement('td');
+	// 		tdName.style.fontSize = "small";
+	// 		if(user.status == 'active') {
+	// 			tdName.style.color = "black";
+	// 			tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
+	// 		} else if(user.status == 'idle'){
+	// 			tdName.style.color = "red";
+	// 			tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (busy)`;
+	// 		}
 
-			if(user.status != 'offline'){
-				tr.appendChild(tdName);
-				const tdPoints = document.createElement('td');
-				tdPoints.innerHTML = ``;
-				tr.appendChild(tdPoints);
-				document.querySelector('.userlist-table').appendChild(tr);
-			}
-		}
+	// 		if(user.status != 'offline'){
+	// 			tr.appendChild(tdName);
+	// 			const tdPoints = document.createElement('td');
+	// 			tdPoints.innerHTML = ``;
+	// 			tr.appendChild(tdPoints);
+	// 			document.querySelector('.userlist-table').appendChild(tr);
+	// 		}
+	// 	}
 		
-	});
+	// });
+	// ///////////////////////TEAMB////////////////////
+	// const bTeamRow = document.createElement('tr');
+	// bTeamRow.classList.add('table-light');
+
+	// const bTeamData = document.createElement('td');
+	// bTeamData.style.color = "black";
+	// bTeamData.innerHTML = `TEAM B`;
+	// bTeamRow.appendChild(bTeamData);
+
+	// const bPointData = document.createElement('td');
+	// bPointData.style.color = "black";
+	// //calc team A points
+	// var bTeamPoints = 0;
+	// bTeamPoints = GameState.bTeamPoints;
+	// bPointData.innerHTML = `${bTeamPoints}`;
+	// bTeamRow.appendChild(bPointData);
+	// document.querySelector('.userlist-table').appendChild(bTeamRow);
+	// ///////////////////TEAM B MEMBER LIST///////////////////
+    // // Build a table row for each user in the room
+	// GameState.users.forEach(user=>{
+	// 	if(user.teamName == "teamB") {
+	// 		const tr = document.createElement('tr');
+	// 		tr.classList.add('table-light');
+			
+	// 		//  Append username and point data to the table row
+	// 		const tdName = document.createElement('td');
+	// 		tdName.style.fontSize = "small";
+	// 		if(user.status == 'active') {
+	// 			tdName.style.color = "black";
+	// 			tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username}`;
+	// 		} else if(user.status == 'idle'){
+	// 			tdName.style.color = "red";
+	// 			tdName.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${user.username} (busy)`;
+	// 		}
+
+	// 		if(user.status != 'offline'){
+	// 			tr.appendChild(tdName);
+	// 			const tdPoints = document.createElement('td');
+	// 			tdPoints.innerHTML = ``;
+	// 			tr.appendChild(tdPoints);
+	// 			document.querySelector('.userlist-table').appendChild(tr);
+	// 		}
+	// 	}
+		
+	// });
 	/////////////////////////////////////////////
 
     // Build a table row for each user in the room
@@ -272,7 +346,7 @@ function outputTabooCard(GameState) {
 	}
 
 	if(GameState.cardEvent == "passcard") {
-		guessWord.innerHTML=`<i class="fas fa-arrow-alt-circle-right fa-9x" style="color: blue;"></i>`;
+		guessWord.innerHTML=`<i class="fas fa-arrow-alt-circle-right fa-9x" style="color: blue; position: relative; top: 70px;"></i>`;
 		taboo0.innerHTML = ``;
 		taboo1.innerHTML = ``;
 		taboo2.innerHTML = ``;
@@ -280,7 +354,7 @@ function outputTabooCard(GameState) {
 		taboo4.innerHTML = ``;
 	}
 	else if(GameState.cardEvent == "checkcard") {
-		guessWord.innerHTML=`<i class="fas fa-check fa-9x" style="color: green;"></i>`;
+		guessWord.innerHTML=`<i class="fas fa-check fa-9x" style="color: green; position: relative; top: 70px;"></i>`;
 		taboo0.innerHTML = ``;
 		taboo1.innerHTML = ``;
 		taboo2.innerHTML = ``;
@@ -288,7 +362,7 @@ function outputTabooCard(GameState) {
 		taboo4.innerHTML = ``;
 	}
 	else if(GameState.cardEvent == "buzzcard") {
-		guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red;"></i>`;
+		guessWord.innerHTML=`<i class="fas fa-times fa-9x" style="color: red; position: relative; top: 70px;"></i>`;
 		taboo0.innerHTML = ``;
 		taboo1.innerHTML = ``;
 		taboo2.innerHTML = ``;
@@ -299,18 +373,37 @@ function outputTabooCard(GameState) {
 }
 
 function passCard() {
-	broadcastEvent("passcard");
-	clearServerBuzzer();
-	drawBlackCard();
+	if(giverControl0.style.visibility == "visible") {
+		broadcastEvent("passcard");
+		clearServerBuzzer();
+		drawBlackCard();
+	}
+
   }
 
 function checkCard() {
-	broadcastEvent("checkcard");
-	drawBlackCard();
-	sendWinnerInfoToServer1(teams.value);
+	if(giverControl1.style.visibility == "visible") {
+		broadcastEvent("checkcard");
+		drawBlackCard();
+		sendWinnerInfoToServer1(teams.value);
+	}
+
 }
 
 function buzzCard() {
 	broadcastEvent("buzzcard");
 	buzzServer();
+	drawBlackCard();
+}
+
+function displayScorecard() {
+	//console.log(scorecardOverlay.style.display);
+	//console.log(scorecardOverlay.style.visibility);
+	if(scorecardOverlay.style.display == "block" && scorecardOverlay.style.visibility == "visible") {
+		scorecardOverlay.style.display = "none"; 
+		scorecardOverlay.style.visibility = "hidden";
+	} else {
+		scorecardOverlay.style.display = "block"; 
+		scorecardOverlay.style.visibility = "visible";
+	}
 }

@@ -1,4 +1,5 @@
 const gameControl1 = document.getElementById('gamecontrol1');
+const gameControl2 = document.getElementById('gamecontrol2');
 
 const logoutControl = document.getElementById('logoutcontrol');
 
@@ -51,13 +52,13 @@ socket.emit('joinRoom', { username: getClientUsername(), room: getClientRoom() }
 			}
 /////////////////////////////////////////////////////////////////////////////
 resetPointLink.addEventListener("click", function(){ 
-	console.log("reset point link clicked");
+	//console.log("reset point link clicked");
 	socket.emit('requestRulesInfo0', {id: "resetpoints"});
 	
 });
 
 refreshUserListLink.addEventListener("click", function(){ 
-	console.log("refresh user list link clicked");
+	//console.log("refresh user list link clicked");
 	socket.emit('requestRulesInfo0', {id: "resetuserlist"});
 	
 });
@@ -71,9 +72,20 @@ gameControl1.addEventListener("click", function(){
 });
 
 teams.addEventListener("change", function(){ 
-	//console.log(teams.value);
+	const rbs = document.querySelectorAll('input[name="options"]');
+	let selectedValue;
+	for (const rb of rbs) {
+		if (rb.checked) {
+			selectedValue = rb.value;
+			break;
+		}
+	}
+	//alert(selectedValue);
+	//console.log(selectedValue);
+
 	//Emit game control state to server
-	const teamSelection = teams.value;
+	//const teamSelection = teams.value;
+	const teamSelection = selectedValue;
 	socket.emit('teamControlState', {teamSelection});
 	
 });
@@ -192,8 +204,10 @@ function initializeGame(GameState) {
 	gameControl1.innerHTML = `<i class="fas fa-stop"></i> Stop Game`;
 	gameControl1.style.display = "block";
 	gameControl1.style.visibility = "hidden";
-	teams.style.display = "block";
-	teams.style.visibility = "hidden";
+	gameControl2.style.display = "block";
+	gameControl2.style.visibility = "hidden";
+	teams.style.display = "none";
+	teams.style.visibility = "visible";
 	timer.style.display = "block";
 	timer.style.visibility = "visible";
 	var role;
@@ -249,26 +263,38 @@ socket.on('terminate', ({GameState}) => {
 	terminateGame(GameState);
 });
 
-socket.on('countdown', remaining => {
+socket.on('countdown', ({remaining, GameState}) => {
 	if(remaining == 0) {
-		remaining = "";
+		remaining = "GO!";
 	}
-	timer.innerHTML = remaining;
+
+	timer.innerHTML = `<div id="pointscontainer">
+							<div id="apoints">`+GameState.aTeamPoints+`</div>
+    						<div id="left">TEAM A</div>
+    						<div id="middle">`+remaining+`</div>
+    						<div id="right">TEAM B</div>
+    						<div id="bpoints">`+GameState.bTeamPoints+`</div>
+						</div>`;
+	//timer.innerHTML = GameState.aTeamPoints +" TEAM A |"+remaining + "| TEAM B "+ GameState.bTeamPoints;
+	//timer.innerHTML = remaining;
 });
 
 //keep
 // Apply game termination to DOM
 function terminateGame(GameState) {
-	console.log("terminate game called");
+	//console.log("terminate game called");
 	socket.emit('setServerGameInitialized', false);
-	gameControl1.innerHTML = `<i class="fas fa-play"></i> Start Game`;
+	//console.log(gameControl1.innerHTML);
+	gameControl1.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-play fa-4x icon-black"></i>`;
 	gameControl1.style.display = "block";
 	gameControl1.style.visibility = "visible";
+	gameControl2.style.display = "block";
+	gameControl2.style.visibility = "visible";
 	teams.style.display = "block";
 	teams.style.visibility = "visible";
 	outputTabooCard(GameState);
-	timer.style.display = "block";
-	timer.style.visibility = "hidden";
+	timer.style.display = "none";
+	timer.style.visibility = "visible";
 	guessWord.innerHTML = ``;
 	taboo0.innerHTML = ``;
 	taboo1.innerHTML = ``;

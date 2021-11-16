@@ -35,9 +35,9 @@ div, option, p, tr, th, .normalFont {
 }
 
 .grid-container > div {
-  /*background-color: rgba(255, 255, 255, 0.8);*/
+  background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
-  padding: 5px 0;
+  padding: 0px 0;
   font-size: 30px;
 }
 
@@ -87,17 +87,56 @@ div, option, p, tr, th, .normalFont {
   padding: 5px 0;
   font-size: 12px;
 }
+
+.optionbar { grid-area: myoptions;}
+.scorebar { grid-area: myscore;}
+.buttoncontrolcontainer {
+  display: grid;
+  grid-template-areas:
+    'myoptions myscore';
+  grid-gap: 8rem;
+  height: 2rem;
+}
+
+.buttoncontrolcontainer > div {
+  text-align: center;
+  margin-left:auto;
+  margin-right:auto;
+  font-size: x-small;
+}
+
+.teamabar { grid-area: myteama;}
+.timebar { grid-area: mytime;}
+.teambbar { grid-area: myteamb;}
+.score-grid {
+  display: grid;
+  grid-template-areas:
+    'myteama mytime myteamb';
+  grid-gap: 2rem;
+  height: 2rem;
+}
+
+.score-grid > div {
+  text-align: center;
+  margin-left:auto;
+  margin-right:auto;
+  color: white; 
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
 /****************************************************************************************/
-.startcontrol { grid-area: start; }
-.timercontrol { grid-area: timer; font-size:30px;}
 .teamcontrol { grid-area: team; }
+.timercontrol { grid-area: timer; font-size: 47px;}
+.cardcontrol {grid-area: card; }
 
 .gamecontrolcontainer {
   display: grid;
   grid-template-areas:
-    'start timer team';
-  grid-gap: 10px;
-  height: 1rem;
+    'team'
+    'timer'
+    'card';
+  grid-gap: 0px;
+  height: 10rem;
 }
 
 .gamecontrolcontainer > div {
@@ -106,7 +145,7 @@ div, option, p, tr, th, .normalFont {
   margin-right:auto;
 }
 
-.overlaystartcontrol {
+.startcontrol-overlay {
   position: absolute;
   top: 30%;
   width: 100%;
@@ -115,6 +154,169 @@ div, option, p, tr, th, .normalFont {
 .icon-black {
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
+
+.table-image { 
+  height: 30em; /* You must set a specified height */
+  width: 22em;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.fixed-pos {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.shadoweffect {
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+table {
+  width: 100%;
+  max-width: 100%;
+  position: relative; 
+  top: 15%;
+
+}
+
+
+td, th {
+  text-align: center;
+  max-width: 10px;
+}
+
+th {
+  font-size: x-large;
+}
+
+
+.taboobtn {
+  font-size: large;
+  color: white;
+  border: 1px solid white;
+  border-radius: 2em 2em 2em 2em;
+  background-color:rgb(59,151,121);
+}
+.taboobtn:active {
+  color: yellow;
+  background-color:rgb(123,103,150);
+}
+
+.taboobtn0 {
+  font-size: x-small;
+  color: white;
+  border: 1px solid white;
+  border-radius: 0em 0em 0em 0em;
+  background-color:rgb(59,151,121);
+}
+.taboobtn0:active {
+  color: yellow;
+  background-color:rgb(123,103,150);
+}
+
+.stv-radio-buttons-wrapper {
+  clear: both;
+  display: inline-block;
+}
+
+.stv-radio-button {
+  position: absolute;
+  left: -9999em;
+  top: -9999em;
+}
+  
+.stv-radio-button + label {
+  float: left;
+  padding: .5em 1em;
+  cursor: pointer;
+  border: 1px solid white;
+  margin-right: -1px;
+  color: white;
+  font-size: x-large;
+  background-color: rgb(59,151,121);
+}
+    
+.stv-radio-button:first-of-type + label {
+  border-radius: 2em 0 0 2em;
+}
+    
+.stv-radio-button:last-of-type + label {
+  border-radius: 0 2em 2em 0;
+}
+  
+.stv-radio-button:checked + label {
+  color: yellow;
+  background-color: rgb(123,103,150);
+}
+/***************************************************************************************/
+#pointscontainer {
+	height: 100%; 
+	width: 100%; 
+	font-size: 0;
+	margin-left: auto; 
+	margin-right: auto; 
+	text-align: center;
+    background-color: rgba(1, 150, 186, 1);
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	
+}
+#apoints, #left, #middle, #right, #bpoints {
+	display: inline-block; 
+	*display: inline;  
+	vertical-align: top; 
+	font-size: large;
+}
+#apoints {
+  width: 5%; 
+  min-width: 2.5em;
+  min-height: 2.1em;
+  background-color:rgb(59,151,121); 
+  border-radius: 1em 0 0 1em; 
+  border: 1px solid white;
+  color: white;
+  padding: .25em 0em 0em 0em;
+}
+#left {
+  width:18%; 
+  min-width: 7em;
+  min-height: 2.9em;
+  background-color:rgb(59,151,121);
+  font-size: small; 
+  border: 1px solid white;
+  padding: .5em 0em 0em 0em;
+}
+#middle {
+  width: 9%;
+  min-width: 2em;
+  max-height: 1.56em;
+  background: transparent; 
+  border: 1px solid yellow;
+  font-size: x-large;
+  color: yellow;
+}
+#right {
+  width: 18%; 
+  min-width: 7em;
+  min-height: 2.9em;
+  background-color:rgb(123,103,150);
+  font-size: small; 
+  border: 1px solid white;
+  padding: .5em 0em 0em 0em;
+}
+#bpoints {
+  width: 5%;
+  min-width: 2.5em; 
+  min-height: 2.1em;
+  background-color:rgb(123,103,150); 
+  border-radius: 0 1em 1em 0; 
+  border: 1px solid white;
+  padding: .25em 0em 0em 0em;
+}
+
 /***************************************************************************************/
 
 .messages {

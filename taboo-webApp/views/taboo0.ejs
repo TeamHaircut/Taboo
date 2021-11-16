@@ -26,77 +26,97 @@
 	</div>
 </nav>
 
-<div style="margin-left:auto; margin-right:auto; text-align: center;"><br>
-	<div class="btn-group btn-group-toggle" data-toggle="buttons"  style="width:220px; border-radius:20px;">
-		<label class="btn btn-primary active">
-			<input type="radio" name="options" id="option1" checked>TEAM A
-		</label>
-		<label class="btn btn-primary">
-			<input type="radio" name="options" id="option2"> TEAM B
-		</label>
-	</div>
-</div>
 
+	
 		<div class="info-div mb-1" style="font-size: small; color: red;"></div>
-		<div class="gamecontrolcontainer" style=" display:none;">
-			<div class="startcontrol"><a id="gamecontrol1" href="#" class="itemL" style="color: black;"><i class="fas fa-play"></i> Start Game</a></div> 
-			<div class="timercontrol"><div id="timer"></div> </div> 
-			<div class="teamcontrol">
-				<select name="teams" id="teams"  style="padding:3px;">
-					<option value="teamA">Team A</option>
-					<option value="teamB">Team B</option>
-				</select>
+		<div class="buttoncontrolcontainer">
+			<div class="optionbar">
+				<label>
+					<input  type="button" class="taboobtn0" style="width: 6rem;" value="OPTIONS">
+				</label>
+			</div>
+			<div class="scorebar">
+				<label>
+					<input  onclick="displayScorecard()" class="taboobtn0" style="width: 6rem;" type="button" value="TEAMS/SCORE">
+				</label>
 			</div>
 		</div>
-
-		<div class="grid-container card-body" style="margin-left: auto; margin-right: auto;  max-width:30rem;" >
-			<div class="item1" style="display: block; visibility: visible;"></div>
-			
-			<div class="container item2" style="margin-left: auto; margin-right: auto; width: 15rem;">
-				<div class="card img-fluid" style="width:250px">
-					<img class="card-img-top" id="tabooCardColor" src="img_cardbackground_green.PNG" style="width:100%">
-					<div class="card-img-overlay"  style="text-align: center; padding: 0px;">
-						<p class="card-title guessWord" style="font-size: 81%; color: white; line-height: normal; height: 4rem; padding: 12px 0px;"></p>
-						<p class="card-text taboo0" style="font-size: large; line-height: 1.8;"></p>
-						<p class="card-text taboo1" style="font-size: large; line-height: 1.8;"></p>
-						<p class="card-text taboo2" style="font-size: large; line-height: 1.8;"></p>
-						<p class="card-text taboo3" style="font-size: large; line-height: 1.8;"></p>
-						<p class="card-text taboo4" style="font-size: large; line-height: 1.8;"></p>
+		<div class="gamecontrolcontainer">
+			<div class="teamcontrol">
+					<div class="stv-radio-buttons-wrapper" name="teams" id="teams">
+						<input type="radio" class="stv-radio-button" name="options" id="option1" value="teamA" checked/>
+						<label for="option1">TEAM A</label>
+						<input type="radio" class="stv-radio-button" name="options" id="option2" value="teamB"/>
+						<label for="option2">TEAM B</label>
 					</div>
-					<div class="overlaystartcontrol">
-						<p class="card-text startcontrol" style="margin-left: auto; margin-right: auto; text-align: center;"><a id="gamecontrol1" href="#" class="itemL" style="color: rgb(59, 151, 121);">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-play fa-4x icon-black"></i></a></p>
-						<p class="card-text startcontrol" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin-left: auto; margin-right: auto; text-align: center; color:rgb(59, 151, 121);">Start Round</p> 
+			</div>
+			<div class="timercontrol">
+				<div id="timer" style="margin-top: 0.35em; margin-bottom: 0.3em;">
+					<div id="pointscontainer">
+						<div id="apoints">0</div>
+						<div id="left">TEAM A</div>
+						<div id="middle">GO!</div>
+						<div id="right">TEAM B</div>
+						<div id="bpoints">0</div>
+					</div>
+
+				</div>
+		
+			<div class="grid-container card-body cardcontrol" style="margin-left: auto; margin-right: auto;  max-width:30rem;" >
+				<div class="item1" style="display: none; visibility: hidden;"></div>
+				<div class="container item2" style="margin-left: auto; margin-right: auto; width: 15rem; background-color: red;">
+					<div class="card img-fluid" style="width:250px">
+						<img class="card-img-top" id="tabooCardColor" src="img_cardbackground_green.PNG" style="width:100%">
+						<div class="card-img-overlay"  style="text-align: center; padding: 0px;">
+							<p class="card-title guessWord" style="font-size: 81%; color: white; line-height: normal; height: 4rem; padding: 12px 0px;"></p>
+							<p class="card-text taboo0" style="font-size: large; line-height: 1.8;"></p>
+							<p class="card-text taboo1" style="font-size: large; line-height: 1.8;"></p>
+							<p class="card-text taboo2" style="font-size: large; line-height: 1.8;"></p>
+							<p class="card-text taboo3" style="font-size: large; line-height: 1.8;"></p>
+							<p class="card-text taboo4" style="font-size: large; line-height: 1.8;"></p>
+						</div>
+						<div class="startcontrol-overlay"  style="display: block; visibility: visible;">
+							<p class="card-text startcontrol" style="margin-left: auto; margin-right: auto; text-align: center;"><a id="gamecontrol1" href="#" class="itemL" style="color: rgb(59, 151, 121);">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-play fa-4x icon-black"></i></a></p>
+							<p class="card-text startcontrol" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin-left: auto; margin-right: auto; text-align: center; color:rgb(59, 151, 121);" id="gamecontrol2">Start Round</p> 
+						</div>
 					</div>
 				</div>
-				<div class="item3" id="giverControl0"; style="display: none;"><button onclick="passCard()" class="btn"><i class="fas fa-arrow-alt-circle-right fa-4x" style="color: blue;"></i></button></div>
-				<div class="item4" id="giverControl1"; style="display: none;"><button onclick="checkCard()" class="btn"><i class="fas fa-check fa-4x" style="color: green;"></i></button></div>
-				<div class="item5" id="buzzerControl"; style="display: block;"><button onclick="buzzCard()" class="btn"><img src="img_buzzer.PNG" style="width:40%; position: relative; top: -150px;"></button></div>
 			</div>
 		</div>
+		<div style="margin-left:auto; margin-right:auto; text-align: center; padding-bottom: 100px;">
+			<label>
+				<input  onclick="passCard()"class="taboobtn" id="giverControl0" type="button" value="SKIP" style="width:150px; height:50px; background-color: blue;">
+			</label>
+			<label>
+				<input  onclick="checkCard()" class="taboobtn" id="giverControl1" type="button" value="+1"  style="width:150px; height:50px; background-color: green;">
+			</label>
+			<label>
+				<img onclick="buzzCard()" id="buzzerControl" src="img_buzzer.PNG" style="width:150px; height:150px; cursor: pointer;">
+			</label>
+		</div>
+	
+			<div id="scorecardOverlay" class="card-body fixed-pos" style="display: none; visibility: hidden; max-width:30rem; background-color: transparent" >
+				<div class="item2" style="margin-left: auto; margin-right: auto; width: 18rem;">
+					<div class="card img-fluid shadoweffect" style="width: 1000px;">
+						<img class="card-img-top" src="img_scorecard.PNG" style="width:100%">
+						<div class="card-img-overlay" style="text-align: center; padding: 0px;">
+							<div>
+								<table>
+									<thead>
+										<tr>
+											<th style="padding-top: 25%; padding-bottom: 2%;">Team A</th>
+											<th style="padding-top: 25%; padding-bottom: 2%;">Team B</th>
+										</tr>
+									</thead>
+									<tbody class="userlist-table">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-<div style="margin-left:auto; margin-right:auto; text-align: center;">
-		<label class="btn">
-			<input type="button" value="OPTIONS" style="width:130px; height:50px;">
-		</label>
-		<label class="btn">
-			<input type="button" value="SCORECARD"  style="width:130px; height:50px;">
-		</label>
-</div>
-			  
-	<div class="card card-body" style="display: none; visibility: hidden;">
-		<table class="table">
-		  <thead>
-			<tr>
-			  <th scope="col"><h3>Users</h3></th>
-			  <th scope="col"><h3>Points</h3></th>
-			</tr>
-		  </thead>
-		  <tbody class="userlist-table">
-		  </tbody>
-		</table> 
-	</div>
-
-</div>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/DOM/dom.js"></script>
 	<script src="/DOM/utils.js"></script>
