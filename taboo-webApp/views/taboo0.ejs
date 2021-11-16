@@ -1,0 +1,124 @@
+<nav class="navbar navbar-light bg-light" style="height:3.5rem; display: none; visibility: hidden;">
+	<img class="" src="IMG_0455.PNG" style="margin-left:auto; margin-right:auto; text-align: center; height:2.5rem;">
+	<div class="collapse navbar-collapse" id="navbarColor03"> 
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<p class="nav-link"></p>
+			</li>
+			<li class="nav-item active">
+				<p class="nav-link"><i class="fas fa-user"></i> <span id="client-username"></span>		
+				</p>
+			</li>
+			<li class="nav-item active" style="display:block;">
+				<p class="nav-link"><i class="fas fa-home"></i> ROOM CODE: <span id="client-room"></span></p>
+			</li>
+			<li class="nav-item dropdown" style="display:block; visibility:visible;">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Game Management</a>
+				<div class="dropdown-menu">
+				  <a id="resetPointLink" class="dropdown-item" href="#"> Reset Points to 0</a>
+				  <a id="refreshUserListLink" class="dropdown-item" href="#"> Drop idle users from game</a>
+				</div>
+			</li>
+		</ul>
+		<form class="form-inline my-2 my-lg-0">
+			<a id="logoutcontrol" href="/users/logout" class="nav-link"><i class="fas fa-sign-out-alt"></i> LEAVE ROOM</a>
+		</form>
+	</div>
+</nav>
+
+
+	
+		<div class="info-div mb-1" style="font-size: small; color: red;"></div>
+		<div class="buttoncontrolcontainer">
+			<div class="optionbar">
+				<label>
+					<input  type="button" class="taboobtn0" style="width: 6rem;" value="OPTIONS">
+				</label>
+			</div>
+			<div class="scorebar">
+				<label>
+					<input  onclick="displayScorecard()" class="taboobtn0" style="width: 6rem;" type="button" value="TEAMS/SCORE">
+				</label>
+			</div>
+		</div>
+		<div class="gamecontrolcontainer">
+			<div class="teamcontrol">
+					<div class="stv-radio-buttons-wrapper" name="teams" id="teams">
+						<input type="radio" class="stv-radio-button" name="options" id="option1" value="teamA" checked/>
+						<label for="option1">TEAM A</label>
+						<input type="radio" class="stv-radio-button" name="options" id="option2" value="teamB"/>
+						<label for="option2">TEAM B</label>
+					</div>
+			</div>
+			<div class="timercontrol">
+				<div id="timer" style="margin-top: 0.35em; margin-bottom: 0.3em;">
+					<div id="pointscontainer">
+						<div id="apoints">0</div>
+						<div id="left">TEAM A</div>
+						<div id="middle">GO!</div>
+						<div id="right">TEAM B</div>
+						<div id="bpoints">0</div>
+					</div>
+
+				</div>
+		
+			<div class="grid-container card-body cardcontrol" style="margin-left: auto; margin-right: auto;  max-width:30rem;" >
+				<div class="item1" style="display: none; visibility: hidden;"></div>
+				<div class="container item2" style="margin-left: auto; margin-right: auto; width: 15rem; background-color: red;">
+					<div class="card img-fluid" style="width:250px">
+						<img class="card-img-top" id="tabooCardColor" src="img_cardbackground_green.PNG" style="width:100%">
+						<div class="card-img-overlay"  style="text-align: center; padding: 0px;">
+							<p class="card-title guessWord" style="font-size: 81%; color: white; line-height: normal; height: 4rem; padding: 12px 0px;"></p>
+							<p class="card-text taboo0" style="font-size: large; line-height: 1.8;"></p>
+							<p class="card-text taboo1" style="font-size: large; line-height: 1.8;"></p>
+							<p class="card-text taboo2" style="font-size: large; line-height: 1.8;"></p>
+							<p class="card-text taboo3" style="font-size: large; line-height: 1.8;"></p>
+							<p class="card-text taboo4" style="font-size: large; line-height: 1.8;"></p>
+						</div>
+						<div class="startcontrol-overlay"  style="display: block; visibility: visible;">
+							<p class="card-text startcontrol" style="margin-left: auto; margin-right: auto; text-align: center;"><a id="gamecontrol1" href="#" class="itemL" style="color: rgb(59, 151, 121);">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-play fa-4x icon-black"></i></a></p>
+							<p class="card-text startcontrol" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin-left: auto; margin-right: auto; text-align: center; color:rgb(59, 151, 121);" id="gamecontrol2">Start Round</p> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="margin-left:auto; margin-right:auto; text-align: center; padding-bottom: 100px;">
+			<label>
+				<input  onclick="passCard()"class="taboobtn" id="giverControl0" type="button" value="SKIP" style="width:150px; height:50px; background-color: blue;">
+			</label>
+			<label>
+				<input  onclick="checkCard()" class="taboobtn" id="giverControl1" type="button" value="+1"  style="width:150px; height:50px; background-color: green;">
+			</label>
+			<label>
+				<img onclick="buzzCard()" id="buzzerControl" src="img_buzzer.PNG" style="width:150px; height:150px; cursor: pointer;">
+			</label>
+		</div>
+	
+			<div id="scorecardOverlay" class="card-body fixed-pos" style="display: none; visibility: hidden; max-width:30rem; background-color: transparent" >
+				<div class="item2" style="margin-left: auto; margin-right: auto; width: 18rem;">
+					<div class="card img-fluid shadoweffect" style="width: 1000px;">
+						<img class="card-img-top" src="img_scorecard.PNG" style="width:100%">
+						<div class="card-img-overlay" style="text-align: center; padding: 0px;">
+							<div>
+								<table>
+									<thead>
+										<tr>
+											<th style="padding-top: 25%; padding-bottom: 2%;">Team A</th>
+											<th style="padding-top: 25%; padding-bottom: 2%;">Team B</th>
+										</tr>
+									</thead>
+									<tbody class="userlist-table">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/DOM/dom.js"></script>
+	<script src="/DOM/utils.js"></script>
+	<script src="/client.js"></script>
+	<link href="/css/style.css" rel="stylesheet" type="text/css">
