@@ -199,10 +199,12 @@ th {
   border: 1px solid white;
   border-radius: 2em 2em 2em 2em;
   background-color:rgb(59,151,121);
+  opacity: 1.0;
 }
 .taboobtn:active {
   color: yellow;
   background-color:rgb(123,103,150);
+  opacity: 0.25;
 }
 
 .taboobtn0 {
@@ -240,17 +242,28 @@ th {
 }
     
 .stv-radio-button:first-of-type + label {
+  background-color: rgb(59,151,121);
   border-radius: 2em 0 0 2em;
+  opacity: 0.75;
+  border-color: white;
 }
     
 .stv-radio-button:last-of-type + label {
+  background-color:rgb(123,103,150);
   border-radius: 0 2em 2em 0;
+  opacity: 0.75;
+  border-color: white;
 }
   
 .stv-radio-button:checked + label {
   color: yellow;
-  background-color: rgb(123,103,150);
+  opacity: 1.0;
+  border-color: yellow;
+  /*background-color: rgb(123,103,150);*/
 }
+/***************************************************************************************/
+
+
 /***************************************************************************************/
 #pointscontainer {
 	height: 100%; 
