@@ -55,6 +55,22 @@ function userJoin(id, username, room) {
 	return user;
 }
 
+function removeUser(currentUser) {
+	users.forEach(user => {
+		if(user.id == currentUser.id) {
+			user.id = '';
+			user.username = '';
+			user.room = '';
+			user.status = '';
+			user.teamName = '';
+			user.role = '';
+		} else {
+			//do nothing
+		}
+	});
+
+}
+
 // Get current user
 function getCurrentUser(id) {
   return users.find(user => user.id === id);
@@ -90,5 +106,6 @@ module.exports = {
   setUserStatus,
   setUserTeamName,
   setUserRoles,
-  resetUserList
+  resetUserList,
+  removeUser
 };

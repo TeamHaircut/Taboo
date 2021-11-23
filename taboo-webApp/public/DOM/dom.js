@@ -1,6 +1,7 @@
 const infoDiv = document.querySelector('.info-div');
 
 const roomUserTable = document.querySelector('.userlist-table');
+const scoreTable = document.querySelector('.score-table');
 
 //const chatMessages = document.querySelector('.chat-messages');
 
@@ -28,6 +29,7 @@ var cardSelected = false;
 function outputRoomUserTable(GameState) {
     // Clear the outdated table
     roomUserTable.innerHTML = '';
+	scoreTable.innerHTML = `${GameState.aTeamPoints}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${GameState.bTeamPoints}`;
 
 	var teamAMembers = [];
 	var teamBMembers = [];

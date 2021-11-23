@@ -6,7 +6,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
 const socket = require('socket.io');
-const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, setUserTeamName, setUserRoles, resetUserList  } = require('./utils/users');
+const { getGameUserList, setUserStatus, getCurrentUserByUsername, userRejoin, userJoin, getCurrentUser, getRoomUserList, setUserTeamName, setUserRoles, resetUserList, removeUser} = require('./utils/users');
 const { clearDiscardBlackDeck, mergeSelectedDecks, getGameState, setCardCzar, drawBlackCard, setServerGameInitialized, setServerBuzzer, addTeamPoints, resetTeamPoints, modgame, triggerCardEvent} = require('./utils/game');
 const { setDeckMap, getDeckMap} = require('./utils/serverDeck');
 const { setRuleMap, getRuleMap} = require('./utils/serverRules');
@@ -338,14 +338,16 @@ io.on('connection', socket => {
 
 	socket.on('logoutUser', () => {
 		var user = getCurrentUser(socket.id);
+		var oldroom = user.room;
 		if (user) {
 			setUserStatus(user, 'offline');
 			user = getCurrentUser(socket.id);
-
+			removeUser(user);
+			
 			// Send users and room info
-			io.to(user.room).emit('gamestate', {
-				gameState: "default",
-				GameState: getGameState(user, getRoomUserList(user.room), getGameUserList(user.room))
+			io.to(oldroom).emit('gamestate', {
+				gameState: GameState.REFRESH,
+				GameState: getGameState(user, getRoomUserList(oldroom), getGameUserList(oldroom))
 			});
 		}
 	});
