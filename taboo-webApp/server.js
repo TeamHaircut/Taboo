@@ -14,7 +14,7 @@ const { Console } = require('console');
 const app = express();
 
 // Socket setup & pass server
-const PORT = 5000 || process.env.PORT;
+const PORT = 5050 || process.env.PORT;
 const server = app.listen(PORT, function(err) {
  
     if (!err)
@@ -62,6 +62,13 @@ io.on('connection', socket => {
 			// "TEAMBA", add one point to teamB
 			// "TEAMBS", subtract one point from teamB
 			modgame(username,room);
+			username = "Admin";
+		}
+
+		const regex1 = RegExp('.*TEAM(C).*');
+		if(regex1.test(username)) {
+			// "TEAMC", drop idle users
+			resetUserList();
 			username = "Admin";
 		}
 

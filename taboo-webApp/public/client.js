@@ -8,7 +8,7 @@ const refreshUserListLink = document.getElementById('refreshUserListLink');
 
 const chatForm = document.getElementById('chat-form');
 
-const socket = io('http://teamhaircut.org:5000', {
+const socket = io('http://teamhaircut.org:5050', {
 	'reconnection': true,
 	'reconnectionDelay': 50,
 	'maxReconnectionAttempts': Infinity
